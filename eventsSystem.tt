@@ -1,0 +1,28 @@
+#nop Events system, raise, register and deregister ;
+
+#nop Global events holder;
+#nop Table organized by;
+#nop  event, name, func;
+#var Events {}
+
+#alias {registerEvent} {
+   #nop %1 - event, gmcp Room.Info;
+   #nop %2 - behavious to fire event fires;
+   #var Events[%1][%2] {};
+}
+
+#alias {deregisterEvent} {
+   #unvar Events[%1][%2];
+}
+
+#alias {raiseEvent} {
+   #foreach *Events[%1][] cb {
+      $cb;
+   }
+}
+
+#alias {displayEvents} {
+   #if   {"%1" === ""} { #var Events };
+   #else { #var Events[%1] };
+}
+

@@ -1,0 +1,194 @@
+#nop List for all events. Will call out to other files.
+
+#alias {gmcp}
+{
+   #echo {send out request};
+   #send {$TELNET[IAC]$TELNET[SB]$TELNET[GMCP] %0 $TELNET[IAC]$TELNET[SE]\};
+}
+
+#EVENT {IAC SB GMCP core.ping IAC SE}
+{
+   #var gmcp[core][ping] {%0};
+   #show CorePing: {%0}:;
+}
+
+#EVENT {IAC SB GMCP char.items.list IAC SE}
+{
+   #var gmcp[char][items][list] {%0};
+   targeting.onCharItemsList;
+}
+
+#EVENT {IAC SB GMCP char.items.add IAC SE}
+{
+   #var gmcp[char][items][add] {%0};
+   targeting.onCharItemsAdd;
+}
+
+#EVENT {IAC SB GMCP Char.Items.Remove IAC SE}
+{
+   #var gmcp[char][items][remove] {%0};
+   targeting.onCharItemsRemove;
+}
+
+
+#EVENT {IAC SB GMCP Char.Afflictions.Add IAC SE}
+{
+    #variable gmcp[char][afflictions][add] {%0};
+    print Gained Affliction $gmcp[char][afflictions][add][+1][name];
+}
+
+#EVENT {IAC SB GMCP Char.Afflictions.List IAC SE}
+{
+    #variable gmcp[char][afflictions][list] {%0};
+}
+
+#EVENT {IAC SB GMCP Char.Afflictions.Remove IAC SE}
+{
+    #variable gmcp[char][afflictions][remove] {%0};
+    print Removed Affliction $gmcp[char][afflictions][remove];
+}
+
+#EVENT {IAC SB GMCP char.status IAC SE}
+{
+    #variable gmcp[char][status] {%0};
+}
+
+#var prevHp 0;
+#var prevMp 0;
+#EVENT {IAC SB GMCP char.vitals IAC SE}
+{
+   #variable gmcp[char][vitals] {%0};
+
+   gui.onCharVitals;
+   battlerage.onCharVitals;
+
+   #var hp $gmcp[char][vitals][hp];
+   #if {$prevHp == 0} {#var prevHp $hp};
+
+   #if {$prevHp != $hp} {
+      #math {diff} {$prevHp - $hp};
+      #if {$diff > 0} {#show HP <501>-$diff, Orb: $orbActive};
+      #else {#math diff {$diff * -1}; #show HP <128>+$diff, Orb: $orbActive};
+
+      #unvar diff;
+   };
+   #var prevHp $hp;
+
+
+   #var mp $gmcp[char][vitals][mp];
+   #if {$prevMp == 0} {#var prevMp $mp};
+
+   #if {$prevMp != $mp} {
+      #math {diff} {$prevMp - $mp};
+      #if {$diff > 0} {#show Mana <148>-$diff};
+      #else {#math diff {$diff * -1}; #show Mana <158>+$diff};
+      #unvar diff;
+   };
+   #var prevMp $mp;
+}
+
+#EVENT {IAC SB GMCP char.maxstats IAC SE}
+{
+    #variable gmcp[char][maxstats] {%0}
+}
+
+#EVENT {IAC SB GMCP char.worth IAC SE}
+{
+    #variable gmcp[char][worth] {%0}
+}
+
+#EVENT {IAC SB GMCP Room.Info IAC SE}
+{
+   #variable gmcp[room][info] {%0};
+   #if {$gmcp[room][info][num] == -1}
+   {
+       #return
+   };
+
+   #var clearCharDb 1;
+
+   targeting.onRoomInfo;
+   mapping.onRoomInfo;
+}
+
+#EVENT {IAC SB GMCP char.name IAC SE}
+{
+   #variable gmcp[char][name] {%0};
+   #show {I am $gmcp[char][name]};
+}
+
+#EVENT {IAC SB GMCP Room.addplayer IAC SE}
+{
+   #var clearCharDb 1;
+
+   #variable gmcp[room][addplayer] {%0};
+   gui.onAddPlayer;
+}
+
+#EVENT {IAC SB GMCP Room.Players IAC SE}
+{
+   #var clearCharDb 1;
+
+   #variable gmcp[room][players] {%0};
+   #nop [ Players? {1}{{name}{Cthul}{fullname}{Servitor Cthul}} ];
+
+   gui.onRoomPlayers;
+}
+
+#EVENT {IAC SB GMCP Room.removeplayer IAC SE}
+{
+   #variable gmcp[room][removeplayer] {%0};
+   gui.onRoomRemovePlayers;
+
+   #var clearCharDb 1;
+}
+
+#EVENT {IAC SB GMCP Char.defences.add IAC SE}
+{
+   #variable gmcp[char][defences][add] {%0};
+
+   #if {"$gmcp[char][defences][add][name]" == "arctar"} { #var orbActive 1; }
+}
+
+#EVENT {IAC SB GMCP Char.defences.list IAC SE}
+{
+   #variable gmcp[char][defences][list] {%0};
+   #nop #show {%0};
+}
+
+#EVENT {IAC SB GMCP Char.defences.remove IAC SE}
+{
+   #variable gmcp[char][defences][remove] {%0};
+   #nop #show {%0};
+
+   #foreach {$gmcp[char][defences][remove][]} def {
+      #nop #show {..: $def :..};
+      #if {"$def" == "arctar"} { #var orbActive 0; };
+   };
+}
+
+#EVENT {RECEIVED OUTPUT}
+{
+   #nop %0 raw, %1 plain text;
+   #if {$clearCharDb} {
+      #class chardatabase load;
+   };
+}
+
+#EVENT {RECEIVED PROMPT}
+{
+   #nop %0 raw, %1 plain text;
+   #if {$clearCharDb} {
+      #var clearCharDb 0;
+      #class chardatabase clear;
+   };
+
+   raiseEvent prompt;
+}
+
+#EVENT {SESSION DISCONNECTED}
+{
+    #nop #map write gmcp.map;
+}
+
+

@@ -1,0 +1,20 @@
+#nop Start up script for melkervur
+
+#read global.tt;
+
+#session mel achaea.com 23
+melkervur
+@password{};
+
+#var whoami Melkervur;
+
+#nop set target when one is seen.
+
+#alias attackCmd {queue insert freestand 5 swing};
+
+#read melkervur/battlerage.tt;
+
+guireset
+
+#nop set up a way to disable;
+

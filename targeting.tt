@@ -1,0 +1,218 @@
+#nop Targeting aliases and events
+
+#class targeting kill;
+#class targeting open;
+
+#read targetlist.tt;
+
+#alias {targeting.onRoomInfo}
+{
+   #local roomInfo $gmcp[room][info];
+
+   #nop UNhighlight mobs from a different area.;
+   #if {{$areaName} != {$roomInfo[area]}} {
+      #local areaList $targets[$areaName];
+      #foreach *areaList[] tar {
+         #local tar *areaList[+tar]; 
+         #unhighlight $tar; 
+      };
+   };
+
+   #var areaName $roomInfo[area];
+
+   #nop highlight new area's targets;
+   #local areaList $targets[$areaName];
+   #foreach *areaList[] tar {
+      #highlight { $tar } {blink reverse};
+   };
+}
+
+#alias {targeting.onCharItemsAdd}
+{
+   #local loc $gmcp[char][items][add][location];
+
+   #if {"$loc" === "inv"} {#return};
+
+   #local item $gmcp[char][items][add][item];
+   #local icon $item[icon];
+   #if {"$icon" == "deadbody"} { #return; };
+
+   #local attri $item[attrib];
+   #if {"$attri" == "" || "$attri" != "%*m%*" }
+   { 
+      #local name $item[name];
+      #local id $item[id];
+      #local item <278>$name<028>$id<209>;
+
+      room_window_show items $item;
+      #continue; 
+   };
+
+   #if {$getgold == 1 && "$icon" == "coin" && "$attri" == "%*t%*"} { 
+      #send {$addfree get gold};
+      #send {$addfree put gold in pack};
+      #return; 
+   };
+
+   #if {"$attri" == "%*d%*" }{ #continue; };
+
+   #local name $item[name];
+   #local id $item[id];
+   #local mob <278>$name<028>$id<209>;
+   #var roomMobs[$id] {$name};
+
+   room_window_show mobs $mob;
+}
+
+#alias {targeting.onCharItemsList}
+{
+   #local loc $gmcp[char][items][list][location];
+   #if {"$loc" == "inv"} {#return};
+
+   #list room_window[tab][mobs] clear;
+   #list room_window[tab][items] clear;
+   #unvar roomMobs;
+   room_window_draw_data;
+
+   #local items $gmcp[char][items][list][items];
+   #foreach $items[%*] item {
+
+      #local icon $item[icon];
+      #if {"$icon" == "deadbody"} { #continue; };
+
+      #local attri $item[attrib];
+      #nop ADD items here;
+      #if {"$attri" == "" || "$attri" != "%*m%*" }
+      { 
+         #local name $item[name];
+         #local id $item[id];
+         #local item <278>$name<028>$id<209>;
+
+         room_window_show items $item;
+         #if {$getgold == 1 && "$icon" == "coin" && "$attri" == "%*t%*"} { 
+
+            #send {$addfree get gold};
+            #send {$addfree put gold in pack};
+         };
+
+         #continue; 
+      };
+
+      #if {"$attri" == "%*d%*" }{ #continue; };
+
+      #local name $item[name];
+      #local id $item[id];
+      #local mob <278>$name<028>$id<209>;
+      #var roomMobs[$id] {$name};
+
+      room_window_show mobs $mob;
+   }
+}
+
+#alias {targeting.onCharItemsRemove}
+{
+   #local loc $gmcp[char][items][remove][location];
+   #if {"$loc" == "inv"} {#return};
+
+   #local item $gmcp[char][items][remove][item];
+   #local id $item[id];
+   #local attri $item[attrib];
+
+   room_window_remove $id;
+
+   #local id $item[id];
+   #unvar roomMobs[$id];
+}
+
+#alias {targets}
+{
+   #if {"%1" === ""}
+   {
+      #showme {<848>Targets for <818>[<838>$areaName<818>]};
+      #foreach {*targets[$areaName][%*]} tar {
+         info   $tar;
+      };
+   };
+   #elseif {&targets[$areaName][%0]}
+   {
+      #unhighlight {%0};
+      #unvar targets[$areaName][%0];
+      #showme Target '%0' removed from '$areaName'.;
+      #class targetlist write targetlist.tt;
+   };
+   #else
+   {
+      #highlight { %0 } {blink reverse};
+      #var targets[$areaName][%0] {};
+      #showme Target '%0' added to '$areaName'.;
+      #class targetlist write targetlist.tt;
+   };
+}
+
+#alias {atk}
+{
+   #unvar atkTarget;
+
+   #if {"%1" === ""}
+   {
+      #nop info No target given;
+      #if {&{roomMobs} == 0} {#return};
+      #if {&{roomMobs[]} == 0} {#return};
+
+      #foreach *roomMobs[] denizen {
+         #foreach *targets[$areaName][] tar {
+
+            #if {"$roomMobs[$denizen]" == "%*$tar%*"} {
+               #var atkTarget $tar;
+               #send {settarget $denizen};
+               attackCmd $denizen;
+               #return;
+            };
+         };
+      };
+   };
+   #else
+   {
+      #var atkTarget %1;
+      attackCmd %1;
+   };
+
+   #nop #if {&{atkTarget} == 0} {dbg {Nothing to attack}};
+}
+
+#class targeting close
+
+#alias {whois} { 
+   #format inquery %n %1;
+   #var inquery $chardb[$inquery];
+
+   info Class: $inquery[class];
+   info Level: $inquery[lvl];
+   info PvP: $inquery[pvp];
+   info City: $inquery[color]$inquery[city]<900>;
+}
+
+#alias {items} {
+   #if {"%1" === ""}
+   {
+      #showme {<848>Items for <818>[<838>$areaName<818>]};
+      #foreach {*itemslist[$areaName][%*]} item {
+         info   $item;
+      };
+   };
+   #elseif {&itemslist[$areaName][%0]}
+   {
+      #unhighlight {%0};
+      #unvar itemslist[$areaName][%0];
+      #showme Item '%0' removed from '$areaName'.;
+      #class itemslist write itemslist.tt;
+   };
+   #else
+   {
+      #highlight { %0 } {blink reverse};
+      #var itemslist[$areaName][%0] {};
+      #showme Item '%0' added to '$areaName'.;
+      #class itemslist write itemslist.tt;
+   };
+}
+

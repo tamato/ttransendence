@@ -1,0 +1,17 @@
+#nop test scripts
+
+#class wip kill
+#class wip open
+
+#alias {whois} { 
+   #var inquery $chardb[%i%1];
+   print .: $inquery :.;
+
+   info Class: $inquery[class];
+   info Level: $inquery[lvl];
+   info PvP: $inquery[pvp];
+   info City: $inquery[city];
+}
+
+#class wip save
+#class wip close

@@ -1,0 +1,22 @@
+#nop Gui info specific to Cthul
+
+#alias {updateCharUI} {
+   #if {$uimap[width] === 0} {#return};
+
+   #local offset 4;
+   #screen clear square {$uimap[height]+$offset+1} 2 -4 {$uimap[width]-2};
+
+   #nop Left hand side;
+   #line ignore #showme {Priestess: $priStatus, #: $priCards} {$uimap[height]+1+$offset} {3};
+   #line ignore #showme {Fool: $remainingFoolTime} {$uimap[height]+2+$offset} {3};
+   #line ignore #showme {DAura: $distortActive} {$uimap[height]+3+$offset} {3};
+   #line ignore #showme {Arctar: $orbActive, #:$remainingOrbTime} {$uimap[height]+4+$offset} {3};
+   #line ignore #showme {Tentacles: 0} {$uimap[height]+5+$offset} {3};
+   #line ignore #showme {Astral: $astralactive} {$uimap[height]+6+$offset} {3};
+
+   #nop Right hand side;
+   #line ignore #showme {Hermits: $hermitCards} {$uimap[height]+8+$offset} {3};
+   #line ignore #showme {  In Deck: 0} {$uimap[height]+9+$offset} {3};
+   #line ignore #showme {Wheel: 0} {$uimap[height]+$offset+10} {3};
+}
+

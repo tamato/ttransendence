@@ -1,0 +1,42 @@
+#nop https://tintin.mudhalla.net/scripts/gmcp.php;
+
+#EVENT {SESSION CONNECTED}
+{
+   #variable TELNET[IAC]  \xFF;
+   #variable TELNET[DONT] \xFE;
+   #variable TELNET[DO]   \xFD;
+   #variable TELNET[WONT] \xFC;
+   #variable TELNET[WILL] \xFB;
+   #variable TELNET[SB]   \xFA;
+   #variable TELNET[SE]   \xF0;
+   #variable TELNET[GMCP] \xC9;
+   #nop Turn telnet debug on to see telnet debugging information.;
+   #nop #config {debug telnet} {on};
+
+   #read mapping.tt;
+   mapping.onConnected;
+   #echo {Session connection!};
+
+   #read character_highlights.tt;
+
+   #class pathing clear;
+   #class roomnums clear;
+   #class harvesting clear;
+   #class auraglance clear;
+   #class bash clear;
+   #class priestess clear
+}
+
+
+#EVENT {IAC WILL GMCP}
+{
+    #info SYSTEM save;
+    #send {$TELNET[IAC]$TELNET[DO]$TELNET[GMCP]\};
+    #send {$TELNET[IAC]$TELNET[SB]$TELNET[GMCP] core.hello { "client": "$info[SYSTEM][CLIENT_NAME]", "version": "$info[SYSTEM][CLIENT_VERSION]" } $TELNET[IAC]$TELNET[SE]\};
+    #send {$TELNET[IAC]$TELNET[SB]$TELNET[GMCP] core.supports.set [ "room 1", "room.info 1", "char 1", "char.status 1" ] $TELNET[IAC]$TELNET[SE]\};
+    #send {$TELNET[IAC]$TELNET[SB]$TELNET[GMCP] core.supports.add [ "char.vitals 1", "char.items 1", "char.afflictions 1", "char.defences 1" ] $TELNET[IAC]$TELNET[SE]\};
+    #send {$TELNET[IAC]$TELNET[SB]$TELNET[GMCP] core.supports.add [ "char.skills 1" ] $TELNET[IAC]$TELNET[SE]\};
+    #send {$TELNET[IAC]$TELNET[SB]$TELNET[GMCP] core.supports.add [ "comm.channel 1" ] $TELNET[IAC]$TELNET[SE]\};
+    #send {$TELNET[IAC]$TELNET[SB]$TELNET[GMCP] core.supports.add [ "core.ping 1" ] $TELNET[IAC]$TELNET[SE]\};
+}
+

@@ -1,0 +1,131 @@
+#nop Havesting script
+
+#read harvesting/harvestConfig.tt;
+
+#var plantQueue {};
+#var picking 0;
+#var picked 0;
+#var harvestedRooms {};
+
+#alias {clearAutoHarvestRooms} {
+   #var harvestedRooms {};
+}
+
+#alias {autoharvest} {
+   #send {plants};
+   #class harvesting load;
+};
+
+#alias {pickplant} {
+   #if {$picking == 1} {#return};
+
+   #if {&plantQueue[] == 0} {
+      #class harvesting clear;
+
+      #nop Only put stuff away, if anything was picked.;
+      #if {$picked > 0} {
+         #send {inr all};
+      };
+      
+      #return;
+   };
+
+   #if {$gmcp[char][vitals][bal] == 0} {#return};
+   #var harvestedRooms[$gmcp[room][info][num]] 1;
+
+   #var picking 1;
+   #send {harvest *plantQueue[+1]};
+   #unvar plantQueue[+1];
+   #math picked {$picked + 1};
+};
+
+#class harvesting kill;
+#class harvesting open;
+
+#action {^You cannot harvest that.$} {
+   #math picked {$picked - 1};
+   #var picking 0;
+   pickplant;
+}
+
+#action {^You have already harvested from this plant recently.$} {
+   #math picked {$picked - 1};
+   #var picking 0;
+   pickplant;
+};
+
+#action {^You have recovered balance on all limbs.$} {
+   #var picking 0;
+   pickplant;
+};
+
+#action {^That plant has been fully harvested.$} {
+   #var picking 0;
+   #math picked {$picked - 1};
+   pickplant;
+}
+
+#alias {autoHarvestPrompt} {
+   deregisterEvent prompt autoHarvestPrompt;
+   pickplant;
+}
+
+#line oneshot #action {^The following plants are growing in this room:$} {
+   #var picked 0;
+   #var picking 0;
+   registerEvent prompt autoHarvestPrompt;
+}
+
+#alias {queuepick %1} {
+   #if {"*harvestedRooms[$gmcp[room][info][num]]" != ""} {#return};
+
+   #if {$plantsToHarvest[%1] === 1} {
+      #var plantQueue[%1] {1};
+   };
+}
+
+#action {(%w)} {queuepick %1;};
+
+#class harvesting close;
+#class harvesting save;
+
+/*
+Abilities in Harvesting:
+-------------------------------------------------------------------------------
+Harvest              The ability to harvest plants for Remedies.
+Ginseng              An herb that may purify the blood when eaten.
+Ash                  A swamp-dwelling tree with bark that restores sanity.
+Echinacea            The purple-coneflower that grows in the forests.
+Ginger               A low-lying forest plant.
+Burdock              A dark root of the burdock plant.
+Myrrh                A sticky bush that, when eaten, increases scholasticism.
+Planting             Planting herbs and plants in new locations.
+Bellwort             A wildflower that counters the effects of altruism.
+Sac                  The venom sac of a snake.
+Lastharvest          The ability to see who last harvested in a room.
+Bloodroot            An underground root that can cure paralysis, among others.
+Hawthorn             The berry of the hill-dwelling hawthorn bush.
+Kuzu                 The fast-growing jungle vine.
+Skullcap             This downy plant has an interesting effect when smoked.
+Slipper              The lady's slipper plant is found in the Savannah.
+Goldenseal           This Savannah-dwelling plant restores harmony when eaten.
+Valerian             A mountain-dwelling plant with smokeable properties.
+Bayberry             A hill-dwelling tree with valuable bark.
+Cohosh               The curiously white plant that induces insomnia.
+Lobelia              A beautiful scarlet wildflower with therapeutic properties.
+Pear                 The fruit of the prickly pear cactus.
+Weed                 The mind-altering cactus weed.
+Irid                 Iridescent moss growing underground.
+Sileris              A lush, berry-bearing plant which grows in valleys.
+Kelp                 The grass of the sea. It has strengthening attributes.
+Feathers             The feathers of various birds.
+Sidewinder           The powdered skin of a sidewinder.
+Kola                 The nut of this jungle tree can keep you quite alert.
+Elm                  Slippery elm from the red elm tree.
+-------------------------------------------------------------------------------
+To gain further information on an ability, AB <ability>.
+
+
+*/
+
+

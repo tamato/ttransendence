@@ -1,0 +1,23 @@
+#nop Start up script for melkervur
+
+#show Reading global file;
+#read global.tt;
+
+#var whoami Cthul;
+
+#alias attackCmd {queue insert freestand 5 warp};
+
+#read occultist/misc.tt;
+#read occultist/occultism.tt;
+#read occultist/domination.tt;
+#read occultist/gui.tt;
+
+#read harvesting/harvest.tt;
+
+#session cthul achaea.com 23;
+cthul;
+$password;
+
+guireset;
+updateCharUI;
+

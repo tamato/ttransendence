@@ -1,0 +1,422 @@
+#nop Gui Setup and chats/messages
+
+#nop #split 20 1 40 50;
+#nop Home setup: ;
+#nop     60 rows;
+#nop     252 cols;
+
+#nop Laptop;
+#nop gtd->screen->rows:          50;
+#nop gtd->screen->cols:         190;
+
+#VARIABLE {room_window}
+{
+    {active} {mobs}
+    {botcol} {-1}
+    {botrow} {$uiroom[height]}
+    {expanded} 
+    {
+        {seen} {}
+        {players} {}
+        {mobs} {}
+        {items} {}
+    }
+    {tab} 
+    {
+        {seen} {}
+        {players} {}
+        {mobs} {}
+        {items} {}
+    }
+    {topcol} {-$uiroom[width]}
+    {toprow} {1}
+};
+
+#VARIABLE {comm_window}
+{
+    {active} {chats}
+    {botcol} {-$uiroom[width]}
+    {botrow} {$uicomms[height]}
+    {offset} {1}
+    {tab} 
+    {
+        {chats} {}
+        {tells} {}
+    }
+    {topcol} {$uimap[width]}
+    {toprow} {1}
+    {unread} 
+    {
+        {chats} {0}
+        {tells} {0}
+    }
+}
+
+#ACTION {~%1 tells you %2}
+{
+    comm_window_show tells %1 tells you %2
+}
+
+#ACTION {~%1 tells you %2}
+{
+    comm_window_show tells %1 tells you %2
+}
+
+#ALIAS {comm_window_scroll_up}
+{
+    #if {$comm_window[offset] < &comm_window[tab][%0][]}
+    {
+        #math comm_window[offset] $comm_window[offset] + 1;
+        comm_window_draw_data $comm_window[active]
+    }
+}
+
+#ALIAS {comm_window_scroll_down}
+{
+    #if {$comm_window[offset] > 1}
+    {
+        #math comm_window[offset] $comm_window[offset] - 1;
+        comm_window_draw_data $comm_window[active]
+    }
+}
+
+/*
+#BUTTON {$comm_window[toprow] $comm_window[topcol] $comm_window[botrow] $comm_window[botcol] SCROLLED MOUSE WHEEL UP}
+{
+    comm_window_scroll_up $comm_window[active]
+}
+
+#BUTTON {$comm_window[toprow] $comm_window[topcol] $comm_window[botrow] $comm_window[botcol] SCROLLED MOUSE WHEEL DOWN}
+{
+    comm_window_scroll_down
+}
+*/
+
+#FUNCTION {comm_window_square}
+{
+    #return $comm_window[toprow]+1 $comm_window[topcol]+1 $comm_window[botrow]-1 $comm_window[botcol]-1
+}
+
+#FUNCTION {room_window_square}
+{
+    #return $room_window[toprow]+1 $room_window[topcol]+1 $room_window[botrow]-1 $room_window[botcol]-1
+}
+
+#FUNCTION {comm_window_border}
+{
+    #return $comm_window[toprow] $comm_window[topcol] $comm_window[botrow] $comm_window[botcol]
+}
+
+#FUNCTION {room_window_border}
+{
+    #return $room_window[toprow] $room_window[topcol] $room_window[botrow] $room_window[botcol]
+}
+
+#ALIAS {comm_window_draw_data}
+{
+    #draw tile @comm_window_square{} $comm_window[tab][%1][%*]
+}
+
+#ALIAS {room_window_draw_data}
+{
+   #if {$uiroom[enabled] === 0} {#return};
+
+   #local data {};
+   #foreach {*room_window[tab][]} con {
+
+      #nop Collapse container if it is not expanded;
+      #if {&{room_window[expanded][$con]} == 0} {
+         #list data ins -1 {<078>[+]<028> $con};
+         #nop blank line spacer;
+         #list data ins -1 {};
+         #continue;
+      };
+
+      #list data ins -1 {<078>[-]<028> $con};
+
+      #foreach {$room_window[tab][$con][]} line {
+         #list data ins -1 {    $line<099>};
+      };
+
+      #nop blank line spacer;
+      #list data ins -1 {};
+   };
+   #draw tile @room_window_square{} $data[%*];
+}
+
+#ALIAS {comm_window_show %1 %2}
+{
+    #list comm_window[tab][%1] ins -1 {%2};
+    #if {{%1} === {$comm_window[active]}}
+    {
+        comm_window_draw_data %1
+    };
+    #elseif {$comm_window[unread][%1] == 0}
+    {
+        #variable comm_window[unread][%1] 1;
+        comm_window_draw_tabs
+    }
+}
+
+#ALIAS {comm_window_draw_tabs}
+{
+   #draw green filled jeweled box @comm_window_border{};
+
+   #local short {};
+   #local index {};
+   #loop {1} {&comm_window[tab][]} {index}
+   {
+      #local tab *comm_window[tab][+$index];
+      #if {{$comm_window[active]} === {$tab}}
+      {
+          #format short <238>%.6s $tab
+      };
+      #elseif {$comm_window[unread][$tab] == 1}
+      {
+          #format short <568>%.6s $tab
+      };
+      #else
+      {
+          #format short <268>%.6s $tab
+      };
+      #line ignore #showme {\e]68;2;TAB;comm_window_tab_click $tab\a\e[4;24m$short\e[24m} {$comm_window[toprow]} {$comm_window[topcol] - 5 + $index * 7};
+
+   }
+}
+
+#ALIAS {room_window_draw_box}
+{
+   #draw green filled jeweled box @room_window_border{};
+}
+
+#ALIAS {comm_window_tab_click}
+{
+    #variable comm_window[active] %0;
+    #variable comm_window[unread][%0] 0;
+    #variable comm_window[offset] 1;
+    comm_window_draw_tabs;
+    comm_window_draw_data %0
+}
+
+#alias {toggleExpanded} {
+   #if {&{room_window[expanded][%0]}} {
+      #unvar room_window[expanded][%0];
+   };
+   #else {
+      #var room_window[expanded][%0] {};
+   };
+
+   room_window_draw_data;
+}
+
+#alias {tmobs} {
+   toggleExpanded mobs;
+}
+
+#alias {titems} {
+   toggleExpanded items;
+}
+
+#alias {tplayers} {
+   toggleExpanded players;
+}
+
+#alias {tseen} {
+   toggleExpanded seen;
+}
+
+#alias {schats} {
+   comm_window_tab_click chats
+}
+
+#alias {stells} {
+   comm_window_tab_click tells
+}
+
+/*
+#EVENT {PRESSED SECURE LINK TAB MOUSE BUTTON ONE}
+{
+    %4
+}
+*/
+
+#ALIAS {guireset}
+{
+   #nop #config mouse on;
+   #split $uicomms[height] 1 $uimap[width] $uiroom[width];
+
+   comm_window_draw_tabs;
+   room_window_draw_box;
+   room_window_draw_data
+   mapping.onRoomInfo;
+   schats;
+
+   #if {$uimap[height] > 0} {
+      #draw green filled jeweled box {$uimap[height]+4} 1 -2 {$uimap[width]};
+   };
+}
+
+#EVENT {IAC SB GMCP Comm.Channel.Start IAC SE}
+{
+   #var clearCharDb 1;
+}
+
+#EVENT {IAC SB GMCP Comm.Channel.Text IAC SE}
+{
+   #var messages {%0};
+   comm_window_show chats $messages[text];
+
+   #nop {{text}{includes the talkers name "..."}{channel}{"says"}{talker}{"includes color sdfsdaf"}};
+}
+
+#ALIAS {room_window_show %1 %2}
+{
+   #list room_window[tab][%1] ins -1 {%2};
+   room_window_draw_data;
+}
+
+#ALIAS {addSeenPlayer %1}
+{
+   #var newidx &room_window[tab][seen][];
+   #math newidx {$newidx + 1};
+
+   #list room_window[tab][seen] find {%*%1%*} idx;
+   #if {$idx == 0} {
+      #if {{$chardb[%1]} != {}} {
+         #var color $chardb[%1][color]%1<099>;
+      };
+      #else {
+         #var color <070>%1<099>;
+      };
+
+      #list room_window[tab][seen] ins -1 {<218>$newidx $color};
+      #list pvpTargets ins -1 {%1 {{deathCounter}{0}}};
+   };
+
+   room_window_draw_data;
+   #unvar idx;
+}
+
+#alias {room_window_remove %1}
+{
+   #foreach {*room_window[tab][]} con {
+
+      #list room_window[tab][$con] find {%*%1%*} idx;
+      #if {$idx === 0} { #continue };
+
+      #list room_window[tab][$con] delete $idx;
+   };
+   
+   room_window_draw_data;
+}
+
+#alias {gui.onAddPlayer}
+{
+   #local ply $gmcp[room][addplayer][name];
+
+   #if {{$chardb[$ply]} != {}} {
+      room_window_show players $chardb[$ply][color]$ply<099>;
+   };
+   #else {
+      room_window_show players <070>$ply<099>;
+   }
+   addSeenPlayer $ply;
+}
+
+#alias {gui.onRoomPlayers}
+{
+   #list room_window[tab][players] clear;
+   room_window_draw_data;
+
+   #foreach {*gmcp[room][players][]} {idx} {
+      #local ply $gmcp[room][players][+$idx][name];
+
+      #if {{$ply} === {$whoami}} { #continue };
+      addSeenPlayer $ply;
+
+      #if {{$chardb[$ply]} != {}} {
+         room_window_show players $chardb[$ply][color]$ply<099>;
+      };
+      #else {
+         room_window_show players <070>$ply<099>;
+      };
+   };
+   #unvar idx;
+   room_window_draw_data;
+}
+
+#alias {gui.onRoomRemovePlayers}
+{
+   #local ply $gmcp[room][removeplayer];
+
+   #list room_window[tab][players] find {%*$ply%*} idx;
+   #if {$idx != 0} { 
+      #list room_window[tab][players] delete $idx;
+   }
+   room_window_draw_data;
+}
+
+#FUNCTION {colscale}
+{
+    #switch {10 * %1 / %2}
+    {
+        #case {0}
+        {
+            #return {<faa>}
+        };
+        #case {1}
+        {
+            #return {<fba>}
+        };
+        #case {2}
+        {
+            #return {<fca>}
+        };
+        #case {3}
+        {
+            #return {<fda>}
+        };
+        #case {4}
+        {
+            #return {<fea>}
+        };
+        #case {5}
+        {
+            #return {<ffa>}
+        };
+        #case {6}
+        {
+            #return {<efa>}
+        };
+        #case {7}
+        {
+            #return {<dfa>}
+        };
+        #case {8}
+        {
+            #return {<cfa>}
+        };
+        #case {9}
+        {
+            #return {<bfa>}
+        };
+        #default
+        {
+            #return {<afa>}
+        }
+    }
+}
+
+#alias {gui.onCharVitals} 
+{
+   #return;
+   #screen clear square -3 1 -3 -1;
+   #format {prompt} {};
+   #format {prompt} {$prompt<038> Hp: @colscale{$gmcp[char][vitals][hp];$gmcp[char][vitals][maxhp]}%+4s<238>/<138>%-4s } {$gmcp[char][vitals][hp]} {$gmcp[char][vitals][maxhp]};
+   #format {prompt} {$prompt<238> Mn: @colscale{$gmcp[char][vitals][mp];$gmcp[char][vitals][maxmp]}%+3s<238>/<138>%-3s } {$gmcp[char][vitals][mp]} {$gmcp[char][vitals][maxmp]};
+   #format {prompt} {$prompt<238> Xp: <128>%+2m} {$gmcp[char][vitals][nl]};
+   #format {prompt} {$prompt<238> Gd: <128>%-2s} {$gmcp[char][status][gold]};
+   #format {prompt} {$prompt<238> Orb: <128>%+1s} {$orbActive};
+   #format {prompt} {$prompt<238> DA: <128>%+1s} {$distortActive};
+}
+

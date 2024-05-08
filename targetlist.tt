@@ -1,0 +1,74 @@
+#CLASS {targetlist} OPEN
+
+#VARIABLE {areaName} {the Dungeon of the Beastlords}
+#VARIABLE {targets}
+{
+    {Ashtan} 
+    {
+        {rat} {}
+    }
+    {Test} 
+    {
+        {orc} {}
+        {pygmy} {}
+        {smurf} {}
+    }
+    {the Dardanic Grasslands} 
+    {
+        {grizzly} {}
+    }
+    {the Darkenwood Forest} 
+    {
+        {Istishia} {}
+        {Vinia} {}
+        {arachnoi} {}
+        {spider} {}
+    }
+    {the Dungeon of the Beastlords} 
+    {
+        {Inish} {}
+        {acolyte} {}
+        {cloaked} {}
+        {initiate} {}
+        {ritualist} {}
+    }
+    {the Ioje compound} 
+    {
+        {slaver} {}
+    }
+    {the Rhodestrian Settlement} 
+    {
+        {Rhodestrian} {}
+        {Sonterro} {}
+        {Yolenders} {}
+        {cougar} {}
+        {mercenary} {}
+        {thief} {}
+        {troll} {}
+    }
+    {the Southern Vashnar Mountains} 
+    {
+        {drake} {}
+        {grizzly} {}
+    }
+    {the Village of Genji} 
+    {
+        {manticore} {}
+    }
+    {the bog of Ashtan} 
+    {
+        {Haag} {}
+    }
+    {the fathomless expanse of the World Tree} 
+    {
+        {rat} {}
+        {slaver} {}
+    }
+    {the land of Minia} 
+    {
+        {pixie} {}
+        {pygmy} {}
+    }
+}
+
+#CLASS {targetlist} CLOSE

@@ -1,0 +1,523 @@
+#var allshops {
+	{2} {
+		{The Seabreeze Tavern} {4299}
+		{The Praetoria Pelagium} {4806}
+		{Within a candy shop} {15788}
+		{Tasur'ke bait shop} {18007}
+		{Within a smoky tabac shop} {30689}
+		{A display room in the tabac shop} {31230}
+		{A room filled with stacked wooden humidors} {31261}
+	}
+	{3} {
+		{Daveed's Pet Supply} {16063}
+		{The Festivities Annex} {20882}
+		{The Theran smithy} {22228}
+		{Commodity warehouse} {39194}
+		{A decorated annex} {39329}
+		{The Theran taxidermist} {39436}
+		{Frightful Fittings} {40258}
+		{A decorated cottage garden} {44180}
+		{Serendipity Wedding Boutique} {44698}
+		{Lounge within a cottage} {44760}
+	}
+	{5} {
+		{A cheery shopkeeper's hut} {24996}
+	}
+	{9} {
+		{Food stall} {6184}
+		{Clothing stall} {6185}
+		{General stall} {6186}
+		{Arenard's Apothecary} {6187}
+		{At the edge of a fishing hole} {17367}
+	}
+	{10} {
+		{Inside the baker's cabin} {29825}
+		{The home of the village tanner} {30235}
+	}
+	{14} {
+		{The Shop of Wonders} {726}
+		{The Weapons Gallery} {2848}
+		{Mouse's Nest} {3683}
+		{The Victualler} {3689}
+		{The Rose Petal} {3696}
+		{Sundries of Delos, including some clothes} {4726}
+		{A small grocery store} {4970}
+		{Dove and Dwarf} {5223}
+		{Rose and Mirrors} {5388}
+		{A small flower shop} {5390}
+		{The Broken Anvil} {5448}
+		{Merchant Emporium Delos} {5498}
+		{Modern Man} {5551}
+		{Inland Trading Post} {5557}
+		{The Elemental Lord Artefact Shop} {9189}
+		{The Tailors Union Headquarters} {9670}
+		{Class Artefacts Shop: Warriors} {10157}
+		{Class Artefacts Shop: Alchemist - Jester} {10160}
+		{The Offensive Artefact Shop} {10162}
+		{The Defensive Artefact Shop} {10164}
+		{The Statistic-Altering and Regeneration Artefact Shop} {10166}
+		{The Miscellaneous Artefact Shop} {10168}
+		{The Jewellers Union Headquarters} {11605}
+		{The Delosian Stables} {13044}
+		{The Piercing Annex of the Jewellers Union} {15412}
+		{A comfortable parlour} {20530}
+		{The Serpents Secret} {28401}
+		{The Broken Pot} {29113}
+		{Black Fist Wares} {29239}
+		{The Culinary Institute of Delos} {36013}
+		{Eagle's Perch} {36558}
+		{The Artefact Armour Shop} {37417}
+		{The Delosian Talisman Shop} {40475}
+		{The Treasure Trove} {41082}
+		{Malignant Mercantile} {41094}
+		{The Accessories Annex of the Tailors Union} {42514}
+		{The Commodities Market of Delos} {44519}
+		{The Obsidian Thorn} {46279}
+		{Tradeskill and Crafting Artefact Shop} {52548}
+		{Class Artefacts Shop: Magi - Sentinel} {52597}
+		{Class Artefacts Shop: Serpent - Sylvan} {52603}
+		{The House of Wonders} {52795}
+		{A painter's studio} {55580}
+		{A cool cellar} {58492}
+		{Blackstone Industries} {58808}
+	}
+	{17} {
+		{A small and cosy store} {13162}
+	}
+	{22} {
+		{The Crystal Leaf Shoppe} {1732}
+		{The Wolves Den} {4224}
+	}
+	{24} {
+		{Gunder's Fine Fish} {4892}
+		{The Sleeping with the Fishes Inn} {4896}
+		{Dockside warehouse} {4927}
+	}
+	{27} {
+		{Cages Copse} {12857}
+	}
+	{28} {
+		{Shastaan market} {2860}
+		{Shastaan's Outfitters} {4727}
+		{The Mermaid's Tail Bait and Bar} {16297}
+	}
+	{41} {
+		{A large storage hut} {1513}
+		{The Tomaculan Stables} {13612}
+	}
+	{44} {
+		{The Silent Death} {8339}
+		{Lichlord Rags} {8374}
+		{Appearances} {8396}
+		{The Blue Moon} {9832}
+		{Merchant Emporium Mhaldor} {9843}
+		{Reinforced stables} {10676}
+		{Grimtooth} {12438}
+		{Arms of the Maldaathi} {12453}
+		{Warehouse interior} {12478}
+		{Taproom of the Worm and Grub} {12497}
+		{The Anvil's Bounty} {12817}
+		{Morbid Emporium} {13147}
+		{Drake Gloom} {13229}
+		{Mhaldor supplies} {13518}
+		{Rift Fulls} {13619}
+		{Drogo's misappropriated stash} {14018}
+		{The Undertaker's Apothecary} {14302}
+		{The Brass Gauntlet} {15045}
+		{The Ashen Shrike} {15163}
+		{Aristata Maleficent Emporium} {15784}
+		{The Art of Evil} {16447}
+		{Malevolent Whispers} {16838}
+		{Ebon shores} {18235}
+		{Drogo's sigils} {18255}
+		{The Spider's Web} {22328}
+		{The Dread Cache} {22531}
+	}
+	{46} {
+		{The Merchants' Bar and Eatery} {41586}
+	}
+	{49} {
+		{Pebbles and Plants} {2523}
+		{Unlimited Reserves} {2878}
+		{The Usual Place} {3654}
+		{Needful Things} {3656}
+		{Golden Dragon's Lair} {3658}
+		{More East of Central Market} {3694}
+		{Pantherly} {3736}
+		{Seadog Tavern} {3854}
+		{Endless Time} {4217}
+		{Vanguard Provisions} {4307}
+		{Grandma Theo's Place} {4385}
+		{Wayward Wares} {4406}
+		{Haute Chaotique} {4731}
+		{Savants of the Wheel} {4885}
+		{Rousseau's Bounty} {4964}
+		{The Mall of Carnage} {4975}
+		{The Bellatorium} {4980}
+		{The Tools of Fate} {5241}
+		{Chaos Corner} {5319}
+		{The Esoteric Reliquary} {5392}
+		{The Serpent's Eye} {5417}
+		{The Golden Sovereign} {5419}
+		{Shadows of Mischief} {5421}
+		{Black Sun} {5438}
+		{Pacts and Promises} {5445}
+		{Delacroix Emporium} {5529}
+		{Merchant Emporium Ashtan} {5555}
+		{The Hidden Archer's Alcove} {5681}
+		{Cinnabeth's Creperie} {6710}
+		{Little Shop of Eldritch Horrors} {6880}
+		{Curios and Curiosities} {7690}
+		{World's End} {8003}
+		{Amadia's Jewellery Shoppe of Ashtan} {11798}
+		{Fire and Spice} {11930}
+		{The Rook and Quill} {14682}
+		{The Tackle Box} {17383}
+		{The Ugly Humgii Bar and Grill} {18268}
+		{An arch before the city stables} {29920}
+		{A marble and obsidian shop of esoteric wares} {35668}
+	}
+	{51} {
+		{The Eleusian Inn} {6776}
+		{Eleusian Trading Post} {8191}
+		{Sylvan Colours} {8193}
+		{Silver Threads} {8194}
+		{A cluttered atelier} {8624}
+		{Combatants Corner} {12785}
+		{Eleusian Woodcrafts} {13231}
+		{Ye Olde Bake Shoppe} {13344}
+		{Forestal Whispers of Romance} {13711}
+		{Straif is Echtra} {15369}
+		{Wintermourne Weapons & Wares} {16290}
+		{The Shaggy Wolf} {16445}
+		{The Gnarl} {18845}
+		{Within a small reed shed} {19310}
+		{Pestle & Mortar} {32536}
+		{The Hummingbird's Song} {33713}
+		{Emerald Greens of Eleusis} {34228}
+		{Natural Tendencies} {34717}
+		{Squirrel's Den} {36526}
+		{The Whispering Ivy} {45135}
+		{The Sleeping Forest Tradepost} {45473}
+	}
+	{55} {
+		{Bowmasters} {1342}
+		{Breakers and Shoals} {3489}
+		{This and That} {4395}
+		{Dragonfly Furnishings} {4428}
+		{Southwest corner of the Bazaar} {4543}
+		{Northwest corner of the Bazaar} {4544}
+		{North of the Bazaar} {4545}
+		{The Paper Crown} {4546}
+		{South of the Bazaar} {4548}
+		{Slaughterhouse of Hashan} {4672}
+		{The Oasis} {4689}
+		{The Gift Shop in the House of Delights} {4728}
+		{Clothes Minded} {4962}
+		{Hashan's Gallery of Art} {4973}
+		{The Moon's Shadow} {5008}
+		{Le Jardin d'Affaire} {5440}
+		{The Flamboyant Flamingo} {5450}
+		{Envy} {5457}
+		{The Shadow Arsenal} {5460}
+		{The Prosperian Market of Hashan} {5487}
+		{The Stash} {5553}
+		{Dark Side of the Coin} {5754}
+		{Merchant Emporium Hashan} {6135}
+		{Demi and Maryll's Baked Goods} {6707}
+		{Enchanted Whisper} {6716}
+		{The Cherry Blossom} {6816}
+		{Sew Lovely} {6818}
+		{Illusionary Worlds} {6820}
+		{Untitled} {6822}
+		{That One Shop} {6824}
+		{Fledgling Foundations} {6826}
+		{Umbral Outpost} {6828}
+		{The Bone Dragon} {6830}
+		{Carnivalis Imaginarium} {6832}
+		{Silver Dragon's Lair} {6834}
+		{A Shop in the Dark} {6836}
+		{Meteor Shower} {6838}
+		{Dinghy Din-Dins} {6840}
+		{Krymenian Commodities} {6842}
+		{Cosy Corner of Curiosities} {6864}
+		{Small Wicked Things} {6866}
+		{White Flames} {12546}
+	}
+	{57} {
+		{A blacksmith shop} {6478}
+		{Commodities shop} {6538}
+		{Cyrene's Provisions} {6539}
+		{Fashions by Dahlia} {6540}
+		{Fine Cyrene Woodcrafts} {6541}
+		{Inside the Ram's Horn} {6548}
+		{Martina's Sweet Shoppe} {6713}
+		{Inside the fletcher's cottage} {7092}
+		{A modest livery yard} {7100}
+		{The Magic Shoppe} {8536}
+		{Stormsong Imports} {9617}
+		{Make It Sew} {9619}
+		{The Asp's Nest} {9621}
+		{Outrider Imports} {9624}
+		{Dozing Dragon} {9632}
+		{The Motley Magpie} {9634}
+		{The Doctor's Arcane Accountrements} {9636}
+		{Claw and Hide} {9638}
+		{The Phaestean Forge} {9640}
+		{Blue Dragon's Lair} {9642}
+		{Shadows of Nature} {9650}
+		{Poppy Rose} {9652}
+		{Ar'Kena Supply} {9985}
+		{Merchant Emporium Cyrene} {10001}
+		{Another Referendum} {10002}
+		{Grumpy Dragon} {10004}
+		{The Vashnarian Variety} {10006}
+		{Knight's Companion} {10007}
+		{Lurching Around} {10081}
+		{The Crafter's Palette} {10100}
+		{The Snow Falls} {10239}
+		{Serene Seams} {10271}
+		{The Enchanted Anvil} {10277}
+		{The Angel and Hammer} {10604}
+		{Vorondil Gallery} {13068}
+		{The Treasure Trove} {13258}
+		{Mountain Breeze Studio} {13680}
+		{Crimson Arsenal} {13856}
+		{Hearth and Home} {14042}
+		{Blu's Den of Delights} {15539}
+	}
+	{62} {
+		{The famous bar in the Ty Beirdd Manor} {15323}
+	}
+	{92} {
+		{A hunter's hut} {6056}
+		{A small market} {6884}
+	}
+	{93} {
+		{Snow Show} {58743}
+		{Runaway Reindeer Supply Shed} {58944}
+		{Worthwhile Wrappings} {59279}
+		{HoHoHo for CoCoCoa} {59468}
+		{Snug in the Snow} {59601}
+		{Jingling Jewels} {60146}
+		{Gifts and Greenery} {60251}
+		{Jousting for Joy} {61136}
+		{The Half-Noggin Toboggan} {62343}
+	}
+	{96} {
+		{The Tsol'aa bakery} {1968}
+	}
+	{103} {
+		{The Manushan Stables} {13762}
+	}
+	{108} {
+		{The Kamleikan trading post} {9582}
+	}
+	{109} {
+		{Celestial Navy Supplies} {42}
+		{DeBurr's Jewellery Shop} {2656}
+		{Trappings of Light} {3551}
+		{The Charred Raven} {3722}
+		{Two Bear Arms} {3725}
+		{Crescent's Moon} {3831}
+		{Silvertongue Supplies} {3852}
+		{The Enchanted Light} {4220}
+		{Yen's Arts and Crafts} {4274}
+		{Kaiu's Korner} {4309}
+		{Scholarly Notions} {4431}
+		{Seffy's Secret} {4462}
+		{Dawnblade Supplies} {4715}
+		{The Compass Rose} {4883}
+		{The Harbinger Accord} {4888}
+		{Targossian Tonics} {5243}
+		{Sae's by the Shore} {5403}
+		{Targossian Toxins} {5491}
+		{Banazir Bargains} {5494}
+		{Warrior of Light Supplies} {5496}
+		{The Admiral's Revenge Inn} {5515}
+		{Silverveil General Store} {6844}
+		{Veiled Solace} {6846}
+		{Squidly Inks} {6848}
+		{The Warrior's Way} {6850}
+		{Kaiu's Kozy} {6852}
+		{Kloaks and Koats} {6854}
+		{Brewed Squall} {6856}
+		{Argent Phoenix Creations} {6858}
+		{Hot Gravy Grapes} {6860}
+		{Starburst Kawhe} {6862}
+		{A bright dining room} {8145}
+		{A small office} {9814}
+		{Within a blacksmith's workshop} {13635}
+		{A vibrant flower shop} {30097}
+		{A bright, quiet bakery} {36281}
+		{Beggar Tuck's Dry Goods} {40766}
+		{The Shallamese Fletchery} {41251}
+		{Hutchings'} {42037}
+	}
+	{111} {
+		{Amidst orderly stacks of merchant wares} {39416}
+	}
+	{113} {
+		{A marketplace} {6669}
+		{Arms of the Tides} {20766}
+	}
+	{115} {
+		{Storage chamber} {30}
+		{Gemstone vials of Moghedu} {6950}
+		{The Moghedu Stables} {12849}
+		{Fortress marketplace} {17990}
+		{Within a sweltering cavern} {41712}
+	}
+	{128} {
+		{Ancient stables} {14145}
+		{Blackrock mining stockroom} {14536}
+	}
+	{131} {
+		{A makeshift storefront} {42323}
+	}
+	{137} {
+		{Genji market} {10121}
+		{Genji's Jewellery Shop} {10122}
+		{Shop of the Archers} {10123}
+		{An Atavian stable} {13385}
+	}
+	{138} {
+		{A paddock behind the stable} {23802}
+		{Common room of the Tavern of Hope} {25840}
+	}
+	{141} {
+		{Bustling trade centre} {33199}
+		{A breezy sandstone building} {33208}
+		{Spacious warehouse} {39356}
+	}
+	{142} {
+		{Small stables} {13064}
+	}
+	{147} {
+		{Inside a shop} {10988}
+	}
+	{152} {
+		{The storage pits of Nimick} {23690}
+	}
+	{154} {
+		{A charming bakery} {15568}
+		{The Limping Imp Tavern} {15577}
+	}
+	{156} {
+		{Trampled path behind village} {4702}
+	}
+	{165} {
+		{Inside a large tent} {8566}
+	}
+	{170} {
+		{A breezy kitchen} {13699}
+	}
+	{171} {
+		{A massive kitchen in the castle} {18456}
+	}
+	{176} {
+		{Connie's Place} {11995}
+	}
+	{178} {
+		{Barren auction grounds} {39098}
+	}
+	{179} {
+		{Harbour shop} {9821}
+		{Tavern in the Port} {23664}
+	}
+	{181} {
+		{Marketplace} {18367}
+		{The Black Shark Tavern} {19460}
+		{A small shop} {19461}
+	}
+	{192} {
+		{Clamorous bazaar} {26775}
+		{Livestock auction} {26817}
+		{Harbourside fruit stand} {26822}
+	}
+	{195} {
+		{A cheerful village inn} {28313}
+	}
+	{197} {
+		{Hut of the weaver A'roden} {11874}
+		{The Aran'riod Stables} {11884}
+		{A small hut} {11896}
+		{Hut of the cook O'seru} {11898}
+	}
+	{198} {
+		{A bloom-wreathed arbour} {63055}
+	}
+	{201} {
+		{A brightly coloured flower shop} {14807}
+		{A warm inn common room} {16776}
+		{A crowded, cheerful toy store} {16980}
+		{A furrier's on Domus Street} {17253}
+		{A sparse woodcarver's workshop} {17271}
+		{Marianna's Perfumes and Cosmetics} {17955}
+		{Dejourdie Street music shop} {20529}
+	}
+	{243} {
+		{The Ivy Room} {32189}
+	}
+	{257} {
+		{Before a quiet bar} {52148}
+		{Market Fayre} {52807}
+	}
+	{289} {
+		{Common room of The Rough Diamond} {53559}
+	}
+	{291} {
+		{Tavern kitchen and bait shop} {36077}
+		{The Thraasi supply warehouse} {36155}
+		{The Thraasi Lighthouse Tavern} {36159}
+	}
+	{308} {
+		{Martei's Mercantile Exchange} {38276}
+	}
+	{317} {
+		{A weaver's stall} {31714}
+		{An elegant pottery stand} {31733}
+		{Through the crowded markets} {31738}
+		{Inside the grocery} {31754}
+		{At a sculptor's shop} {31797}
+		{Passing the tablet shop} {31803}
+		{Southern military building} {31823}
+	}
+	{330} {
+		{A noisy bar} {34456}
+		{The fisherman's commune} {34475}
+	}
+	{334} {
+		{Chamber of Peaceful Visitation} {36004}
+	}
+	{340} {
+		{A bustling tavern} {28696}
+		{A dreary horse pen} {30182}
+	}
+	{342} {
+		{A run-down building cluttered with armour} {23564}
+	}
+	{344} {
+		{Prison camp supply post} {28553}
+	}
+	{351} {
+		{Three Moons Inn} {18758}
+	}
+	{352} {
+		{Tickler's Tavern} {37485}
+	}
+	{363} {
+		{The Qerstead Inn} {45957}
+	}
+	{386} {
+		{Bar at the Brass Lantern Inn} {30417}
+		{Poolside bar in the Iron Grotto} {41144}
+	}
+	{491} {
+		{A well-stocked food stall} {57661}
+		{Tribal tent} {57666}
+		{Watery cavern} {57680}
+		{Amidst cluttered shelves} {57713}
+		{Wit's Inn} {58139}
+	}
+}

@@ -1,0 +1,382 @@
+#nop Cthul Scripts
+#nop All variables belong in Cthul.tt or Global.tt.
+
+#var priestessEnable 1;
+#var ruinCost 17;
+
+#alias {occult} {
+   print Occultist Helper commands;
+   info * da;
+   info   - Toggles distort aura;
+   info * af;
+   info   - Toggles astral form;
+   info * pri;
+   info   - fling priestess card;
+   info * b and t;
+   info   - hermit cards;
+   info * uni;
+   info   - universe card;
+   info * inscr;
+   info   - inscribe tarot cards, 2 param, first is card, second is #;
+}
+
+#class bash kill
+#class bash open
+
+#action {^You have recovered equilibrium%*} {
+   atk;
+
+   #if {&{atkTarget} == 0} {
+      #class bash clear;
+      #nop #if {$distortActive === 1} {da};
+   };
+};
+
+#class bash close;
+#class bash save;
+
+#nop F1
+#macro {\eOP} { 
+   satk;
+};
+#alias {satk} {
+   #unvar atkTarget;
+   #class bash clear; 
+}
+
+#nop S-F1
+#macro {\e[1;2P} { 
+   startAutoAtk;
+};
+
+#alias {aatk} {
+   #class bash load; 
+   print {resuming auto attack};
+   #if {$distortActive === 0} {da};
+   atk;
+
+   #class autobash clear;
+}
+
+#nop -------------------------------------------------------------------------
+#nop BattleRage
+#nop -------------------------------------------------------------------------
+#class battlerage kill;
+#class battlerage open;
+
+#var chaosgate 1;
+#var stagnate 1;
+#var harry 1;
+#var fluctuate 1;
+
+#nop Around monsters?;
+#nop there might be a different one around people.
+
+#action {^A nearly invisible magical shield forms around} 
+{ 
+   #nop A dizzying beam of energy strikes you as your attack rebounds off of a burly troll guard's shield.;
+   #if {&{atkTarget} != 0} {
+      #if {$rage >= $ruinCost} {
+         #math rage {$rage - $ruinCost};
+         #send {ruin};
+      }
+   }
+};
+
+#alias {tryRage}
+{
+   #math sum {%1 + $ruinCost};
+   #if {$rage >= $sum && ${%2} == 1} {
+      #var rage 0;
+      #var %2 0;
+      #send {%2}; 
+      #delay {%3} {#var %2 {1}};
+   };
+}
+
+#alias {battlerage.onCharVitals}
+{
+   #if {&{atkTarget} == 0} {#return};
+
+   #var rage {$gmcp[char][vitals][charstats][2]};
+   #regex {$rage} {Rage: %d}
+      {#var rage &1} 
+      {#show <513>BattleRage: NOT GETTING IT};
+
+   #nop TODO - need to add Temper;
+
+   tryRage 35 chaosgate 23;
+   tryRage 24 stagnate 35;
+   tryRage 14 harry 17;
+   tryRage 23 fluctuate 25;
+}
+
+#class battlerage close;
+#class battlerage save;
+
+#nop -------------------------------------------------------------------------
+#nop Tarot
+#nop -------------------------------------------------------------------------
+#class tarot kill;
+#class tarot open;
+
+#alias {b} { 
+   #if {"%1" === ""}  { 
+      #send {hermits}
+   };
+   #else { 
+      #foreach {$gmcp[char][items][list][items][]} thing {
+         #if {"$thing" == "%*mono%*"} {
+            print {Monolith present, find another room};
+            #return;
+         };
+      };
+
+      #send {$addfree outd hermit};
+      #send {$addfree activate hermit %1};
+      updateCharUI;
+   };
+};
+
+#alias {t} { 
+   #if {"%1" === ""}  { 
+      #send {hermits} 
+   };
+   #else {
+      #send {$addfree fling hermit at ground %1};
+
+      #line oneshot #action {^You have recovered balance on all limbs.$} {b %1};
+      updateCharUI;
+   };
+};
+
+#alias {death} {
+   #if {"%1" == ""} {err Pass in a target for Death;#return};
+
+   #send {$addfree rub death on %1};
+
+   #list pvpTargets find %1 plyIdx;
+   #math pvpTargets[$plyIdx][deathCounter] {$pvpTargets[$plyIdx][deathCounter] + 1};
+   #if {$pvpTargets[$plyIdx][deathCounter] >= 7} {
+      print Fling Death at %1!!;
+   };
+}
+
+/*
+   hanged man before Aeon, or Cold?
+*/
+#alias {wheel} {
+   #send {$addfree ruinate wheel at ground};
+   #nop 01:09:59.76 O 100h 0rage 100m 99e 78w[xE|66] :>-;
+
+   #nop #delay {6.5} {#send {$addfree pinchaura caloric}};
+
+   #delay {13.5} {#show Cold Blue Light! Chill them with relevations of the void!;#cr}; 
+   #nop 01:10:13.50 O 100h 0rage 100m 99e 78w[exE|66] :>-;
+   
+   #delay {20.5} {#show Vibrant Indigo Light! Stupify with the truth!;#cr};
+   #nop 01:10:20.56 O 100h 0rage 100m 99e 78w[exE|66] :>-;
+
+   #delay {27.5} {#show Violet Light! Slow them down!;#cr;};
+   #nop 01:10:27.52 O 100h 0rage 100m 99e 78w[exE|66] :>-;
+   #nop TODO need timer for when Aeon hits;
+
+   #nop #delay {22} {#send {$addfree pinchaura speed}};
+}
+
+#class priestess kill;
+#class priestess open;
+
+#nop when fling is used.;
+#nop You shuffle a tarot card inscribed with the High Priestess out of your deck, bringing the total number of remaining cards to 89;
+
+#nop when outd is used;
+#nop You shuffle a card with the image of the High Priestess out of your deck, bringing the total remaining to 86;
+#line oneshot #action {High Priestess %* bringing the total %2 to %3.$} {
+   #var priCards %3; 
+   updateCharUI; 
+};
+
+#line oneshot #action {Raising the High Priestess tarot over your head} {
+   #var priestessEnable 1; 
+   #var priStatus {Ready};
+
+   #nop Have it out of deck, it could be similar to the rift in that some things my block getting it out.;
+   #nop TODO Should do this for FOOL too.;
+   #nop #send {outd priestess};
+   updateCharUI;
+   print Healed from Priestess;
+
+   #class priestess clear
+};
+
+#class priestess close
+#class priestess save
+
+#var priStatus {Ready};
+#var priCards 0;
+#alias {pri} {
+   #nop Since this actin is nested in the Alias we HAVE to use an extra %;
+   #class priestess load;
+
+   #var target {me};
+   #if {"%1" !== ""} {#var target %1};
+
+   #nop #send {$insfree fling priestess at me};
+   #send {$insfree fling priestess at $target};
+
+   #unvar target;
+   #var priStatus {Qd};
+   #var priestessEnable 0; 
+   updateCharUI;
+};
+
+#nop Alias only match at the start of a line.;
+#nop There is also a comment about if no % var's are used in the commands, something will get appended to %0.;
+#alias {uni} {
+   #if {"%1" === ""} {
+      print {Universe Shortcuts};
+      #show {nt : New Thera};
+      #show {gn : Genji};
+      #show {sh: Shastaan};
+      #show {az: Azdun};
+      #show {bf: Bitterfork};
+      #show {mb: Manara};
+      #show {};
+   } {
+      #send {$addfree fling universe at ground};
+      
+      #var dest %1;
+      
+      #if     {"%1" === "nt"} {#var dest {newthera}};
+      #elseif {"%1" === "gn"} {#var dest {genji}};
+      #elseif {"%1" === "sh"} {#var dest {shastaan}};
+      #elseif {"%1" === "az"} {#var dest {azdun}};
+      #elseif {"%1" === "bf"} {#var dest {bitterfork}};
+      #elseif {"%1" === "mb"} {#var dest {manara}};
+      
+      #nop example of a one time action;
+      #line oneshot {#action {A shimmering, translucent }
+      {
+         #show {Headed out to $dest};
+
+         #send {$addfree touch $dest};
+         #unvar dest;
+      }};
+   }
+};
+
+#nop Fool, 35 sec cooldown;
+
+#var foolMaxTimer 35;
+#var remainingFoolTime 0;
+#alias {fool} {
+   #var target {%1};
+
+   #if {"$1" === ""} {
+      #var target {me};
+      #line oneshot #action {^You press the Fool tarot to your forehead.$}{
+         #line oneshot #high {%*} {reverse};
+         #var remainingFoolTime $foolMaxTimer;
+
+         #ticker foolTimer {
+            #math remainingFoolTime {$remainingFoolTime - 1};
+            updateCharUI;
+
+            #if {remainingFoolTime <= 0} {#unticker foolTimer; #var remainingFoolTime 0;};
+         } {1};
+
+         updateCharUI;
+      };
+
+      #line oneshot #high {^You may heal another affliction$}{reverse};
+   };
+
+   #send {$addfree fling fool at $target};
+   #unvar target;
+};
+
+#alias {inscr} {
+   #var cardcount 0;
+   #if {&{2} == 0} { #var cardcount 20};
+   #else {#var cardcount %1};
+   
+   #var card %1;
+   #send {outd $cardcount blank};
+   #send {inscribe blank with $cardcount $card};
+
+   #line oneshot #action {You have successfully inscribed the image of the %%1 on your Tarot card} {
+      #line oneshot #high {%%*} {reverse};
+      #send {ind all $card};
+      #unvar card;
+   };
+
+   #unvar cardcount;
+};
+
+#alias {dl} {
+   #line oneshot #action {{.+}[%%!s%%1] Priestess} {
+      #var priCards %%1;
+      updateCharUI;
+   };
+
+   #line oneshot #action {{.+}[%%!s%%1] Hermit} {
+      #var hermitCards %%1;
+      updateCharUI;
+   };
+
+   #send {dl};
+};
+
+#class tarot close;
+
+#alias {trainer}
+{
+   #send {CITY GUIDE AVAILABLE};
+   #send {CITYNEWBIES};
+   #send {CITY NOVICE LIST};
+   
+   #action {%w has requested that you share some of your knowledge} {#send {OK}};
+   #nop Cenoi has requested that you share some of your knowledge of Weaponmastery with him. 'OK' to commence the lesson. ;
+}
+
+#var generosity 0;
+#alias {defs} {
+   #if {$generosity === 0} {
+      #var generosity 1;
+      #send {curing defences on};
+   };
+   #else {
+      #var generosity 0;
+      #send {curing defences off};
+      #send {generosity};
+   };
+}
+
+#action {You get %d gold sovereigns from a canvas backpack} {
+   #if {$generosity === 1} {
+      #send {put gold in pack};
+   }
+}
+
+#action {You remove a deck of tarot cards.} {
+   #if {$generosity === 1} {
+      #send {wear deck};
+   }
+}
+
+#action {You remove a canvas backpack.} {
+   #if {$generosity === 1} {
+      #send {wear pack};
+   }
+}
+
+#nop TODO keep wearing the deck
+#nop TODO put pack back on.
+
+#alias {qq} {
+   #nop #send {curing defences off};
+   #send {CITY GUIDE UNAVAILABLE};
+   #send {QQ};
+}
+

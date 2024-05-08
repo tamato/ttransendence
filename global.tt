@@ -1,0 +1,181 @@
+#nop
+
+#nop #config verbose on;
+
+#event {RECEIVED ERROR}
+{
+   #echo <118>%h { TOKENIZER };
+   #info tokenizer -1;
+   #echo <118>%h
+}
+
+#script {configdir} {echo $HOME/.config/tintin}
+#read {$configdir[1]/guisettings.tt}
+
+#var seenPlys {};
+
+#read eventsSystem.tt;
+#read connect.tt;
+#read gui.tt;
+#read targeting.tt
+
+#nop Convert ANSI output to HTML
+#nop install 'aha'
+#nop  cat test.txt | aha --black > test.htm
+
+#nop to see ANSI in NVIM, 
+#nop  use nvim -c ":term cat $1", or ansivim in .profile.
+
+
+#config {command color} {\e[4;33m}; #nop underline yellow;
+#config {verbatim}      {on};
+#config {REPEAT_ENTER}  {ON};    #nop repeat last command.
+
+#var getgold 1;
+#alias {ggold} {
+   #if {$getgold == 1 || "%1" == "0"} {
+      #var getgold 0;
+   };
+   #else {$getgold == 1 || "%1" == "0"} {
+      #var getgold 0;
+   }
+}
+
+#var addfree {queue add freestanding};
+#var insfree {queue insert freestanding 1};
+
+#alias {print} {
+   #line ignore #showme  <168>--------------------------------------------------------------------------------;
+   #line ignore #showme  <078>             [ <038>%0 <078>];
+   #line ignore #showme  <168>--------------------------------------------------------------------------------;
+}
+
+#alias {err} {
+   #showme  {<710>ERROR: <488>%0};
+}
+
+#alias {info} {
+   #line ignore #showme  {<238>%0};
+}
+
+#alias {dbg} {
+   #line ignore #showme  {<760>DBG: <488>%0};
+}
+
+#alias {journal} {
+   #nop #if {{%0} != {}} { #log off; #config {log} {txt}; #break; };
+
+   #config log raw;
+   #log append journal.txt;
+
+   #show {};
+   #show {};
+   print {Begin Entry};
+}
+
+#alias {^fight!} {
+   #nop #if {{%0} != {}} { #log off; #config {log} {txt}; #break; };
+
+   #config log html;
+   #log append combat.log;
+
+   #show {};
+   #show {};
+   print {New Fight};
+}
+
+#highlight {^You have slain%*.$} {black b magenta};
+#action {^You have slain%*.$} {
+   #unvar atkTarget;
+};
+
+#highlight {gold{|en} sovereigns} {black b yellow};
+
+#nop Use Diagnose  for losing eq;
+#nop use Directory for losing balance;
+
+#highlight {^Your fellow citizen, %w, has just escaped imprisonment in the foul pygmy dungeon. Welcome him to %w!} {light cyan};
+
+#alias {allowPrism} {
+   #class prism clear;
+   print Use 'blockPrism' to put the defence back up.;
+}
+
+#alias {blockPrism} {
+   #class prism load;
+}
+
+#class prism kill;
+#class prism open;
+#action {^A beam of prismatic light suddenly shoots into the room.$} {
+   #highlight {%*} { black b red };
+   #send {*gmcp[room][info][exits][+1]};
+};
+#class prism close;
+#class prism save;
+
+#highlight {%1 suddenly appears, having travelled down the beam of prismatic light.} { black b red };
+
+#var clearCharDb 0;
+
+#alias {cw} { 
+   #var clearCharDb 1;
+   #send {cw};
+}
+
+#alias {hw} { 
+   #var clearCharDb 1;
+   #send {hw};
+}
+
+#alias {qw} { 
+   #var clearCharDb 1;
+   #send {qw};
+}
+
+#alias {ih} { 
+   #var clearCharDb 1;
+   #send {info here};
+};
+
+#read itemslist.tt;
+#read events.tt;
+
+#alias {bfind} {
+   #buffer find %1;
+   #var findidx 1;
+}
+
+#alias {bfn} {
+   #buffer find +$findidx %1;
+   #math findidx {$findidx + 1};
+}
+
+#action {^Your starburst tattoo flares as the world is momentarily tinted red.$} {
+   #show <118>------------------------------------------------;
+   #line oneshot #sub {%*} {           <138>STARBURST USED};
+   #show <118>------------------------------------------------;
+};
+
+#action {^A %w tattoo fades from view and disappears} {
+   print Lost %1 tattoo!;
+}
+
+#high {A nearly invisible magical shield forms around%*$} { underscore <FFF0000>}
+
+#alias {help} {
+  print Global helper commands;
+  info * atk;
+  info   - single attack a denzien in the room that is on the targets list;
+  info * aatk;
+  info   - auto attack denziens in the room;
+  info * satk;
+  info   - stop auto attacking;
+  info * targets;
+  info   - lists, adds/removes targets to attack;
+  info * mapping; 
+  info   - prints commands related to QoL for rooms/maps;
+  info * occult; 
+  info   - prints commands for occultists;
+}
+

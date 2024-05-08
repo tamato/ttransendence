@@ -1,0 +1,32 @@
+#nop Harvest config settings
+
+#class harvestConfig kill;
+#class harvestConfig open;
+
+#var plantsToHarvest {
+   {ginseng} {1}
+   {ash} {1}
+   {echinacea} {1}
+   {myrrh} {1}
+   {bellwort} {1}
+   {bloodroot} {1}
+   {hawthorn} {1}
+   {kuzu} {1}
+   {skullcap} {1}
+   {slipper} {0}
+   {goldenseal} {1}
+   {valerian} {1}
+   {bayberry} {1}
+   {cohosh} {1}
+   {lobelia} {1}
+   {pear} {1}
+   {weed} {0}
+   {moss} {1}
+   {sileris} {1}
+   {kelp} {1}
+   {kola} {1}
+   {elm} {1}
+};
+
+#class harvestConfig close;
+#class harvestConfig save;

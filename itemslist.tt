@@ -1,0 +1,17 @@
+#CLASS {itemslist} OPEN
+
+#VARIABLE {itemslist}
+{
+    {the Dungeon of the Beastlords} 
+    {
+        {Mask} {}
+        {bell} {}
+        {fetish} {}
+    }
+    {the bog of Ashtan} 
+    {
+        {cauldron} {}
+    }
+}
+
+#CLASS {itemslist} CLOSE

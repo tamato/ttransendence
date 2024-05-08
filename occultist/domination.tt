@@ -1,0 +1,43 @@
+#nop
+
+#nop Runs for 45 seconds.
+#var orbMaxTimer 45;
+#var remainingOrbTime 0;
+#var orbActive 0;
+#alias {orb}
+{
+   #send {$addfree summon arctar};
+   #line oneshot #action {A swirling portal of chaos opens, spits out a chaos orb, then vanishes.} 
+   {
+      #line oneshot #gag {^Abruptly, the power rippling across your skin dissipates.$};
+
+      #send {$addfree command orb};
+      #nop Gained the defence.;
+      #line oneshot #action {^A ripple of power washes across your skin.$} 
+      {
+         #line oneshot #high {%*} {reverse};
+         #var orbActive 1;
+         #var remainingOrbTime $orbMaxTimer;
+         #ticker orbTimer {
+            #math remainingOrbTime {$remainingOrbTime - 1};
+            updateCharUI;
+
+            #if {$remainingOrbTime <= 0} {
+               #var orbActive 0;
+               #var remainingOrbTime 0;
+
+               updateCharUI;
+               #unticker orbTimer;
+               print {Arctar: Abruptly, the power rippling across your skin dissipates};
+            };
+
+         } {1};
+
+         updateCharUI;
+      };
+   }
+}
+
+#alias {ds} {#send {order doppleganger seek %1}};
+#alias {dhome} {#send {order doppleganger return}};
+
