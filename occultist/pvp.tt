@@ -1,5 +1,16 @@
-<<<<<<< HEAD
 #nop PvpCommands
+
+/*
+must pass in a number
+*/
+#function {pvpTarget} {
+   #local count &pvpTargets[];
+   #nop check if value in bounds;
+   #if {"%1" == ""} {#return ""};
+
+   #nop Return just the name of the player
+   #return *pvpTargets[%1][+1];
+}
 
 #class occultistpvp kill;
 #class occultistpvp open;

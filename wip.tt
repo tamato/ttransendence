@@ -13,5 +13,23 @@
    info City: $inquery[city];
 }
 
+
+/* 
+   test out table of indicies that hold names and data.
+*/
+#list testtbl ins -1 {mel {{counter}{0}}}
+#var testtbl;
+
+#nop Set the counter;
+#var testtbl[1][mel][counter] 4;
+#var testtbl;
+
+#var name *testtbl[1][+1];
+#var name;
+#show $name;
+#show -------------;
+#var testtbl[1][$name];
+#show -------------;
+
 #class wip save
 #class wip close
