@@ -43,6 +43,9 @@
 #alias {dpl} {#send {order doppleganger look}};
 #alias {dphome} {#send {order doppleganger return}};
 #alias {dpc} {#send {order doppleganger cloak }};
+#alias {dpr} {#send {order doppleganger return }};
+
+#alias {dpm} {#send {order doppleganger move %1 }};
 
 #alias {dpw %1} {#send {order doppleganger channel warp %1 }};
 #alias {dpts %1} {#send {order doppleganger channel fling star %1}};

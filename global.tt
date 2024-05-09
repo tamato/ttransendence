@@ -141,14 +141,17 @@
 #read itemslist.tt;
 #read events.tt;
 
+#var bftarget {};
 #alias {bfind} {
-   #buffer find %1;
-   #var findidx 1;
-}
-
-#alias {bfn} {
-   #buffer find +$findidx %1;
-   #math findidx {$findidx + 1};
+   #if {"%1" === "$bftarget"} {
+      #math findidx {$findidx + 1};
+      #buffer find +$findidx %1;
+   }
+   #else {
+      #var findidx 1;
+      #var bftarget %1;
+      #buffer find %1;
+   }
 }
 
 #action {^Your starburst tattoo flares as the world is momentarily tinted red.$} {
@@ -163,7 +166,7 @@
 
 #high {A nearly invisible magical shield forms around%*$} { underscore <FFF0000>}
 
-#alias {help} {
+#alias {ghelp} {
   print Global helper commands;
   info * atk;
   info   - single attack a denzien in the room that is on the targets list;
@@ -178,4 +181,5 @@
   info * occult; 
   info   - prints commands for occultists;
 }
+
 

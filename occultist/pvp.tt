@@ -24,6 +24,3 @@ must pass in a number
 #class occultistpvp close;
 #class occultistpvp save;
 
-/* */
-#alias {} {
-}

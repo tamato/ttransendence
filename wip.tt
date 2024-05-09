@@ -33,3 +33,6 @@
 
 #class wip save
 #class wip close
+
+#function gettime {#format result %t %f}
+
