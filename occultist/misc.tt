@@ -58,61 +58,6 @@
    #class autobash clear;
 }
 
-#nop -------------------------------------------------------------------------
-#nop BattleRage
-#nop -------------------------------------------------------------------------
-#class battlerage kill;
-#class battlerage open;
-
-#var chaosgate 1;
-#var stagnate 1;
-#var harry 1;
-#var fluctuate 1;
-
-#nop Around monsters?;
-#nop there might be a different one around people.
-
-#action {^A nearly invisible magical shield forms around} 
-{ 
-   #nop A dizzying beam of energy strikes you as your attack rebounds off of a burly troll guard's shield.;
-   #if {&{atkTarget} != 0} {
-      #if {$rage >= $ruinCost} {
-         #math rage {$rage - $ruinCost};
-         #send {ruin};
-      }
-   }
-};
-
-#alias {tryRage}
-{
-   #math sum {%1 + $ruinCost};
-   #if {$rage >= $sum && ${%2} == 1} {
-      #var rage 0;
-      #var %2 0;
-      #send {%2}; 
-      #delay {%3} {#var %2 {1}};
-   };
-}
-
-#alias {battlerage.onCharVitals}
-{
-   #if {&{atkTarget} == 0} {#return};
-
-   #var rage {$gmcp[char][vitals][charstats][2]};
-   #regex {$rage} {Rage: %d}
-      {#var rage &1} 
-      {#show <513>BattleRage: NOT GETTING IT};
-
-   #nop TODO - need to add Temper;
-
-   tryRage 35 chaosgate 23;
-   tryRage 24 stagnate 35;
-   tryRage 14 harry 17;
-   tryRage 23 fluctuate 25;
-}
-
-#class battlerage close;
-#class battlerage save;
 
 #nop -------------------------------------------------------------------------
 #nop Tarot

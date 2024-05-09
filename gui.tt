@@ -407,6 +407,7 @@
     }
 }
 
+registerEvent CharVitals gui.onCharVitals;
 #alias {gui.onCharVitals} 
 {
    #return;

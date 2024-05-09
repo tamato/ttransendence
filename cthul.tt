@@ -8,10 +8,12 @@
 #alias attackCmd {queue insert freestand 5 warp};
 
 #read occultist/misc.tt;
+/*
+#read occultist/battlerage.tt;
 #read occultist/occultism.tt;
 #read occultist/domination.tt;
 #read occultist/gui.tt;
-
+*/
 #read harvesting/harvest.tt;
 
 #session cthul achaea.com 23;

@@ -16,6 +16,7 @@
 {
    #var gmcp[char][items][list] {%0};
    targeting.onCharItemsList;
+   raiseEvent CharItemsList;
 }
 
 #EVENT {IAC SB GMCP char.items.add IAC SE}
@@ -59,8 +60,7 @@
 {
    #variable gmcp[char][vitals] {%0};
 
-   gui.onCharVitals;
-   battlerage.onCharVitals;
+   raiseEvent CharVitals;
 
    #var hp $gmcp[char][vitals][hp];
    #if {$prevHp == 0} {#var prevHp $hp};
@@ -191,4 +191,9 @@
     #nop #map write gmcp.map;
 }
 
+
+#EVENT {CLASS CLOSE battlerage}
+{
+   deregisterEvent CharVitals;
+}
 
