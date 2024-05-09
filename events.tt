@@ -15,20 +15,19 @@
 #EVENT {IAC SB GMCP char.items.list IAC SE}
 {
    #var gmcp[char][items][list] {%0};
-   targeting.onCharItemsList;
    raiseEvent CharItemsList;
 }
 
 #EVENT {IAC SB GMCP char.items.add IAC SE}
 {
    #var gmcp[char][items][add] {%0};
-   targeting.onCharItemsAdd;
+   raiseEvent CharItemsAdd;
 }
 
 #EVENT {IAC SB GMCP Char.Items.Remove IAC SE}
 {
    #var gmcp[char][items][remove] {%0};
-   targeting.onCharItemsRemove;
+   raiseEvent CharItemsRemove;
 }
 
 
@@ -107,8 +106,7 @@
 
    #var clearCharDb 1;
 
-   targeting.onRoomInfo;
-   mapping.onRoomInfo;
+   raiseEvent RoomInfo;
 }
 
 #EVENT {IAC SB GMCP char.name IAC SE}
@@ -122,7 +120,7 @@
    #var clearCharDb 1;
 
    #variable gmcp[room][addplayer] {%0};
-   gui.onAddPlayer;
+   raiseEvent AddPlayer;
 }
 
 #EVENT {IAC SB GMCP Room.Players IAC SE}
@@ -132,13 +130,13 @@
    #variable gmcp[room][players] {%0};
    #nop [ Players? {1}{{name}{Cthul}{fullname}{Servitor Cthul}} ];
 
-   gui.onRoomPlayers;
+   raiseEvent RoomPlayers;
 }
 
 #EVENT {IAC SB GMCP Room.removeplayer IAC SE}
 {
    #variable gmcp[room][removeplayer] {%0};
-   gui.onRoomRemovePlayers;
+   raiseEvent RoomRemovePlayers;
 
    #var clearCharDb 1;
 }

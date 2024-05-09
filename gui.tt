@@ -310,6 +310,7 @@
    room_window_draw_data;
 }
 
+registerEvent AddPlayer gui.onAddPlayer;
 #alias {gui.onAddPlayer}
 {
    #local ply $gmcp[room][addplayer][name];
@@ -323,6 +324,7 @@
    addSeenPlayer $ply;
 }
 
+registerEvent RoomPlayers gui.onRoomPlayers;
 #alias {gui.onRoomPlayers}
 {
    #list room_window[tab][players] clear;
@@ -345,6 +347,7 @@
    room_window_draw_data;
 }
 
+registerEvent RoomRemovePlayers gui.onRoomRemovePlayers;
 #alias {gui.onRoomRemovePlayers}
 {
    #local ply $gmcp[room][removeplayer];

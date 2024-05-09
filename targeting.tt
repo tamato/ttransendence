@@ -5,6 +5,7 @@
 
 #read targetlist.tt;
 
+registerEvent RoomInfo targeting.onRoomInfo;
 #alias {targeting.onRoomInfo}
 {
    #local roomInfo $gmcp[room][info];
@@ -27,6 +28,7 @@
    };
 }
 
+registerEvent CharItemsAdd targeting.onCharItemsAdd;
 #alias {targeting.onCharItemsAdd}
 {
    #local loc $gmcp[char][items][add][location];
@@ -64,6 +66,7 @@
    room_window_show mobs $mob;
 }
 
+registerEvent CharItemsList targeting.onCharItemsList;
 #alias {targeting.onCharItemsList}
 {
    #local loc $gmcp[char][items][list][location];
@@ -109,6 +112,7 @@
    }
 }
 
+registerEvent CharItemsRemove targeting.onCharItemsRemove;
 #alias {targeting.onCharItemsRemove}
 {
    #local loc $gmcp[char][items][remove][location];
