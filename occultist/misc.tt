@@ -325,3 +325,7 @@
    #send {QQ};
 }
 
+#alias {readbook} {
+   #send {^ sits, concentrating deeply on the book in his hands.}
+}
+

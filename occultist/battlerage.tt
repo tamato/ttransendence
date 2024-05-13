@@ -44,7 +44,7 @@ registerEvent CharVitals battlerage.onCharVitals;
    #var rage {$gmcp[char][vitals][charstats][2]};
    #regex {$rage} {Rage: %d}
       {#var rage &1} 
-      {#show <513>BattleRage: NOT GETTING IT};
+      {err BattleRage: NOT GETTING IT};
 
    #nop TODO - need to add Temper;
 

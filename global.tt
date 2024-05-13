@@ -51,15 +51,15 @@
 }
 
 #alias {err} {
-   #showme  {<710>ERROR: <488>%0};
+   #line ignore #showme  {<431>ERROR: <410>%0};
 }
 
 #alias {info} {
-   #line ignore #showme  {<238>%0};
+   #line ignore #showme  {<230>%0};
 }
 
 #alias {dbg} {
-   #line ignore #showme  {<760>DBG: <488>%0};
+   #line ignore #showme  {<405>DBG: <460>%0};
 }
 
 #alias {journal} {

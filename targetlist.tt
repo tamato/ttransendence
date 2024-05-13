@@ -1,11 +1,15 @@
 #CLASS {targetlist} OPEN
 
-#VARIABLE {areaName} {the Dungeon of the Beastlords}
+#VARIABLE {areaName} {the Mhojave Desert}
 #VARIABLE {targets}
 {
     {Ashtan} 
     {
         {rat} {}
+    }
+    {Enverren Marsh} 
+    {
+        {guard} {}
     }
     {Test} 
     {
@@ -35,6 +39,10 @@
     {the Ioje compound} 
     {
         {slaver} {}
+    }
+    {the Mhojave Desert} 
+    {
+        {scorpion} {}
     }
     {the Rhodestrian Settlement} 
     {

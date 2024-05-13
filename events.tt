@@ -190,7 +190,7 @@
 }
 
 
-#EVENT {CLASS CLOSE battlerage}
+#EVENT {CLASS DEACTIVATED battlerage}
 {
    deregisterEvent CharVitals;
 }
