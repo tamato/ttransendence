@@ -1,3 +1,8 @@
 #nop Status Bar, shows above the input line
 
+registerEvent prompt statusbar
+
+#alias {statusbar} {
+
+}
 

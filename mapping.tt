@@ -2,8 +2,6 @@
 
 #read shopRoomNumbers.tt;
 
-#var mapping[callbacks] {};
-
 #alias {mapping} {
    print Auto Walking Commands;
    info * mgo;
@@ -21,12 +19,10 @@
    info;
    info Notes;
    info To hook 'events' into this system,;
-   into assign functions/aliases to mapping[callbacks][group][your callback];
    info;
 }
 
-#alias {mapping.onConnected}
-{
+#alias {mapping.onConnected} {
    #map create;
    #map flag static;
    #map flag unicode;
@@ -54,27 +50,18 @@
    #class pathing load;
 
    #nop Do destination checks first;
-   #var mapping[callbacks][walking][dst] {mapping.walkdst};
-   #var mapping[callbacks][walking][step] {mapping.step};
+   registerEvent walking mapping.walkdst;
+   registerEvent walking mapping.step;
 
    #var mapping[dst] %1;
    #map find {%1};
 
-   mapping.step;
-}
-
-#alias {mrun} {
-   #if {"%1" == ""} {err Pass in room number!; #return};
-
-   #var mapping[dst] %1;
-   #map find {%1};
-   #path run {0.7};
+   raiseEvent walking;
 }
 
 #alias {mgostart} {
    mgo {$mapping[startRoom]};
 }
-
 
 #alias {mfind} {
    #if {"%1" == ""} {err Pass in a room name;#return};
@@ -91,7 +78,7 @@
    #show <258>--------------------;
 }
 
-#alias {mpp.prepExplore} {
+#alias {mapping.prepExplore} {
    #map get {roomvnum} {mapping[startRoom]};
    #list mapping[yetToVisit] clear;
 
@@ -128,7 +115,7 @@
    #show finished, headed to $mapping[dst];
 }
 
-#alias {mpp.nextdest}{
+#alias {mapping.nextdest}{
    #if {&{mapping[yetToVisit][]} > 0} {
       #var shortest {};
       #var sl {999999};
@@ -153,7 +140,7 @@
    };
    #elseif {&{mapping[yetToVisit][]} == 0} {
       #nop Will be called after on per room operations are finished.;
-      #var mapping[callbacks][cleanup][stop] {mstop};
+      registerEvent cleanup mstop;
    }
 }
 
@@ -161,18 +148,18 @@
    #local vnum $gmcp[room][info][num];
    #if {$vnum == $mapping[dst]} {
       print Finding a new dst, number of rooms left to visit &mapping[yetToVisit][];
-      mpp.nextdest;
+      mapping.nextdest;
    };
 }
 
 #alias {mex} {
    #class pathing load;
 
-   mpp.prepExplore;
+   mapping.prepExplore;
 
    #nop Do destination checks first;
-   #var mapping[callbacks][explore][dst] {mapping.founddst};
-   #var mapping[callbacks][explore][step] {mapping.step};
+   registerEvent explore mapping.founddst;
+   registerEvent explore mapping.step;
 
    #path walk;
 }
@@ -182,7 +169,7 @@
    #delay {delayStepping} {
       #if {$gmcp[char][vitals][bal] == 1 && $gmcp[char][vitals][eq] == 1} {
          #path walk;
-         #show Stepping....;
+         info Stepping....;
 
          #math stepIdx {$stepidx + 1};
          #math stepIdx {$stepidx % 3};
@@ -273,18 +260,11 @@ registerEvent RoomInfo mapping.onRoomInfo;
       };
 
       #nop go through all exploring callbacks;
-      #foreach $mapping[callbacks][explore][] cb {
-         #if {&mapping[callbacks][explore] === 0} {#break};
-         $cb;
-      };
+      raiseEvent explore;
    };
 
    #nop Go through all walking callbacks;
-   #foreach $mapping[callbacks][walking][] wcb {
-      #if {&mapping[callbacks][walking] === 0} {#break};
-
-      $wcb;
-   };
+   raiseEvent walking;
 
    #nop Watch for differences in room names to update the crowd map.;
    #nop #map get roomname rname;
@@ -304,7 +284,7 @@ registerEvent RoomInfo mapping.onRoomInfo;
 
    #if {&{mapping[yetToVisit][]} > 0} {
       print Hit some kind of end, finding new destination.;
-      mpp.nextdest;
+      mapping.nextdest;
    };
    #else {
       print No exit and out of places to go, clean it up.;
@@ -369,11 +349,11 @@ registerEvent RoomInfo mapping.onRoomInfo;
    #class pathing clear;
    #class autobash clear;
    #unvar mapping[dst];
-   #unvar mapping[callbacks][explore];
-   #unvar mapping[callbacks][walking];
-   #unvar mapping[callbacks][cleanup];
 
-   #unvar autoharvest[callback][finished];
+   deregisterEvent explore;
+   deregisterEvent cleanup;
+   deregisterEvent walking;
+   deregisterEvent finishAutoHarvest;
    clearAutoHarvestRooms;
 
    #list mapping[yetToVisit] clear;
@@ -388,15 +368,11 @@ registerEvent RoomInfo mapping.onRoomInfo;
 
    #nop Nothing, or they've been cleared out, move on.;
    #if {&{atkTarget} == 0} {
-      #class autobash clear;
+      raiseEvent cleanup;
 
-      #var autoharvest[callback][finished] {continueFromHarvest};
+      registerEvent finishAutoHarvest continueFromHarvest;
       autoharvest;
    };
-
-   #foreach $mapping[callbacks][cleanup][] cleanup {
-      $cleanup;
-   }
 }
 
 #alias {mbash} {
@@ -409,11 +385,11 @@ registerEvent RoomInfo mapping.onRoomInfo;
    print Starting Auto Bash;
    #if {$distortActive === 0} {da};
 
-   mpp.prepExplore;
+   mapping.prepExplore;
 
    #nop Do destination checks first;
-   #var mapping[callbacks][explore][dst] {mapping.founddst};
-   #var mapping[callbacks][explore][hunt] {hunt};
+   registerEvent explore mapping.founddst;
+   registerEvent explore hunt;
 
    hunt;
 };

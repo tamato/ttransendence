@@ -12,7 +12,12 @@
 }
 
 #alias {deregisterEvent} {
-   #unvar Events[%1][%2];
+   #if {"%2" === ""} {
+      #unvar Events[%1];
+   };
+   #else {
+      #unvar Events[%1][%2];
+   };
 }
 
 #alias {raiseEvent} {

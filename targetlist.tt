@@ -1,6 +1,6 @@
 #CLASS {targetlist} OPEN
 
-#VARIABLE {areaName} {the Mhojave Desert}
+#VARIABLE {areaName} {the village of Qurnok}
 #VARIABLE {targets}
 {
     {Ashtan} 
@@ -54,6 +54,10 @@
         {thief} {}
         {troll} {}
     }
+    {the Siroccian Mountains} 
+    {
+        {wolverine} {}
+    }
     {the Southern Vashnar Mountains} 
     {
         {drake} {}
@@ -76,6 +80,12 @@
     {
         {pixie} {}
         {pygmy} {}
+    }
+    {the village of Qurnok} 
+    {
+        {Ulvna} {}
+        {guard} {}
+        {ulvna} {}
     }
 }
 

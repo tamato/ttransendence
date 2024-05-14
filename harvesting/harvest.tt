@@ -19,6 +19,7 @@
 #alias {pickplant} {
    #if {$picking == 1} {#return};
 
+   #nop Nothing left to get, wrap it up.;
    #if {&plantQueue[] == 0} {
       #class harvesting clear;
 
@@ -26,7 +27,8 @@
       #if {$picked > 0} {
          #send {inr all};
       };
-      
+
+      raiseEvent finishAutoHarvest; 
       #return;
    };
 
