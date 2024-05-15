@@ -290,7 +290,7 @@
       };
 
       #list room_window[tab][seen] ins -1 {<218>$newidx $color};
-      #list pvpTargets ins -1 {%1 {{deathCounter}{0}}};
+      #list pvpTargets ins -1 {{name}{%1}{deathCounter}{0}};
    };
 
    room_window_draw_data;

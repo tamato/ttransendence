@@ -39,7 +39,7 @@
 }
 
 #alias {sumd} {#send {summon Piridon}};
-#alias {dps %1} {#send {order doppleganger seek %1}};
+#alias {dps %1} {#send {order doppleganger seek @pvpTarget{%1}}};
 #alias {dpl} {#send {order doppleganger look}};
 #alias {dphome} {#send {order doppleganger return}};
 #alias {dpc} {#send {order doppleganger cloak }};

@@ -98,11 +98,11 @@
 #alias {death} {
    #if {"%1" == ""} {err Pass in a target for Death;#return};
 
-   #send {$addfree rub death on %1};
+   #local target @pvpTarget{%1};
+   #send {$addfree rub death on $target};
 
-   #list pvpTargets find %1 plyIdx;
-   #math pvpTargets[$plyIdx][deathCounter] {$pvpTargets[$plyIdx][deathCounter] + 1};
-   #if {$pvpTargets[$plyIdx][deathCounter] >= 7} {
+   #math pvpTargets[%1][deathCounter] {$pvpTargets[%1][deathCounter] + 1};
+   #if {$pvpTargets[%1][deathCounter] >= 7} {
       print Fling Death at %1!!;
    };
 }
