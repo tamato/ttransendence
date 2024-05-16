@@ -38,17 +38,29 @@
    }
 }
 
-#alias {sumd} {#send {summon Piridon}};
-#alias {dps %1} {#send {order doppleganger seek @pvpTarget{%1}}};
-#alias {dpl} {#send {order doppleganger look}};
-#alias {dphome} {#send {order doppleganger return}};
-#alias {dpc} {#send {order doppleganger cloak }};
-#alias {dpr} {#send {order doppleganger return }};
+#alias {sumd} {#send {$addfree summon Piridon}};
+#alias {dps %1} {#send {$addfree order doppleganger seek @pvpTarget{%1}}};
+#alias {dpl} {#send {$addfree order doppleganger look}};
+#alias {dphome} {#send {$addfree order doppleganger return}};
+#alias {dpc} {#send {$addfree order doppleganger cloak }};
+#alias {dpr} {#send {$addfree order doppleganger return }};
 
-#alias {dpm} {#send {order doppleganger move %1 }};
+#alias {dpm} {#send {$addfree order doppleganger move @pvpTarget{%1} }};
 
-#alias {dpw %1} {#send {order doppleganger channel warp %1 }};
-#alias {dpts %1} {#send {order doppleganger channel fling star %1}};
-#alias {dpth %1} {#send {order doppleganger channel fling Hangedman %1}};
-#alias {dpta %1} {#send {order doppleganger channel fling aeon %1}};
+#alias {dpw %1} {#send {$addfree order doppleganger channel warp @pvpTarget{%1} }};
+#alias {dpts %1} {#send {$addfree order doppleganger channel fling star @pvpTarget{%1}}};
+#alias {dpth %1} {#send {$addfree order doppleganger channel fling Hangedman @pvpTarget{%1}}};
+#alias {dpta %1} {#send {$addfree order doppleganger channel fling aeon @pvpTarget{%1}}};
+#alias {dpta %1} {#send {$addfree order doppleganger channel fling aeon @pvpTarget{%1}}};
+#alias {ddeath %1} {
+   #if {"%1" == ""} {err Dopple - Pass in a target for Death;#return};
+
+   #local target @pvpTarget{%1};
+   #send {$addfree order doppleganger channel rub death on $target};
+
+   #math pvpTargets[%1][deathCounter] {$pvpTargets[%1][deathCounter] + 1};
+   #if {$pvpTargets[%1][deathCounter] >= 7} {
+      print Fling Death at %1!!;
+   };
+}
 

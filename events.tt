@@ -84,6 +84,12 @@
       #unvar diff;
    };
    #var prevMp $mp;
+
+   #var maxhp $gmcp[char][vitals][maxhp];
+   #if {$checkReckless == 1 && $hp == $maxhp} {
+      #var checkReckless 0;
+      #send {CURING PREDICT reckless};
+   }
 }
 
 #EVENT {IAC SB GMCP char.maxstats IAC SE}

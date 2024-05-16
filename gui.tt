@@ -250,10 +250,6 @@
    room_window_draw_data
    mapping.onRoomInfo;
    schats;
-
-   #if {$uimap[height] > 0} {
-      #draw green filled jeweled box {$uimap[height]+4} 1 -2 {$uimap[width]};
-   };
 }
 
 #EVENT {IAC SB GMCP Comm.Channel.Start IAC SE}
@@ -355,6 +351,7 @@ registerEvent RoomRemovePlayers gui.onRoomRemovePlayers;
    #list room_window[tab][players] find {%*$ply%*} idx;
    #if {$idx != 0} { 
       #list room_window[tab][players] delete $idx;
+      info Player should have been removed!;
    }
    room_window_draw_data;
 }

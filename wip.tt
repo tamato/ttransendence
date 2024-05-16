@@ -3,33 +3,50 @@
 #class wip kill
 #class wip open
 
-#alias {whois} { 
-   #var inquery $chardb[%i%1];
-   print .: $inquery :.;
+#alias {newdeck %1 %2} {
+   #local new %1;
+   #local old %2;
+   
+   #var cards {
+      {aeon} {} 
+      {blank} {} 
+      {chariot} {} 
+      {creator} {}
+      {death} {}
+      {devil} {}
+      {emperor} {}
+      {empress} {}
+      {fool} {}
+      {hangedman} {}
+      {heretic} {}
+      {hermit} {}
+      {justice} {}
+      {lovers} {}
+      {lust} {}
+      {magician} {}
+      {moon} {}
+      {priestess} {}
+      {star} {}
+      {sun} {}
+      {tower} {}
+      {universe} {}
+      {wheel} {}
+   };
 
-   info Class: $inquery[class];
-   info Level: $inquery[lvl];
-   info PvP: $inquery[pvp];
-   info City: $inquery[city];
+   #foreach *cards[] card {;
+      #send {ind all $card};
+   };
+    
+   #nop #send {remove $old};
+   #nop #foreach *cards[] card {;
+      #nop #send {outd all $card};
+   #nop };
+   #nop #send {put $old in pack};
+   #nop #send {wear $new};
+   #nop #foreach *cards card {;
+      #nop #send {ind all $card};
+   #nop };
 }
-
-
-/* 
-   test out table of indicies that hold names and data.
-*/
-#list testtbl ins -1 {mel {{counter}{0}}}
-#var testtbl;
-
-#nop Set the counter;
-#var testtbl[1][mel][counter] 4;
-#var testtbl;
-
-#var name *testtbl[1][+1];
-#var name;
-#show $name;
-#show -------------;
-#var testtbl[1][$name];
-#show -------------;
 
 #class wip save
 #class wip close

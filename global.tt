@@ -142,19 +142,28 @@
 #read events.tt;
 
 #var bftarget {};
+#alias {bclear} {#var bftarget {}};
 #alias {bfind} {
-   #if {"%1" === "$bftarget"} {
-      #math findidx {$findidx + 1};
-      #buffer find +$findidx %1;
-   }
+   #if {"%0" === "$bftarget"} {
+      #math findidx {$findidx - 1};
+      info Find index = $findidx;
+      #buffer find $findidx %i%0;
+      info finding next.;
+   };
    #else {
-      #var findidx 1;
-      #var bftarget %1;
-      #buffer find %1;
+      #var findidx -1;
+      #var bftarget %0;
+      #buffer find $findidx %i%0;
+      info finding first, %0;
    }
 }
 
-#action {^Your starburst tattoo flares as the world is momentarily tinted red.$} {
+#var checkReckless 0;
+#action {You are confused as to the effects of the venom} {
+   #var checkReckless 1;
+}
+
+#action {Your starburst tattoo flares as the world is momentarily tinted red.} {
    #show <118>------------------------------------------------;
    #line oneshot #sub {%*} {           <138>STARBURST USED};
    #show <118>------------------------------------------------;

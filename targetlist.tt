@@ -1,6 +1,6 @@
 #CLASS {targetlist} OPEN
 
-#VARIABLE {areaName} {the village of Qurnok}
+#VARIABLE {areaName} {the Aalen Forest}
 #VARIABLE {targets}
 {
     {Ashtan} 
@@ -16,6 +16,11 @@
         {orc} {}
         {pygmy} {}
         {smurf} {}
+    }
+    {the Aalen Forest} 
+    {
+        {Ta'hena} {}
+        {ranger} {}
     }
     {the Dardanic Grasslands} 
     {
@@ -65,6 +70,7 @@
     }
     {the Village of Genji} 
     {
+        {atavian} {}
         {manticore} {}
     }
     {the bog of Ashtan} 

@@ -56,6 +56,10 @@
    deregisterEvent prompt clearauraglance;
 }
 
+#alias {ag %1} {
+   auraglance @pvpTarget{%1};
+}
+
 #alias {auraglance} {
    #send {auraglance %1};
    #class auraglance load;

@@ -3,6 +3,8 @@
 #alias {updateCharUI} {
    #if {$uimap[width] === 0} {#return};
 
+   #draw green filled jeweled box {$uimap[height]+4} 1 -4 {$uimap[width]};
+
    #local offset 4;
    #screen clear square {$uimap[height]+$offset+1} 2 -4 {$uimap[width]-2};
 
@@ -14,7 +16,6 @@
    #line ignore #showme {Tentacles: 0} {$uimap[height]+5+$offset} {3};
    #line ignore #showme {Astral: $astralactive} {$uimap[height]+6+$offset} {3};
 
-   #nop Right hand side;
    #line ignore #showme {Hermits: $hermitCards} {$uimap[height]+8+$offset} {3};
    #line ignore #showme {  In Deck: 0} {$uimap[height]+9+$offset} {3};
    #line ignore #showme {Wheel: 0} {$uimap[height]+$offset+10} {3};

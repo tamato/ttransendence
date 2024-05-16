@@ -95,7 +95,7 @@
    };
 };
 
-#alias {death} {
+#alias {death %1} {
    #if {"%1" == ""} {err Pass in a target for Death;#return};
 
    #local target @pvpTarget{%1};
