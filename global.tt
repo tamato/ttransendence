@@ -158,6 +158,11 @@
    }
 }
 
+#var 
+#alias {rebound} {
+
+}
+
 #var checkReckless 0;
 #action {You are confused as to the effects of the venom} {
    #var checkReckless 1;
