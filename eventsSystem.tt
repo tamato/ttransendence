@@ -1,13 +1,16 @@
+#nop -------------------;
 #nop Events system, raise, register and deregister ;
+#nop -------------------;
 
 #nop Global events holder;
 #nop Table organized by;
 #nop  event, name, func;
 #var Events {}
 
+#nop Registers a new event, 
+#nop %1 - event, gmcp Room.Info;
+#nop %2 - behavious to fire event fires;
 #alias {registerEvent} {
-   #nop %1 - event, gmcp Room.Info;
-   #nop %2 - behavious to fire event fires;
    #var Events[%1][%2] {};
 }
 
