@@ -14,6 +14,7 @@
 
 #var seenPlys {};
 
+#read movecommands.tt;
 #read eventsSystem.tt;
 #read connect.tt;
 #read gui.tt;
@@ -42,7 +43,7 @@
 }
 
 #var addfree {queue add freestanding};
-#var insfree {queue insert freestanding 1};
+#var insfree {queue insert freestanding};
 
 #alias {print} {
    #line ignore #showme  <168>--------------------------------------------------------------------------------;
@@ -178,7 +179,7 @@
 #var checkReckless 0;
 #action {You are confused as to the effects of the venom} {
    #sub {%0} {<110>!!!! <117>%0<110> !!!};
-   #send {$insfree diag};
+   #send {$insfree 3 diag};
    #var checkReckless 1;
    raiseEvent ConfusedVenom;
 }

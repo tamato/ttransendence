@@ -168,7 +168,7 @@
    #if {"%1" !== ""} {#var target %1};
 
    #nop #send {$insfree fling priestess at me};
-   #send {$insfree fling priestess at $target};
+   #send {$insfree 2 fling priestess at $target};
 
    #unvar target;
    #var priStatus {Qd};

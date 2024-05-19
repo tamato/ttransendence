@@ -72,7 +72,7 @@
    pickplant;
 }
 
-#line oneshot #action {^The following plants are growing in this room:$} {
+#line oneshot #action {The following plants are growing in this room:} {
    #var picked 0;
    #var picking 0;
    registerEvent prompt autoHarvestPrompt;

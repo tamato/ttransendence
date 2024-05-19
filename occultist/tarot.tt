@@ -1,0 +1,75 @@
+#nop Tarot abilities
+
+#var UniverseList {
+   {azdun} {1772}   
+   {bitterfork} {25093}
+   {blackrock} {10573}
+   {brasslantern} {30383}
+   {caerwitrin} {17678}
+   {genji} {10091}
+   {manara} {9124}
+   {manusha} {8730}
+   {mhojave} {39103}
+   {newhope} {25581}
+   {newthera} {20386}
+   {shastaan} {2855}
+   {thraasi} {35703}
+}
+/*
+#map go <>
+#map find targetroom number
+#path get length VAR
+
+mortar and pestle.
+Book of Wyrdling Secrets
+*/
+
+
+#function {universedist} {
+   #map get roomvnum roomid;
+
+   #map find $PoIs[%1];
+   #path get length shortest;
+   #var card {};
+   #foreach *UniverseList[] loc {
+      #nop info $UniverseList[$loc];
+      #nop info $PoIs[%1];
+
+      #map go $UniverseList[$loc];
+      #map find $PoIs[%1];
+      #path get length dist;
+      #nop info Dist $dist;
+      #if {$dist < $shortest} {
+         #var shortest $dist;
+         #var card $loc;
+      };
+   };
+   #map go $roomid;
+   #unvar roomid;
+
+   #nop info Winning card: $card;
+   #return $card;
+}
+
+#var {PoIs} {
+   {aalen} {1894}
+   {private} {54318}
+}
+
+#alias {pois} {
+   #var PoIs;
+}
+
+#alias {mpoi %1} {
+   #var card @universedist{%1};
+   #if {"$card" !== ""} {
+      uni $card;
+      #line oneshot #action {You reach out and touch the map before you. Your surroundings spin as you melt effortlessly into the image.} {
+         mgo $PoIs[%1];
+      };
+   };
+   #elseif {"$card" === ""} {
+      mgo $PoIs[%1];
+   };
+}
+

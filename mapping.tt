@@ -163,11 +163,9 @@
 }
 
 #alias {mapping.step} {
-   print Queueing up step command;
    #delay {delayStepping} {
       #if {$gmcp[char][vitals][bal] == 1 && $gmcp[char][vitals][eq] == 1} {
          #path walk;
-         info Stepping.... $stepIdx;
          nextStepId;
       };
       #else {
@@ -181,7 +179,7 @@
 
 #EVENT {END OF PATH} {
    #if {&{mapping[yetToVisit][]} > 0} {
-      print End of PATH hit, but there is still more to explore.;
+      #nop print End of PATH hit, but there is still more to explore.;
    };
 }
 
@@ -339,7 +337,6 @@ registerEvent RoomInfo mapping.onRoomInfo;
 
 #alias {mstop} {
    #nop Clean up;
-   print Finished AutoExplore;
 
    #class pathing clear;
    #class autobash clear;
@@ -355,7 +352,6 @@ registerEvent RoomInfo mapping.onRoomInfo;
    #path destroy;
 
    #undelay delayStepping;
-   dbg all cleared;
 }
 
 #alias {hunt} {
@@ -403,14 +399,13 @@ Be aware if targets walking into the room.
    #math stepIdx {$stepIdx % 3};
 };
 
-#var stepTimings {{0}{0.01}{1}{0.01}{2}{0.7}};
+#var stepTimings {{0}{0.2}{1}{0.2}{2}{0.6}};
 
 #alias {autobash.step} {
    #delay {delayStepping} {
 
       #if {&{atkTarget} == 0 && $gmcp[char][vitals][bal] == 1 && $gmcp[char][vitals][eq] == 1} {
          #path walk;
-         #show AutoBash Stepping....;
          nextStepId;
       };
       #else {

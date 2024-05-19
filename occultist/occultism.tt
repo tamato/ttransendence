@@ -43,11 +43,11 @@
    updateCharUI;
 }
 
-#action {^A simulacrum shaped like Cthul cracks and crumbles to dust$} {
+#action {A simulacrum shaped like Cthul cracks and crumbles to dust} {
    #send {$addfree simulacrum};
 }
 
-#action {^A heartstone cracks and crumbles to dust.} {
+#action {A heartstone cracks and crumbles to dust.} {
    #send {$addfree heartstone};
 }
 

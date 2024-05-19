@@ -1,0 +1,54 @@
+#nop Move commands need a little help
+
+#alias {move %1} {
+   #send {$insfree 1 %1};
+};
+
+#alias {n} {
+   move n;
+}
+
+#alias {e} {
+   move e;
+}
+
+#alias {s} {
+   move s;
+}
+
+#alias {w} {
+   move w;
+}
+
+#alias {u} {
+   move up;
+}
+
+#alias {d} {
+   move d;
+}
+
+#alias {in} {
+   move in;
+}
+
+#alias {out} {
+   move out;
+}
+
+#alias {ne} {
+   move ne;
+}
+
+#alias {nw} {
+   move nw;
+}
+
+#alias {se} {
+   move se;
+}
+
+#alias {sw} {
+   move sw;
+}
+

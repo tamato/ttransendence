@@ -9,7 +9,8 @@
 #read occultist/battlerage.tt;
 #read occultist/occultism.tt;
 #read occultist/domination.tt;
-#read occultist/gui.tt;
+#read occultist/tarot.tt;
+#read occultist/gui.tharvestt;
 #read harvesting/harvest.tt;
 
 #session cthul achaea.com 23;

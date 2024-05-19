@@ -1,5 +1,6 @@
 characters.json
 characters/*
+character_highlights.tt
 map.json
 world.map
 __pycache__/*
