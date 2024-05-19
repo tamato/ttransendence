@@ -94,7 +94,7 @@
 #nop Use Diagnose  for losing eq;
 #nop use Directory for losing balance;
 
-#highlight {^Your fellow citizen, %w, has just escaped imprisonment in the foul pygmy dungeon. Welcome him to %w!} {light cyan};
+#highlight {Your fellow citizen, %w, has just escaped imprisonment in the foul pygmy dungeon. Welcome him to %w!} {black b cyan};
 
 #alias {allowPrism} {
    #class prism clear;

@@ -3,6 +3,8 @@
 #class wip kill
 #class wip open
 
+#nop %1 - New deck
+#nop %2 - Old deck
 #alias {newdeck %1 %2} {
    #local new %1;
    #local old %2;
@@ -33,19 +35,16 @@
       {wheel} {}
    };
 
+   #send {remove $old};
+   #foreach *cards[] card {;
+      #send {outd all $card};
+   };
+   #send {put $old in pack};
+   #send {wear $new};
+   
    #foreach *cards[] card {;
       #send {ind all $card};
    };
-    
-   #nop #send {remove $old};
-   #nop #foreach *cards[] card {;
-      #nop #send {outd all $card};
-   #nop };
-   #nop #send {put $old in pack};
-   #nop #send {wear $new};
-   #nop #foreach *cards card {;
-      #nop #send {ind all $card};
-   #nop };
 }
 
 #class wip save

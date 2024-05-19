@@ -16,10 +16,6 @@
    info   - pass in a room name to get room info;
    info * mbash;
    info   - Auto explore area while also hunting and harvesting plants;
-   info;
-   info Notes;
-   info To hook 'events' into this system,;
-   info;
 }
 
 #alias {mapping.onConnected} {
@@ -169,11 +165,8 @@
    #delay {delayStepping} {
       #if {$gmcp[char][vitals][bal] == 1 && $gmcp[char][vitals][eq] == 1} {
          #path walk;
-         info Stepping....;
-
-         #math stepIdx {$stepidx + 1};
-         #math stepIdx {$stepidx % 3};
-         #if {$stepIdx == 0} {#var stepIdx 1};
+         info Stepping.... $stepIdx;
+         nextStepId;
       };
       #else {
          info Waiting to recover before exploring...;  
@@ -403,8 +396,13 @@ Be aware if targets walking into the room.
 }
 
 #var stepIdx 1;
-#nop #var stepTimings {{1}{0.01}{2}{0.01}{3}{0.7}};
-#var stepTimings {{1}{0.7}};
+#alias nextStepId {
+   #math stepIdx {$stepIdx + 1};
+   #math stepIdx {$stepIdx % 3};
+};
+
+#var stepTimings {{0}{0.01}{1}{0.01}{2}{0.8}};
+#nop #var stepTimings {{1}{0.7}};
 
 #alias {autobash.step} {
    #delay {delayStepping} {
@@ -412,10 +410,7 @@ Be aware if targets walking into the room.
       #if {&{atkTarget} == 0 && $gmcp[char][vitals][bal] == 1 && $gmcp[char][vitals][eq] == 1} {
          #path walk;
          #show AutoBash Stepping....;
-         #math stepIdx {$stepidx + 1};
-         #math stepIdx {$stepidx % 3};
-         #if {$stepIdx == 0} {#var stepIdx 1};
-
+         nextStepId;
       };
       #else {
          info Waiting to recover before exploring...;  
