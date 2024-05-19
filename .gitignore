@@ -1,0 +1,6 @@
+characters.json
+characters/*
+map.json
+world.map
+__pycache__/*
+tt/__pycache__/*

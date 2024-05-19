@@ -1,17 +1,5 @@
 #nop PvpCommands
 
-/*
-must pass in a number
-*/
-#function {pvpTarget} {
-   #local count &pvpTargets[];
-   #nop check if value in bounds;
-   #if {%1 < 0 && %1 > $count} {#return ""};
-   #if {"%1" == ""} {#return ""};
-
-   #nop Return just the name of the player
-   #return $pvpTargets[%1][name];
-}
 
 #class occultistpvp kill;
 #class occultistpvp open;

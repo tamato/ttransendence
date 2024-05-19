@@ -16,6 +16,8 @@
    info   - pass in a room name to get room info;
    info * mbash;
    info   - Auto explore area while also hunting and harvesting plants;
+   info * mpois;
+   info   - list of points of interest;
 }
 
 #alias {mapping.onConnected} {
@@ -401,8 +403,7 @@ Be aware if targets walking into the room.
    #math stepIdx {$stepIdx % 3};
 };
 
-#var stepTimings {{0}{0.01}{1}{0.01}{2}{0.8}};
-#nop #var stepTimings {{1}{0.7}};
+#var stepTimings {{0}{0.01}{1}{0.01}{2}{0.7}};
 
 #alias {autobash.step} {
    #delay {delayStepping} {

@@ -57,6 +57,7 @@
 }
 
 #alias {ag %1} {
+   info @pvpTarget{%1};
    auraglance @pvpTarget{%1};
 }
 

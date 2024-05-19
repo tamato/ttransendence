@@ -47,6 +47,15 @@
    };
 }
 
+#var poiList {}
+#alias {mpois} {
+   
+   #if {"%1" == ""} {
+      print List of Points of Interset;
+   };
+   #elseif 
+}
+
 #class wip save
 #class wip close
 

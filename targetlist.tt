@@ -11,6 +11,12 @@
     {
         {guard} {}
     }
+    {Saiha'balan Grotto} 
+    {
+        {centipede} {}
+        {orbweaver} {}
+        {salamander} {}
+    }
     {Test} 
     {
         {orc} {}
@@ -20,6 +26,9 @@
     {the Aalen Forest} 
     {
         {Ta'hena} {}
+        {Tsellias} {}
+        {basilisk} {}
+        {fairy} {}
         {ranger} {}
     }
     {the Dardanic Grasslands} 

@@ -33,19 +33,30 @@
 
 #EVENT {IAC SB GMCP Char.Afflictions.Add IAC SE}
 {
-    #variable gmcp[char][afflictions][add] {%0};
-    print Gained Affliction $gmcp[char][afflictions][add][+1][name];
+   #variable gmcp[char][afflictions][add] {%0};
+   #list afflictions ins -1 $gmcp[char][afflictions][add][+1][name];
+   raiseEvent updateui;
 }
 
 #EVENT {IAC SB GMCP Char.Afflictions.List IAC SE}
 {
-    #variable gmcp[char][afflictions][list] {%0};
+   #variable gmcp[char][afflictions][list] {%0};
+
+   #list afflictions clear;
+   #foreach $gmcp[char][afflictions][list][] aff {
+      #list afflictions ins -1 $aff[name];
+   }
+   raiseEvent updateui;
 }
 
 #EVENT {IAC SB GMCP Char.Afflictions.Remove IAC SE}
 {
-    #variable gmcp[char][afflictions][remove] {%0};
-    print Removed Affliction $gmcp[char][afflictions][remove];
+   #variable gmcp[char][afflictions][remove] {%0};
+   print Removed Affliction $gmcp[char][afflictions][remove];
+
+   #list afflictions find {$gmcp[char][afflictions][remove]} idx;
+   #if {$idx !== 0} { #list afflictions delete $idx; };
+   raiseEvent updateui;
 }
 
 #EVENT {IAC SB GMCP char.status IAC SE}
@@ -198,6 +209,6 @@
 
 #EVENT {CLASS DEACTIVATED battlerage}
 {
-   deregisterEvent CharVitals;
+   #nop deregisterEvent CharVitals;
 }
 

@@ -1,5 +1,6 @@
 #nop Gui info specific to Cthul
 
+registerEvent updateui updateCharUI;
 #alias {updateCharUI} {
    #if {$uimap[width] === 0} {#return};
 
@@ -19,5 +20,12 @@
    #line ignore #showme {Hermits: $hermitCards} {$uimap[height]+8+$offset} {3};
    #line ignore #showme {  In Deck: 0} {$uimap[height]+9+$offset} {3};
    #line ignore #showme {Wheel: 0} {$uimap[height]+$offset+10} {3};
+
+   #line ignore #showme {Afflictions} { $uimap[height]+$offset+12 } {3};
+   #var affOff $uimap[height]+$offset+13;
+   #foreach $afflictions[] aff {
+      #line ignore #showme {$aff} {$affOff} {5};
+      #math affOff {$affOff + 1};
+   }
 }
 

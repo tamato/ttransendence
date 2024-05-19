@@ -158,24 +158,52 @@
    }
 }
 
-#var 
+#var useRebounding 0;
 #alias {rebound} {
-
+   #if {$useRebounding === 0} {
+      #var useRebounding 1;
+      #send {curing priority defense rebounding 10};
+   };
+   #else {
+      #var useRebounding 0;
+      #send {curing priority defense rebounding reset};
+   }
 }
 
+/*
+   List of things this could be
+   reckless
+   slickness
+*/
 #var checkReckless 0;
 #action {You are confused as to the effects of the venom} {
+   #sub {%0} {<110>!!!! <117>%0<110> !!!};
+   #send {$insfree diag};
    #var checkReckless 1;
+   raiseEvent ConfusedVenom;
 }
 
 #action {Your starburst tattoo flares as the world is momentarily tinted red.} {
-   #show <118>------------------------------------------------;
-   #line oneshot #sub {%*} {           <138>STARBURST USED};
-   #show <118>------------------------------------------------;
+   #show <118>--------------------------------------------------;
+   #line oneshot #sub {%*} {<103>                    STARBURST USED                    };
+   #show <118>--------------------------------------------------;
 };
 
 #action {^A %w tattoo fades from view and disappears} {
    print Lost %1 tattoo!;
+}
+
+/*
+must pass in a number
+*/
+#function {pvpTarget} {
+   #local count &pvpTargets[];
+   #nop check if value in bounds;
+   #if {%1 < 0 && %1 > $count} {#return ""};
+   #if {"%1" == ""} {#return ""};
+
+   info Target is: <110>$pvpTargets[%1][name]<099>;
+   #return $pvpTargets[%1][name];
 }
 
 #high {A nearly invisible magical shield forms around%*$} { underscore <FFF0000>}
