@@ -36,10 +36,12 @@
 #alias {ggold} {
    #if {$getgold == 1 || "%1" == "0"} {
       #var getgold 0;
+      info Stopped auto get gold;
    };
-   #else {$getgold == 1 || "%1" == "0"} {
-      #var getgold 0;
-   }
+   #else {$getgold == 0 || "%1" == "1"} {
+      #var getgold 1;
+      info Auto getting gold;
+   };
 }
 
 #var addfree {queue add freestanding};
@@ -52,15 +54,15 @@
 }
 
 #alias {err} {
-   #line ignore #showme  {<431>ERROR: <410>%0};
+   #line ignore #showme  {<431>ERROR: <418>%0};
 }
 
 #alias {info} {
-   #line ignore #showme  {<230>%0};
+   #line ignore #showme  {<238>%0};
 }
 
 #alias {dbg} {
-   #line ignore #showme  {<405>DBG: <460>%0};
+   #line ignore #showme  {<405>DBG: <468>%0};
 }
 
 #alias {journal} {
@@ -74,15 +76,15 @@
    print {Begin Entry};
 }
 
-#alias {^fight!} {
+#alias {fight!} {
    #nop #if {{%0} != {}} { #log off; #config {log} {txt}; #break; };
 
-   #config log html;
+   #nop #config log html;
    #log append combat.log;
 
    #show {};
    #show {};
-   print {New Fight};
+   print {New Fight, use log off to stop it.};
 }
 
 #highlight {^You have slain%*.$} {black b magenta};
@@ -178,7 +180,7 @@
 */
 #var checkReckless 0;
 #action {You are confused as to the effects of the venom} {
-   #sub {%0} {<110>!!!! <117>%0<110> !!!};
+   #sub {%0} {<118>!!!! <117>%0<118> !!!};
    #send {$insfree 3 diag};
    #var checkReckless 1;
    raiseEvent ConfusedVenom;
@@ -203,7 +205,7 @@ must pass in a number
    #if {%1 < 0 && %1 > $count} {#return ""};
    #if {"%1" == ""} {#return ""};
 
-   info Target is: <110>$pvpTargets[%1][name]<099>;
+   info Target is: <118>$pvpTargets[%1][name]<988>;
    #return $pvpTargets[%1][name];
 }
 

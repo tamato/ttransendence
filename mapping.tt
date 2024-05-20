@@ -1,6 +1,7 @@
 #nop Create map as we get it.
 
 #read shopRoomNumbers.tt;
+#read pointsofinterest.tt;
 
 #alias {mapping} {
    print Auto Walking Commands;
@@ -16,8 +17,27 @@
    info   - pass in a room name to get room info;
    info * mbash;
    info   - Auto explore area while also hunting and harvesting plants;
-   info * mpois;
+   info * pois;
    info   - list of points of interest;
+   info * mpoi
+   info   - Using tarot universe to quickly reach goal
+}
+
+#alias {pois} {
+   #var PoIs;
+}
+
+#alias {mpoi %1} {
+   #var card @universedist{%1};
+   #if {"$card" !== ""} {
+      uni $card;
+      #line oneshot #action {You reach out and touch the map before you. Your surroundings spin as you melt effortlessly into the image.} {
+         mgo $PoIs[%1];
+      };
+   };
+   #elseif {"$card" === ""} {
+      mgo $PoIs[%1];
+   };
 }
 
 #alias {mapping.onConnected} {
@@ -399,7 +419,7 @@ Be aware if targets walking into the room.
    #math stepIdx {$stepIdx % 3};
 };
 
-#var stepTimings {{0}{0.2}{1}{0.2}{2}{0.6}};
+#var stepTimings {{0}{0.02}{1}{0.02}{2}{0.8}};
 
 #alias {autobash.step} {
    #delay {delayStepping} {

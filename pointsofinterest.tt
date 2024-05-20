@@ -1,0 +1,36 @@
+#CLASS {pois} OPEN
+
+#ALIAS {pois}
+{
+    #if {"%1" === ""}
+    {
+        print List of Points of Interest;
+        #foreach {*PoIs[%*]} {poi}
+        {
+            info   $poi
+        }
+    };
+    #elseif {&PoIs[%1]}
+    {
+        #unhighlight {%1};
+        #unvariable PoIs[%1];
+        #class pois write pointsofinterest.tt
+    };
+    #else
+    {
+        #variable PoIs[%1] {$gmcp[room][info][num]};
+        #class pois write pointsofinterest.tt
+    }
+}
+
+#VARIABLE {PoIs}
+{
+    {aalen} {1894}
+    {battle} {37631}
+    {dr} {3955}
+    {gates} {436}
+    {private} {54318}
+    {rhod} {39115}
+}
+
+#CLASS {pois} CLOSE

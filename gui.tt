@@ -282,7 +282,7 @@
          #var color $chardb[%1][color]%1<099>;
       };
       #else {
-         #var color <070>%1<099>;
+         #var color <078>%1<099>;
       };
 
       #list room_window[tab][seen] ins -1 {<218>$newidx $color};
@@ -315,7 +315,7 @@ registerEvent AddPlayer gui.onAddPlayer;
       room_window_show players $chardb[$ply][color]$ply<099>;
    };
    #else {
-      room_window_show players <070>$ply<099>;
+      room_window_show players <078>$ply<099>;
    }
    addSeenPlayer $ply;
 }
@@ -336,7 +336,7 @@ registerEvent RoomPlayers gui.onRoomPlayers;
          room_window_show players $chardb[$ply][color]$ply<099>;
       };
       #else {
-         room_window_show players <070>$ply<099>;
+         room_window_show players <078>$ply<099>;
       };
    };
    #unvar idx;

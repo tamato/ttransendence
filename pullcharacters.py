@@ -17,8 +17,8 @@ longestNameLen = 0
 with urllib.request.urlopen(url) as response:
     # load up the json object
     jsondata = json.loads(response.read())
-    print ('finished downloading list of characters')
-    print(jsondata['count'])
+    #  print ('finished downloading list of characters')
+    #  print(jsondata['count'])
 
     # parse out each character
     for c in jsondata['characters']:
@@ -32,7 +32,7 @@ with urllib.request.urlopen(url) as response:
                 json.dump(charjson, charfile)
 
 longestNameLen += 1
-print ('finished characters')
+#  print ('finished characters')
 
 # load up all the character files
 allcharacters = [f for f in listdir(path) if isfile(join(path, f))]

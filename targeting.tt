@@ -125,6 +125,8 @@ registerEvent CharItemsRemove targeting.onCharItemsRemove;
    room_window_remove $id;
 
    #local id $item[id];
+
+   info Removing $id;
    #unvar roomMobs[$id];
 }
 
@@ -167,6 +169,7 @@ registerEvent CharItemsRemove targeting.onCharItemsRemove;
          #foreach *targets[$areaName][] tar {
 
             #if {"$roomMobs[$denizen]" == "%*$tar%*"} {
+               info Setting target to: $denizen;
                #var atkTarget $tar;
                #send {settarget $denizen};
                attackCmd $denizen;
@@ -193,7 +196,7 @@ registerEvent CharItemsRemove targeting.onCharItemsRemove;
    info Class: $inquery[class];
    info Level: $inquery[lvl];
    info PvP: $inquery[pvp];
-   info City: $inquery[color]$inquery[city]<900>;
+   info City: $inquery[color]$inquery[city]<988>;
 }
 
 #alias {items} {

@@ -28,7 +28,7 @@
    move d;
 }
 
-#alias {in} {
+#alias {^in$} {
    move in;
 }
 

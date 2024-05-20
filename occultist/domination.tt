@@ -37,8 +37,26 @@
       };
    }
 }
+#alias {sumr} {#send {$addfree summon Rixil}};
+#alias {sume} {#send {$addfree summon Eerion}};
+#alias {sums} {#send {$addfree summon Scrag}};
+#alias {sumpy} {#send {$addfree summon Pyradius}};
+#alias {sumg} {#send {$addfree summon Golgotha}};
+#alias {sumdm} {#send {$addfree summon Dameron}};
+#alias {sumpl} {#send {$addfree summon Palpatar}};
+#alias {sumni} {#send {$addfree summon Nin'kharsag}};
+#alias {sumi} {#send {$addfree summon Istria}};
+#alias {summ} {#send {$addfree summon Marduk}};
+#alias {sumne} {#send {$addfree summon Nemesis}};
+#alias {sumb} {#send {$addfree summon Buul}};
+#alias {sumc} {#send {$addfree summon Cadmus}};
+#alias {sumpi} {#send {$addfree summon Piridon}};
+#alias {sumdn} {#send {$addfree summon Danaeus}};
+#alias {sumx} {#send {$addfree summon Xenophage}};
+#alias {suml} {#send {$addfree summon Lycantha}};
+#alias {sumh} {#send {$addfree summon Hecate}};
+#alias {sumd} {#send {$addfree summon Glaaki}};
 
-#alias {sumd} {#send {$addfree summon Piridon}};
 #alias {dps %1} {#send {$addfree order doppleganger seek @pvpTarget{%1}}};
 #alias {dpl} {#send {$addfree order doppleganger look}};
 #alias {dphome} {#send {$addfree order doppleganger return}};

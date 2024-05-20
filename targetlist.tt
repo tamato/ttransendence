@@ -1,6 +1,6 @@
 #CLASS {targetlist} OPEN
 
-#VARIABLE {areaName} {the Aalen Forest}
+#VARIABLE {areaName} {the Barony of Dun Valley}
 #VARIABLE {targets}
 {
     {Ashtan} 
@@ -17,21 +17,25 @@
         {orbweaver} {}
         {salamander} {}
     }
-    {Test} 
-    {
-        {orc} {}
-        {pygmy} {}
-        {smurf} {}
-    }
     {the Aalen Forest} 
     {
+        {Jaaran} {}
         {Stlerin} {}
         {Ta'hena} {}
         {Tremayn} {}
         {Tsellias} {}
+        {Zeuris} {}
         {basilisk} {}
         {fairy} {}
         {ranger} {}
+    }
+    {the Barony of Dun Valley} 
+    {
+        {catfish} {}
+        {ogre} {}
+        {orc} {}
+        {snake} {}
+        {xulu} {}
     }
     {the Dardanic Grasslands} 
     {
@@ -62,7 +66,9 @@
     }
     {the Rhodestrian Settlement} 
     {
-        {Rhodestrian} {}
+        {Alander} {}
+        {Berstine} {}
+        {Morsten} {}
         {Sonterro} {}
         {Yolenders} {}
         {cougar} {}
@@ -81,6 +87,8 @@
     }
     {the Village of Genji} 
     {
+        {Gaharas} {}
+        {Virina} {}
         {atavian} {}
         {manticore} {}
     }
@@ -102,7 +110,6 @@
     {
         {Ulvna} {}
         {guard} {}
-        {ulvna} {}
     }
 }
 

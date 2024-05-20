@@ -75,7 +75,7 @@
    #var roomvnum *rooms[+1];
    #map get roomarea area $roomvnum;
 
-   #line oneshot #sub {~%*} {%%1 <268>$roomvnum<900>, in <268>$area<900>};
+   #line oneshot #sub {~%*} {%%1 <268>$roomvnum<988>, in <268>$area<988>};
 };
 
 #class auraglance close;

@@ -7,9 +7,88 @@
 /*
 
 */
-#alias {qw} {
+
+#alias {bshi %1} {
+   #send {QUEUE PREPEND CLASS COMMAND GREMLIN AT @pvpTargets{%1}};
+}
+#nop #action {^A nearly invisible magical shield forms around} ;
+#nop You may command another entity to do your bidding.;
+#var addClassFree {queue add ec!t};
+#alias {test %1} {
+   #var pvptarget @pvpTarget{%1};
+   #send {$addClassFree COMMAND CRONE AT $pvptarget left arm};
+   #send {$addfree BODYWARP $pvptarget right arm ague};
+}
+
+#alias {arms %1} {
+   #var pvptarget @pvpTarget{%1};
+   #send {$addClassFree COMMAND CRONE AT $pvptarget right arm};
+   #send {$addfree BODYWARP $pvptarget right arm SHRIVEL right arm};
+
+   #send {$addClassFree COMMAND CRONE AT $pvptarget right arm};
+   #send {$addfree BODYWARP $pvptarget right arm SHRIVEL right leg};
+
+   #send {$addClassFree COMMAND CRONE AT $pvptarget right arm};
+   #send {$addfree BODYWARP $pvptarget right arm SHRIVEL left leg};
+
+   #send {$addClassFree COMMAND CRONE AT $pvptarget right arm};
+   #send {$addfree BODYWARP $pvptarget right arm SHRIVEL right arm};
+
+   #send {$addClassFree COMMAND CRONE AT $pvptarget right arm};
+   #send {$addfree BODYWARP $pvptarget right arm SHRIVEL right arm};
+
+   #send {$addClassFree COMMAND CRONE AT $pvptarget right arm};
+   #send {$addfree BODYWARP $pvptarget right arm SHRIVEL right arm};
 }
 
 #class occultistpvp close;
 #class occultistpvp save;
+
+/*
+
+17:08:55.52 I 86h 0rage 100m 100e 100w[exE|90] :>-
+--------------------------------------------------------------------------------
+             [ Removed Affliction {1}{damagedleftleg} ]
+--------------------------------------------------------------------------------
+
+Your left leg feels stronger and healthier.
+You have cured the damagedleftleg affliction.
+You may apply another salve to yourself.
+17:08:55.67 I 86h 0rage 100m 100e 100w[exE|90] :>-
+You take out some salve and quickly rub it on your legs.
+17:08:55.72 I 86h 0rage 100m 100e 100w[exE|90] :>-
+--------------------------------------------------------------------------------
+             [ Removed Affliction {1}{damagedrightleg} ]
+--------------------------------------------------------------------------------
+
+Your right leg feels stronger and healthier.
+You have cured the damagedrightleg affliction.
+You may apply another salve to yourself.
+17:08:59.72 I 86h 0rage 100m 100e 100w[exE|90] :>-
+--------------------------------------------------------------------------------
+             [ Removed Affliction {1}{brokenleftleg} ]
+--------------------------------------------------------------------------------
+
+You take out some salve and quickly rub it on your legs.
+The bones in your left leg mend.
+You have cured the brokenleftleg affliction.
+17:08:59.79 I 86h 0rage 100m 100e 100w[exE|90] :>-
+You may apply another salve to yourself.
+17:09:00.70 I 86h 0rage 100m 100e 100w[exE|90] :>-
+--------------------------------------------------------------------------------
+             [ Removed Affliction {1}{brokenrightleg} ]
+--------------------------------------------------------------------------------
+
+You take out some salve and quickly rub it on your legs.
+The bones in your right leg mend.
+You have cured the brokenrightleg affliction.
+17:09:00.92 I 86h 0rage 100m 100e 100w[exE|90] :>-
+HP -9, Orb: 0
+
+You bleed 9 health.
+17:09:01.01 I 86h 0rage 100m 100e 100w[exE|90] :>-
+You may apply another salve to yourself.
+17:09:01.79 I 86h 0rage 100m 100e 100w[exE|90] :>-
+
+*/
 
