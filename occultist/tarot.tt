@@ -15,15 +15,50 @@
    {shastaan} {2855}
    {thraasi} {35703}
 }
-/*
-#map go <>
-#map find targetroom number
-#path get length VAR
 
-mortar and pestle.
-Book of Wyrdling Secrets
-*/
+#nop %1 - New deck
+#nop %2 - Old deck
+#alias {newdeck %1 %2} {
+   #local new %1;
+   #local old %2;
+   
+   #var cards {
+      {aeon} {} 
+      {blank} {} 
+      {chariot} {} 
+      {creator} {}
+      {death} {}
+      {devil} {}
+      {emperor} {}
+      {empress} {}
+      {fool} {}
+      {hangedman} {}
+      {heretic} {}
+      {hermit} {}
+      {justice} {}
+      {lovers} {}
+      {lust} {}
+      {magician} {}
+      {moon} {}
+      {priestess} {}
+      {star} {}
+      {sun} {}
+      {tower} {}
+      {universe} {}
+      {wheel} {}
+   };
 
+   #send {remove $old};
+   #foreach *cards[] card {;
+      #send {outd all $card};
+   };
+   #send {put $old in pack};
+   #send {wear $new};
+   
+   #foreach *cards[] card {;
+      #send {ind all $card};
+   };
+}
 
 #function {universedist} {
    #map get roomvnum roomid;
@@ -32,13 +67,14 @@ Book of Wyrdling Secrets
    #path get length shortest;
    #var card {};
    #foreach *UniverseList[] loc {
-      #nop info $UniverseList[$loc];
-      #nop info $PoIs[%1];
-
       #map go $UniverseList[$loc];
       #map find $PoIs[%1];
       #path get length dist;
-      #nop info Dist $dist;
+
+      #nop Using a universe card has a cost;
+      #nop 3 rooms takes 1 second, universe takes 4 seconds (this is an estimate);
+      #math dist {$dist + 12};
+
       #if {$dist < $shortest} {
          #var shortest $dist;
          #var card $loc;
@@ -47,7 +83,6 @@ Book of Wyrdling Secrets
    #map go $roomid;
    #unvar roomid;
 
-   #nop info Winning card: $card;
    #return $card;
 }
 

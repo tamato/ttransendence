@@ -44,7 +44,7 @@ registerEvent CharItemsAdd targeting.onCharItemsAdd;
    { 
       #local name $item[name];
       #local id $item[id];
-      #local item <278>$name<028>$id<209>;
+      #local item <279>$name<028>$id<099>;
 
       room_window_show items $item;
       #continue; 
@@ -60,7 +60,7 @@ registerEvent CharItemsAdd targeting.onCharItemsAdd;
 
    #local name $item[name];
    #local id $item[id];
-   #local mob <278>$name<028>$id<209>;
+   #local mob <279>$name<028>$id<099>;
    #var roomMobs[$id] {$name};
 
    room_window_show mobs $mob;
@@ -89,7 +89,7 @@ registerEvent CharItemsList targeting.onCharItemsList;
       { 
          #local name $item[name];
          #local id $item[id];
-         #local item <278>$name<028>$id<209>;
+         #local item <279>$name<028>$id<099>;
 
          room_window_show items $item;
          #if {$getgold == 1 && "$icon" == "coin" && "$attri" == "%*t%*"} { 
@@ -105,7 +105,7 @@ registerEvent CharItemsList targeting.onCharItemsList;
 
       #local name $item[name];
       #local id $item[id];
-      #local mob <278>$name<028>$id<209>;
+      #local mob <279>$name<028>$id<099>;
       #var roomMobs[$id] {$name};
 
       room_window_show mobs $mob;
@@ -134,7 +134,7 @@ registerEvent CharItemsRemove targeting.onCharItemsRemove;
 {
    #if {"%1" === ""}
    {
-      #showme {<848>Targets for <818>[<838>$areaName<818>]};
+      #showme {<149>Targets for <819>[<839>$areaName<819>]<099>};
       #foreach {*targets[$areaName][%*]} tar {
          info   $tar;
       };
@@ -161,7 +161,6 @@ registerEvent CharItemsRemove targeting.onCharItemsRemove;
 
    #if {"%1" === ""}
    {
-      #nop info No target given;
       #if {&{roomMobs} == 0} {#return};
       #if {&{roomMobs[]} == 0} {#return};
 
@@ -196,13 +195,13 @@ registerEvent CharItemsRemove targeting.onCharItemsRemove;
    info Class: $inquery[class];
    info Level: $inquery[lvl];
    info PvP: $inquery[pvp];
-   info City: $inquery[color]$inquery[city]<988>;
+   info City: $inquery[color]$inquery[city]<099>;
 }
 
 #alias {items} {
    #if {"%1" === ""}
    {
-      #showme {<848>Items for <818>[<838>$areaName<818>]};
+      #showme {<148>Items for <818>[<838>$areaName<818>]<099>};
       #foreach {*itemslist[$areaName][%*]} item {
          info   $item;
       };

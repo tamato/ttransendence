@@ -48,21 +48,21 @@
 #var insfree {queue insert freestanding};
 
 #alias {print} {
-   #line ignore #showme  <168>--------------------------------------------------------------------------------;
-   #line ignore #showme  <078>             [ <038>%0 <078>];
-   #line ignore #showme  <168>--------------------------------------------------------------------------------;
+   #line ignore #showme  <169>--------------------------------------------------------------------------------;
+   #line ignore #showme  <079>             [ <139>%0 <079>]<099>;
+   #line ignore #showme  <169>--------------------------------------------------------------------------------;
 }
 
 #alias {err} {
-   #line ignore #showme  {<431>ERROR: <418>%0};
+   #line ignore #showme  {<431>ERROR: <418>%0<099>};
 }
 
 #alias {info} {
-   #line ignore #showme  {<238>%0};
+   #line ignore #showme  {<238>%0<099>};
 }
 
 #alias {dbg} {
-   #line ignore #showme  {<405>DBG: <468>%0};
+   #line ignore #showme  {<405>DBG: <468>%0<099>};
 }
 
 #alias {journal} {
@@ -179,9 +179,16 @@
    slickness
 */
 #var checkReckless 0;
+#var poisonCounter 0;
 #action {You are confused as to the effects of the venom} {
-   #sub {%0} {<118>!!!! <117>%0<118> !!!};
-   #send {$insfree 3 diag};
+   #sub {%0} {<119>!!!! <117>%0<119> !!!};
+
+   #math poisonCounter {$poisonCounter + 1};
+   #if {$poisonCounter > 2} {
+      #send {$insfree 3 diag};
+      #var poisonCounter 0;
+   };
+
    #var checkReckless 1;
    raiseEvent ConfusedVenom;
 }

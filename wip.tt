@@ -3,50 +3,6 @@
 #class wip kill
 #class wip open
 
-#nop %1 - New deck
-#nop %2 - Old deck
-#alias {newdeck %1 %2} {
-   #local new %1;
-   #local old %2;
-   
-   #var cards {
-      {aeon} {} 
-      {blank} {} 
-      {chariot} {} 
-      {creator} {}
-      {death} {}
-      {devil} {}
-      {emperor} {}
-      {empress} {}
-      {fool} {}
-      {hangedman} {}
-      {heretic} {}
-      {hermit} {}
-      {justice} {}
-      {lovers} {}
-      {lust} {}
-      {magician} {}
-      {moon} {}
-      {priestess} {}
-      {star} {}
-      {sun} {}
-      {tower} {}
-      {universe} {}
-      {wheel} {}
-   };
-
-   #send {remove $old};
-   #foreach *cards[] card {;
-      #send {outd all $card};
-   };
-   #send {put $old in pack};
-   #send {wear $new};
-   
-   #foreach *cards[] card {;
-      #send {ind all $card};
-   };
-}
-
 #var poiList {}
 #alias {mpois} {
    
@@ -60,4 +16,29 @@
 #class wip close
 
 #function gettime {#format result %t %f}
+
+/* try lua */
+#alias {initlua} {
+   #run lua lua;
+   #debug all on;
+   function date (ses);
+      tintin_show(ses, os.date("%Y-%m-%d"));
+   end;
+   function tintin (ses, command);
+      print(string.format("tintin (%s) %s, ses, command));
+   end;
+   function tintin_show (ses, command);
+      print(string.format("tintin_show (%s) %s, ses, command));
+   end;
+
+   #action {tintin (%%1) %%2} {#%%1 %%2};
+   #action {tintin_show (%%1) %%2} {#%%1 $showme %%2};
+   #nop Return to the start session;
+   #gts;
+}
+
+#alias {luatest} {
+   #lua tintin("gts", "#show hello?");
+   #show test..;
+}
 
