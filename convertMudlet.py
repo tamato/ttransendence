@@ -194,7 +194,7 @@ with open('world.map', 'w') as f:
 
             croom = {
                 'vnum':rid,
-                'flags':0, # hide all room, with 4102, ROOM_FLAG_HIDE
+                'flags':2, # hide all room, with 4102, ROOM_FLAG_HIDE
                 'color':color,
                 'name':rname,
                 'sym':feature,
@@ -288,6 +288,7 @@ with open('world.map', 'w') as f:
 
             # in the dict roomid is really AreaID
             # and if they are in different areas, don't bother with void rooms.
+            # Hide diferent areas from show at the same time.
             if room['roomid'] != exitroom['roomid']: 
                 rdest['dirbit'] = dirBits['in']
                 continue

@@ -211,6 +211,7 @@
 }
 
 registerEvent RoomInfo mapping.onRoomInfo;
+#var prevarea -1;
 #alias {mapping.onRoomInfo}
 {
    #if {&{gmcp[room][info][ohmap]} != 0}{#return};
@@ -218,8 +219,29 @@ registerEvent RoomInfo mapping.onRoomInfo;
 
    #local vnum $gmcp[room][info][num];
    #map goto {$vnum};
+      
+      #local area {@getAreaId{}};
+      info Moved into new area, was $prevarea, new $area;
 
    #if {$uimap[enabled] === 1} {
+
+      #if {$area !== $prevarea} {
+         #map list {roomid} {$prevarea} {variable} {prevnum};
+         #foreach *prevnum[] tmpvnum {
+            #map goto $tmpvnum;
+            #map roomflag hide on;
+         };
+
+         #map list {roomid} {$area} {variable} {vnums};
+         #foreach *vnums[] tmpvnum {
+            #map goto $tmpvnum;
+            #map roomflag hide off;
+         };
+
+         #map goto $vnum;
+         #var prevarea $area;
+      };
+
       #draw boxed map 1 1 $uimap[height] $uimap[width];
 
       #math width {$uimap[width] - 4};

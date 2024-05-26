@@ -98,9 +98,9 @@
 
    #var maxhp $gmcp[char][vitals][maxhp];
    #if {$checkReckless == 1 && $hp == $maxhp} {
-      #var checkReckless 0;
       #send {CURING PREDICT reckless};
-   }
+   };
+   #var checkReckless 0;
 }
 
 #EVENT {IAC SB GMCP char.maxstats IAC SE}
@@ -169,6 +169,11 @@
 {
    #variable gmcp[char][defences][list] {%0};
    #nop #show {%0};
+   #foreach $gmcp[char][defences][list] def {
+      #if {"$def[name]" == "selfishness"} {
+         #var selfishness 1;
+      }
+   }
 }
 
 #EVENT {IAC SB GMCP Char.defences.remove IAC SE}

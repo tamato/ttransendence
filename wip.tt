@@ -9,7 +9,23 @@
    #if {"%1" == ""} {
       print List of Points of Interset;
    };
-   #elseif 
+}
+
+#func {getAreaId} {
+   #map get {roomid} areaid;
+   #return $areaid;
+}
+
+#alias {showRooms} {
+   #var savedroom $vnum;
+   #map list {roomid} {@getAreaId{}} {variable} {vnums};
+   #foreach *vnums[] vnum {
+      #map goto $vnum;
+      #nop #map set {hide} {off} {$vnum};
+      #map roomflag hide off;
+   };
+
+   #map goto $savedroom;
 }
 
 #class wip save

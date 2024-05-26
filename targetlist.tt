@@ -1,6 +1,6 @@
 #CLASS {targetlist} OPEN
 
-#VARIABLE {areaName} {the Barony of Dun Valley}
+#VARIABLE {areaName} {the Aalen Forest}
 #VARIABLE {targets}
 {
     {Ashtan} 
@@ -13,9 +13,16 @@
     }
     {Saiha'balan Grotto} 
     {
+        {Altor'ea} {}
+        {Cara'li} {}
+        {altor'ea} {}
         {centipede} {}
+        {earwig} {}
+        {handmaiden} {}
         {orbweaver} {}
+        {priestess} {}
         {salamander} {}
+        {slug} {}
     }
     {the Aalen Forest} 
     {
@@ -24,10 +31,12 @@
         {Ta'hena} {}
         {Tremayn} {}
         {Tsellias} {}
+        {Tu'eras} {}
         {Zeuris} {}
         {basilisk} {}
         {fairy} {}
         {ranger} {}
+        {slug} {}
     }
     {the Barony of Dun Valley} 
     {
