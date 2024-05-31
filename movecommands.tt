@@ -2,6 +2,10 @@
 
 #alias {move %1} {
    #send {$insfree 1 %1};
+
+   #nop removes the trigger to attack again;
+   #nop WARNING, atkTarget would set be set.;
+   #class bash close;
 };
 
 #alias {n} {

@@ -23,10 +23,6 @@
    info   - Using tarot universe to quickly reach goal
 }
 
-#alias {pois} {
-   #var PoIs;
-}
-
 #alias {mpoi %1} {
    #var card @universedist{%1};
    #if {"$card" !== ""} {

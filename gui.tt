@@ -266,7 +266,7 @@
 
 #ALIAS {room_window_show %1 %2}
 {
-   #list room_window[tab][%1] ins -1 {%2};
+   #list room_window[tab][%1] ins +1 {%2};
    room_window_draw_data;
 }
 
