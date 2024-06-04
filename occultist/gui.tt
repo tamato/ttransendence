@@ -4,10 +4,10 @@ registerEvent updateui updateCharUI;
 #alias {updateCharUI} {
    #if {$uimap[width] === 0} {#return};
 
-   #draw green filled jeweled box {$uimap[height]+4} 1 -4 {$uimap[width]};
+   #draw green filled jeweled box {$uimap[height]+4} 1 -2 {$uimap[width]};
 
    #local offset 4;
-   #screen clear square {$uimap[height]+$offset+1} 2 -4 {$uimap[width]-2};
+   #screen clear square {$uimap[height]+$offset+1} 2 -3 {$uimap[width]-2};
 
    #nop Left hand side;
    #line ignore #showme {Priestess: $priStatus, #: $priCards} {$uimap[height]+1+$offset} {3};
@@ -28,4 +28,5 @@ registerEvent updateui updateCharUI;
       #math affOff {$affOff + 1};
    }
 }
+
 

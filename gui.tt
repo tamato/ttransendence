@@ -242,7 +242,7 @@
 #ALIAS {guireset}
 {
    #nop #config mouse on;
-   #split $uicomms[height] 3 $uimap[width] $uiroom[width];
+   #split $uicomms[height] 1 $uimap[width] $uiroom[width];
 
    comm_window_draw_tabs;
    room_window_draw_box;

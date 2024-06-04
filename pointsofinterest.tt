@@ -5,33 +5,75 @@
     #if {"%1" === ""}
     {
         print List of Points of Interest;
-        #foreach {*PoIs[%*]} {poi}
+        #foreach {*PoIs[%*]} {poiKey}
         {
-            info   $poi
+            info   <258>$poiKey<278>,<238> $PoIs[$poiKey][number]<278>:<248> $PoIs[$poiKey][name]
         }
     };
     #elseif {&PoIs[%1]}
     {
-        #unhighlight {%1};
         #unvariable PoIs[%1];
         #class pois write pointsofinterest.tt
     };
     #else
     {
-        #variable PoIs[%1] {$gmcp[room][info][num]};
+        #variable PoIs[%1] {{number}  {$gmcp[room][info][num]}{name}    {$gmcp[room][info][name]}};
         #class pois write pointsofinterest.tt
     }
 }
 
 #VARIABLE {PoIs}
 {
-    {aalen} {1894}
-    {battle} {37631}
-    {dr} {3955}
-    {dunValley} {5128}
-    {gates} {436}
-    {private} {54318}
-    {rhod} {39115}
+    {aalen} 
+    {
+        {name} {}
+        {number} {1894}
+    }
+    {arcadia} 
+    {
+        {name} {Mount Nicator}
+        {number} {10221}
+    }
+    {battle} 
+    {
+        {name} {}
+        {number} {37631}
+    }
+    {darkenwood} 
+    {
+        {name} {Near a large bramble}
+        {number} {9040}
+    }
+    {dr} 
+    {
+        {name} {}
+        {number} {3955}
+    }
+    {dunValley} 
+    {
+        {name} {}
+        {number} {5128}
+    }
+    {gates} 
+    {
+        {name} {Entering the main gate of Ashtan}
+        {number} {436}
+    }
+    {leaveArcadia} 
+    {
+        {name} {Falling through the mists (indoors)}
+        {number} {19775}
+    }
+    {private} 
+    {
+        {name} {}
+        {number} {54318}
+    }
+    {rhod} 
+    {
+        {name} {Within a weathered cavern (indoors)}
+        {number} {39115}
+    }
 }
 
 #CLASS {pois} CLOSE

@@ -81,6 +81,7 @@
       #else {#math diff {$diff * -1}; #show HP <128>+$diff, Orb: $orbActive};
 
       #unvar diff;
+      raiseEvent HpChanged;
    };
    #var prevHp $hp;
 
@@ -93,6 +94,7 @@
       #if {$diff > 0} {#show Mana <148>-$diff};
       #else {#math diff {$diff * -1}; #show Mana <158>+$diff};
       #unvar diff;
+      raiseEvent MpChanged;
    };
    #var prevMp $mp;
 

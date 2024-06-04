@@ -3,29 +3,24 @@
 #class wip kill
 #class wip open
 
-#var poiList {}
-#alias {mpois} {
-   
-   #if {"%1" == ""} {
-      print List of Points of Interset;
-   };
-}
 
-#func {getAreaId} {
-   #map get {roomid} areaid;
-   #return $areaid;
-}
 
-#alias {showRooms} {
-   #var savedroom $vnum;
-   #map list {roomid} {@getAreaId{}} {variable} {vnums};
-   #foreach *vnums[] vnum {
-      #map goto $vnum;
-      #nop #map set {hide} {off} {$vnum};
-      #map roomflag hide off;
-   };
+registerEvent statusBar HpChanged;
+#alias {HpChanged} {
+};
 
-   #map goto $savedroom;
+registerEvent statusBar MpChanged;
+#alias {MpChanged} {
+};
+
+#alias {statusBar} {
+   #local height -3;
+   #local width $uimap[width]+1;
+   #screen clear square {$height} {$width} {$height} {$width+20};
+   #line ignore #showme {HP: MP:} {$height} {$width};
+
+
+   #nop Display history of hits, eventually afflictions too.;
 }
 
 #class wip save

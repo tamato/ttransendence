@@ -63,12 +63,12 @@
 #function {universedist} {
    #map get roomvnum roomid;
 
-   #map find $PoIs[%1];
+   #map find $PoIs[%1][number];
    #path get length shortest;
    #var card {};
    #foreach *UniverseList[] loc {
       #map go $UniverseList[$loc];
-      #map find $PoIs[%1];
+      #map find $PoIs[%1][number];
       #path get length dist;
 
       #nop Using a universe card has a cost;

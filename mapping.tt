@@ -19,20 +19,20 @@
    info   - Auto explore area while also hunting and harvesting plants;
    info * pois;
    info   - list of points of interest;
-   info * mpoi
+   info * twalk
    info   - Using tarot universe to quickly reach goal
 }
 
-#alias {mpoi %1} {
+#alias {twalk %1} {
    #var card @universedist{%1};
    #if {"$card" !== ""} {
       uni $card;
       #line oneshot #action {You reach out and touch the map before you. Your surroundings spin as you melt effortlessly into the image.} {
-         mgo $PoIs[%1];
+         mgo $PoIs[%1][number];
       };
    };
    #elseif {"$card" === ""} {
-      mgo $PoIs[%1];
+      mgo $PoIs[%1][number];
    };
 }
 
