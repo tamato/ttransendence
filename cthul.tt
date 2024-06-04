@@ -5,20 +5,23 @@
 
 #alias attackCmd {queue insert freestand 5 warp};
 
-#read occultist/misc.tt;
-#read occultist/battlerage.tt;
-#read occultist/occultism.tt;
-#read occultist/domination.tt;
-#read occultist/tarot.tt;
-#read occultist/gui.tt;
-#read occultist/pvp.tt;
+registerEvent connected connected;
+#alias {connected} {
+   #read occultist/misc.tt;
+   #read occultist/battlerage.tt;
+   #read occultist/occultism.tt;
+   #read occultist/domination.tt;
+   #read occultist/tarot.tt;
+   #read occultist/gui.tt;
+   #read occultist/pvp.tt;
+   
+   #read harvesting/harvest.tt;
 
-#read harvesting/harvest.tt;
+   guireset;
+   updateCharUI;
+}
 
 #session cthul achaea.com 23;
 cthul;
 $password;
-
-guireset;
-updateCharUI;
 
