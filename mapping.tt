@@ -206,6 +206,14 @@
    };
 }
 
+/**
+   to set a remote room
+   #map set {roomflags} {<flag number>} {<room number>};
+
+   to get info from a remote room.
+   #map get {roomflags} {<var>} {room number};
+*/
+
 registerEvent RoomInfo mapping.onRoomInfo;
 #var prevarea -1;
 #alias {mapping.onRoomInfo}
@@ -216,25 +224,30 @@ registerEvent RoomInfo mapping.onRoomInfo;
    #local vnum $gmcp[room][info][num];
    #map goto {$vnum};
       
-      #local area {@getAreaId{}};
-      info Moved into new area, was $prevarea, new $area;
+   #local area {@getAreaId{}};
+   info Moved into new area, was $prevarea, new $area;
 
    #if {$uimap[enabled] === 1} {
 
       #if {$area !== $prevarea} {
          #map list {roomid} {$prevarea} {variable} {prevnum};
+
+         #nop Hide the old rooms;
          #foreach *prevnum[] tmpvnum {
-            #map goto $tmpvnum;
-            #map roomflag hide on;
+            #map set {roomflags} {2} {$tmpvnum};
+            #nop #map goto $tmpvnum;
+            #nop #map roomflag hide on;
          };
 
+         #nop Show the new rooms;
          #map list {roomid} {$area} {variable} {vnums};
          #foreach *vnums[] tmpvnum {
-            #map goto $tmpvnum;
-            #map roomflag hide off;
+            #map set {roomflags} {0} {$tmpvnum};
+            #nop #map goto $tmpvnum;
+            #nop #map roomflag hide off;
          };
 
-         #map goto $vnum;
+         #nop #map goto $vnum;
          #var prevarea $area;
       };
 
