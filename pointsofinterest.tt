@@ -54,6 +54,11 @@
         {name} {}
         {number} {5128}
     }
+    {fwatch} 
+    {
+        {name} {Before a decayed wooden gate (road)}
+        {number} {7694}
+    }
     {gates} 
     {
         {name} {Entering the main gate of Ashtan}

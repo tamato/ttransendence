@@ -264,9 +264,18 @@
    #nop {{text}{includes the talkers name "..."}{channel}{"says"}{talker}{"includes color sdfsdaf"}};
 }
 
+#ALIAS {room_window_highlight %1 %2 %3}
+{
+   #list room_window[tab][%1] find {%*%2%*} idx;
+   #if {$idx === 0} { #return };
+
+   #var room_window[tab][%1][$idx] %3;
+   room_window_draw_data;
+}
+
 #ALIAS {room_window_show %1 %2}
 {
-   #list room_window[tab][%1] ins +1 {%2};
+   #list room_window[tab][%1] ins -1 {%2};
    room_window_draw_data;
 }
 

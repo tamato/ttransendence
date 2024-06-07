@@ -8,15 +8,13 @@
         {Mask} {}
         {bell} {}
         {fetish} {}
+        {medallion} {}
     }
     {the bog of Ashtan} 
     {
         {cauldron} {}
     }
 }
-
-#CLASS {itemslist} CLOSE
-#CLASS {itemslist} SAVE
 
 deregisterEvent getItems getGold;
 deregisterEvent getItems getItems;
@@ -67,4 +65,7 @@ registerEvent getItems getItems;
       #class itemslist write itemslist.tt;
    };
 }
+
+#CLASS {itemslist} CLOSE
+#CLASS {itemslist} SAVE
 
