@@ -1,6 +1,6 @@
 #CLASS {targetlist} OPEN
 
-#VARIABLE {areaName} {Forest Watch}
+#VARIABLE {areaName} {the land of Minia}
 #VARIABLE {targets}
 {
     {Ashtan} 
@@ -119,6 +119,11 @@
     }
     {the land of Minia} 
     {
+        {Akar} {}
+        {Boga} {}
+        {Jelli} {}
+        {hellcat} {}
+        {imp} {}
         {pixie} {}
         {pygmy} {}
     }
