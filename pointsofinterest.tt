@@ -59,6 +59,11 @@
         {name} {Entering the main gate of Ashtan}
         {number} {436}
     }
+    {grock} 
+    {
+        {name} {Collapsed passage (indoors)}
+        {number} {4230}
+    }
     {leaveArcadia} 
     {
         {name} {Falling through the mists (indoors)}

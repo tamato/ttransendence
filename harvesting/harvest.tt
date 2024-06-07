@@ -4,7 +4,6 @@
 
 #var plantQueue {};
 #var picking 0;
-#var picked 0;
 #var harvestedRooms {};
 
 #alias {clearAutoHarvestRooms} {
@@ -24,9 +23,7 @@
       #class harvesting clear;
 
       #nop Only put stuff away, if anything was picked.;
-      #if {$picked > 0} {
-         #send {inr all};
-      };
+      #send {inr all};
 
       raiseEvent finishAutoHarvest; 
       #return;
@@ -38,32 +35,28 @@
    #var picking 1;
    #send {harvest *plantQueue[+1]};
    #unvar plantQueue[+1];
-   #math picked {$picked + 1};
 };
 
 #class harvesting kill;
 #class harvesting open;
 
-#action {^You cannot harvest that.$} {
-   #math picked {$picked - 1};
+#action {You cannot harvest that.} {
    #var picking 0;
    pickplant;
 }
 
-#action {^You have already harvested from this plant recently.$} {
-   #math picked {$picked - 1};
+#action {You have already harvested from this plant recently.} {
    #var picking 0;
    pickplant;
 };
 
-#action {^You have recovered balance on all limbs.$} {
+#action {You have recovered balance on all limbs.} {
    #var picking 0;
    pickplant;
 };
 
-#action {^That plant has been fully harvested.$} {
+#action {That plant has been fully harvested.} {
    #var picking 0;
-   #math picked {$picked - 1};
    pickplant;
 }
 
@@ -73,7 +66,6 @@
 }
 
 #line oneshot #action {The following plants are growing in this room:} {
-   #var picked 0;
    #var picking 0;
    registerEvent prompt autoHarvestPrompt;
 }

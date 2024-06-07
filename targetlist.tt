@@ -1,6 +1,6 @@
 #CLASS {targetlist} OPEN
 
-#VARIABLE {areaName} {the Aalen Forest}
+#VARIABLE {areaName} {the Dungeon of the Beastlords}
 #VARIABLE {targets}
 {
     {Ashtan} 
@@ -59,11 +59,6 @@
     }
     {the Dungeon of the Beastlords} 
     {
-        {Inish} {}
-        {acolyte} {}
-        {cloaked} {}
-        {initiate} {}
-        {ritualist} {}
     }
     {the Ioje compound} 
     {

@@ -76,7 +76,6 @@
 #alias {mgostart} {
    mgo {$mapping[startRoom]};
 }
-
 #alias {mfind} {
    #if {"%1" == ""} {err Pass in a room name;#return};
 
@@ -186,7 +185,7 @@
       };
       #else {
          info Waiting to recover before exploring...;  
-         #line oneshot #action {^You have recovered} {
+         #line oneshot #action {You have recovered} {
             mapping.step;
          };
       };
@@ -329,11 +328,14 @@ registerEvent RoomInfo mapping.onRoomInfo;
    #if {&{mapping[yetToVisit][]} > 0} {
       print Hit some kind of end, finding new destination.;
       mapping.nextdest;
+      mapping.step;
    };
    #else {
       print No exit and out of places to go, clean it up.;
       mstop;
    };
+
+   raiseEvent explore;
 }
 
 #action {^You stumble through the fog, attempting to find a way out.} {
