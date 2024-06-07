@@ -1,3 +1,4 @@
+#CLASS {itemslist} KILL
 #CLASS {itemslist} OPEN
 
 #VARIABLE {itemslist}
@@ -15,3 +16,55 @@
 }
 
 #CLASS {itemslist} CLOSE
+#CLASS {itemslist} SAVE
+
+deregisterEvent getItems getGold;
+deregisterEvent getItems getItems;
+
+/**
+   "Global" variable TakableItem needs to be set before raising the event 'getItems'
+   TakableItem is defined as a local, but while it exists it is in global scope.
+   It is only 'local' in the sense it will automatically get removed once the scope is left.
+**/
+registerEvent getItems getGold;
+#alias {getGold} {
+   #if {"$TakableItem" == "%*gold%*"} {
+      #send {$addfree get gold};
+      #send {$addfree put gold in pack};
+   }
+}
+
+registerEvent getItems getItems;
+#alias {getItems} {
+   #local area $gmcp[room][info][area];
+   #foreach *itemslist[$area][] item {
+      #if {"$TakableItem" == "%*$item%*"} {
+         #send {$addfree get $item};
+      }
+   }
+}
+
+#alias {items} {
+   #if {"%1" === ""}
+   {
+      #showme {<148>Items for <818>[<838>$areaName<818>]<099>};
+      #foreach {*itemslist[$areaName][%*]} item {
+         info   $item;
+      };
+   };
+   #elseif {&itemslist[$areaName][%0]}
+   {
+      #unhighlight {%0};
+      #unvar itemslist[$areaName][%0];
+      #showme Item '%0' removed from '$areaName'.;
+      #class itemslist write itemslist.tt;
+   };
+   #else
+   {
+      #highlight { %0 } {blink reverse};
+      #var itemslist[$areaName][%0] {};
+      #showme Item '%0' added to '$areaName'.;
+      #class itemslist write itemslist.tt;
+   };
+}
+

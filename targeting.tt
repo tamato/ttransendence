@@ -40,6 +40,14 @@ registerEvent CharItemsAdd targeting.onCharItemsAdd;
    #if {"$icon" == "deadbody"} { #return; };
 
    #local attri $item[attrib];
+
+   dbg Item added dropped $item[name];
+   #if {"$attri" == "%*t%*"} { 
+      dbg Item added $item[name];
+      #local TakableItem $item[name]; #nop will be used in the event getItems;
+      raiseEvent getItems;
+   };
+
    #if {"$attri" == "" || "$attri" != "%*m%*" }
    { 
       #local name $item[name];
@@ -49,14 +57,6 @@ registerEvent CharItemsAdd targeting.onCharItemsAdd;
       room_window_show items $item;
       #continue; 
    };
-
-   #if {$getgold == 1 && "$icon" == "coin" && "$attri" == "%*t%*"} { 
-      #send {$addfree get gold};
-      #send {$addfree put gold in pack};
-      #return; 
-   };
-
-   #if {"$attri" == "%*d%*" }{ #continue; };
 
    #local name $item[name];
    #local id $item[id];
@@ -92,12 +92,10 @@ registerEvent CharItemsList targeting.onCharItemsList;
          #local item <279>$name<028>$id<099>;
 
          room_window_show items $item;
-         #if {$getgold == 1 && "$icon" == "coin" && "$attri" == "%*t%*"} { 
-
-            #send {$addfree get gold};
-            #send {$addfree put gold in pack};
+         #if {"$attri" == "%*t%*"} { 
+            #local TakableItem $name; #nop will be used in the event getItems;
+            raiseEvent getItems;
          };
-
          #continue; 
       };
 
@@ -210,29 +208,5 @@ registerEvent CharItemsRemove targeting.onCharItemsRemove;
    info Level: $inquery[lvl];
    info PvP: $inquery[pvp];
    info City: $inquery[color]$inquery[city]<099>;
-}
-
-#alias {items} {
-   #if {"%1" === ""}
-   {
-      #showme {<148>Items for <818>[<838>$areaName<818>]<099>};
-      #foreach {*itemslist[$areaName][%*]} item {
-         info   $item;
-      };
-   };
-   #elseif {&itemslist[$areaName][%0]}
-   {
-      #unhighlight {%0};
-      #unvar itemslist[$areaName][%0];
-      #showme Item '%0' removed from '$areaName'.;
-      #class itemslist write itemslist.tt;
-   };
-   #else
-   {
-      #highlight { %0 } {blink reverse};
-      #var itemslist[$areaName][%0] {};
-      #showme Item '%0' added to '$areaName'.;
-      #class itemslist write itemslist.tt;
-   };
 }
 

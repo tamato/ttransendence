@@ -36,10 +36,12 @@
 #alias {ggold} {
    #if {$getgold == 1 || "%1" == "0"} {
       #var getgold 0;
+      deregisterEvent getItems getGold;
       info Stopped auto get gold;
    };
    #else {$getgold == 0 || "%1" == "1"} {
       #var getgold 1;
+      registerEvent getItems getGold;
       info Auto getting gold;
    };
 }
@@ -62,7 +64,7 @@
 }
 
 #alias {dbg} {
-   #line ignore #showme  {<405>DBG: <468>%0<099>};
+   #line ignore #showme  {<405>DBG: <208>%0<099>};
 }
 
 #alias {journal} {

@@ -5,7 +5,7 @@
 #nop Global events holder;
 #nop Table organized by;
 #nop  event, name, func;
-#var Events {}
+#nop #var Events {}
 
 #nop Registers a new event, 
 #nop %1 - event, gmcp Room.Info;
