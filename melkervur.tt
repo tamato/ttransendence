@@ -1,20 +1,37 @@
 #nop Start up script for melkervur
-
 #read global.tt;
-
-#session mel achaea.com 23
-melkervur
-@password{};
 
 #var whoami Melkervur;
 
-#nop set target when one is seen.
-
 #alias attackCmd {queue insert freestand 5 swing};
 
-#read melkervur/battlerage.tt;
+registerEvent connected connected;
+#alias {connected} {
+   #read melkervur/battlerage.tt;
+   guireset;
+}
 
-guireset
+#class bash kill
+#class bash open
 
-#nop set up a way to disable;
+#action {^You have recovered balance%*} {
+   atk;
+
+   #if {&{atkTarget} == 0} {
+      #class bash clear;
+   };
+};
+
+#class bash close;
+#class bash save;
+
+#alias {aatk} {
+   #class bash load; 
+   print {resuming auto attack};
+   atk;
+}
+
+#session mel achaea.com 23;
+melkervur;
+$password;
 
