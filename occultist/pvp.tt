@@ -16,30 +16,35 @@
 #var addClassFree {queue add ec!t};
 #alias {test %1} {
    #var pvptarget @pvpTarget{%1};
-   #send {$addClassFree COMMAND CRONE AT $pvptarget left arm};
-   #send {$addfree BODYWARP $pvptarget right arm ague};
+   #send {$addClassFree COMMAND CRONE AT $pvptarget right arm};
+   #send {$addfree BODYWARP $pvptarget right arm SHRIVEL right arm};
 }
 
+#var total 0.0;
+/**  
+   100 / 15 = 7
+   100 / 21 = 5
+   As the immaterial cleaves the material, you perceive that you have dealt 21.0% damage to Melkervur's left arm.
+**/
 #alias {arms %1} {
    #var pvptarget @pvpTarget{%1};
-   #send {$addClassFree COMMAND CRONE AT $pvptarget right arm};
-   #send {$addfree BODYWARP $pvptarget right arm SHRIVEL right arm};
-
-   #send {$addClassFree COMMAND CRONE AT $pvptarget right arm};
-   #send {$addfree BODYWARP $pvptarget right arm SHRIVEL right leg};
-
-   #send {$addClassFree COMMAND CRONE AT $pvptarget right arm};
-   #send {$addfree BODYWARP $pvptarget right arm SHRIVEL left leg};
-
-   #send {$addClassFree COMMAND CRONE AT $pvptarget right arm};
-   #send {$addfree BODYWARP $pvptarget right arm SHRIVEL right arm};
-
-   #send {$addClassFree COMMAND CRONE AT $pvptarget right arm};
-   #send {$addfree BODYWARP $pvptarget right arm SHRIVEL right arm};
-
-   #send {$addClassFree COMMAND CRONE AT $pvptarget right arm};
-   #send {$addfree BODYWARP $pvptarget right arm SHRIVEL right arm};
+   #send {$addClassFree COMMAND CRONE AT $pvptarget left arm};
+   #send {$addfree BODYWARP $pvptarget left arm SHRIVEL left arm};
+   #math total {$total + 1}; 
 }
+
+#action {As the immaterial cleaves the material, you perceive that you have dealt %d.%d% damage to %w's %w %w.} {
+   #local number %1;
+   #local fract %2;
+   #local limbTar %3;
+   #local side %4;
+   #local limb %5;
+
+   #math total {$total + $number};
+   #math fract {$fract / 10};
+   #math total {$total + $fract};
+   dbg Total dam done: $total;
+};
 
 #class occultistpvp close;
 #class occultistpvp save;
