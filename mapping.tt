@@ -224,26 +224,24 @@ registerEvent RoomInfo mapping.onRoomInfo;
    #map goto {$vnum};
       
    #local area {@getAreaId{}};
-   info Moved into new area, was $prevarea, new $area;
-
    #if {$uimap[enabled] === 1} {
-
       #if {$area !== $prevarea} {
+         info Moved into new area, was $prevarea, new $area;
          #map list {roomid} {$prevarea} {variable} {prevnum};
 
          #nop Hide the old rooms;
          #foreach *prevnum[] tmpvnum {
-            #map set {roomflags} {2} {$tmpvnum};
-            #nop #map goto $tmpvnum;
-            #nop #map roomflag hide on;
+            #nop #map set {roomflags} {2} {$tmpvnum};
+            #map goto $tmpvnum;
+            #map roomflag hide on;
          };
 
          #nop Show the new rooms;
          #map list {roomid} {$area} {variable} {vnums};
          #foreach *vnums[] tmpvnum {
-            #map set {roomflags} {0} {$tmpvnum};
-            #nop #map goto $tmpvnum;
-            #nop #map roomflag hide off;
+            #nop #map set {roomflags} {0} {$tmpvnum};
+            #map goto $tmpvnum;
+            #map roomflag hide off;
          };
 
          #nop #map goto $vnum;
