@@ -27,6 +27,7 @@
    #var card @universedist{%1};
    #if {"$card" !== ""} {
       uni $card;
+      raiseEvent clearPath;      
       #line oneshot #action {You reach out and touch the map before you. Your surroundings spin as you melt effortlessly into the image.} {
          mgo $PoIs[%1][number];
       };
@@ -217,11 +218,12 @@ registerEvent RoomInfo mapping.onRoomInfo;
 #var prevarea -1;
 #alias {mapping.onRoomInfo}
 {
-   #if {&{gmcp[room][info][ohmap]} != 0}{#return};
+   #if {&{gmcp[room][info][ohmap]} !== 0}{raiseEvent clearPath; #return};
    #if {&{gmcp[room][info][num]} === 0}{#return};
 
    #local vnum $gmcp[room][info][num];
    #map goto {$vnum};
+   raiseEvent recordPath; 
       
    #local area {@getAreaId{}};
    #if {$uimap[enabled] === 1} {
@@ -231,17 +233,17 @@ registerEvent RoomInfo mapping.onRoomInfo;
 
          #nop Hide the old rooms;
          #foreach *prevnum[] tmpvnum {
-            #nop #map set {roomflags} {2} {$tmpvnum};
-            #map goto $tmpvnum;
-            #map roomflag hide on;
+            #map set {roomflags} {2} {$tmpvnum};
+            #nop #map goto $tmpvnum;
+            #nop #map roomflag hide on;
          };
 
          #nop Show the new rooms;
          #map list {roomid} {$area} {variable} {vnums};
          #foreach *vnums[] tmpvnum {
-            #nop #map set {roomflags} {0} {$tmpvnum};
-            #map goto $tmpvnum;
-            #map roomflag hide off;
+            #map set {roomflags} {0} {$tmpvnum};
+            #nop #map goto $tmpvnum;
+            #nop #map roomflag hide off;
          };
 
          #nop #map goto $vnum;

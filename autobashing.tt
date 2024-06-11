@@ -25,8 +25,9 @@
    Teleporting clears the stack
 */
 registerEvent recordPath;
-#alias {recordPath %1} {
-   err TODO, recordPath;
+#alias {recordPath} {
+   #nop AttemptedDir comes from MoveCommands.tt
+   #list RecordedPath ins +1 $AttemptedDir;
 };
 
 /**

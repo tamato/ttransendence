@@ -64,7 +64,7 @@
 #class tarot kill;
 #class tarot open;
 
-#alias {b} { 
+#alias {b %1} { 
    #if {"%1" === ""}  { 
       #send {hermits}
    };
@@ -82,11 +82,12 @@
    };
 };
 
-#alias {t} { 
+#alias {t %1} { 
    #if {"%1" === ""}  { 
       #send {hermits} 
    };
    #else {
+      raiseEvent clearPath;      
       #send {$addfree fling hermit at ground %1};
 
       #line oneshot #action {^You have recovered balance on all limbs.$} {b %1};

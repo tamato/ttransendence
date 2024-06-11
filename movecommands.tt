@@ -6,6 +6,7 @@
    #nop removes the trigger to attack again;
    #nop WARNING, atkTarget would set be set.;
    #class bash close;
+   #var AttemptedDir %1;
 };
 
 #alias {n} {
