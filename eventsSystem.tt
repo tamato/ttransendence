@@ -11,7 +11,12 @@
 #nop %1 - event, gmcp Room.Info;
 #nop %2 - behavious to fire event fires;
 #alias {registerEvent} {
-   #var Events[%1][%2] {};
+   #if {"%2" === ""} {
+      #var Events[%1][%1] {};
+   };
+   #else {
+      #var Events[%1][%2] {};
+   };
 }
 
 #alias {deregisterEvent} {

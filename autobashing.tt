@@ -1,0 +1,50 @@
+#nop Functionaility for autonomous bashing;
+
+#var ReverseDir {
+   {n} {s}
+   {e} {w}
+   {s} {n}
+   {w} {e}
+
+   {ne} {sw}
+   {nw} {se}
+   {se} {nw}
+   {sw} {ne}
+
+   {up} {down}
+   {down} {up}
+
+   {in} {out}
+   {out} {in}
+}
+
+#var RecordedPath { };
+
+/** 
+   Raised after successfully moving to a new location
+   Teleporting clears the stack
+*/
+registerEvent recordPath;
+#alias {recordPath %1} {
+   err TODO, recordPath;
+};
+
+/**
+   Clear the stack from teleporting
+*/
+registerEvent clearPath;
+#alias {clearPath} {
+   err TODO, clearPath;
+};
+
+
+/** Options are
+   Hunt     - 
+   Retreat  - Leave room to recover
+   Heal     - Stay put until healed
+   Escape   - Hermit out to safety
+   Home     - Finished bashing
+   Travel   - Move to new location
+*/
+#var BashStrat {};
+

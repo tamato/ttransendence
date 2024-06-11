@@ -49,6 +49,9 @@
 #var addfree {queue add freestanding};
 #var insfree {queue insert freestanding};
 
+#alias {title %1 %2} {
+}
+
 #alias {banner} {
 }
 
