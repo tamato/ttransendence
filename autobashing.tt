@@ -26,8 +26,9 @@
 */
 registerEvent recordPath;
 #alias {recordPath} {
-   #nop AttemptedDir comes from MoveCommands.tt
+   #nop AttemptedDir comes from MoveCommands.tt and mapping.tt
    #list RecordedPath ins +1 $AttemptedDir;
+   dbg $RecordedPath;
 };
 
 /**
@@ -35,7 +36,7 @@ registerEvent recordPath;
 */
 registerEvent clearPath;
 #alias {clearPath} {
-   err TODO, clearPath;
+   #list RecordedPath clear;
 };
 
 

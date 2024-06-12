@@ -70,7 +70,10 @@
 }
 
 #alias {dbg} {
-   #line ignore #showme  {<405>DBG: <208>%0<099>};
+   #showme  {<405>DBG: <208>%0<099>};
+}
+
+#alias {pvpInfo} {
 }
 
 #alias {journal} {

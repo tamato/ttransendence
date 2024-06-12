@@ -175,13 +175,21 @@
    registerEvent explore mapping.founddst;
    registerEvent explore mapping.step;
 
-   #path walk;
+   raiseEvent explore;
 }
 
 #alias {mapping.step} {
    #delay {delayStepping} {
       #if {$gmcp[char][vitals][bal] == 1 && $gmcp[char][vitals][eq] == 1} {
          #path walk;
+
+         #path get position pos;
+         #path save tpath;
+         #list tpath explode {;};
+         #nop the event 'recordPath' will be raised after entering the next room.
+         #nop which uses this variable.
+         #var AttemptedDir *tpath[$pos][+1];
+
          nextStepId;
       };
       #else {
@@ -223,6 +231,7 @@ registerEvent RoomInfo mapping.onRoomInfo;
 
    #local vnum $gmcp[room][info][num];
    #map goto {$vnum};
+
    raiseEvent recordPath; 
       
    #local area {@getAreaId{}};
@@ -323,7 +332,7 @@ registerEvent RoomInfo mapping.onRoomInfo;
 #class pathing kill;
 #class pathing open;
 
-#action {^There is no exit in that direction.$} {
+#action {There is no exit in that direction.} {
 
    #if {&{mapping[yetToVisit][]} > 0} {
       print Hit some kind of end, finding new destination.;
@@ -338,10 +347,18 @@ registerEvent RoomInfo mapping.onRoomInfo;
    raiseEvent explore;
 }
 
-#action {^You stumble through the fog, attempting to find a way out.} {
+#action {You stumble through the fog, attempting to find a way out.} {
 }
 
-#action {^Now now, don't be so hasty!$} {
+/**
+#action {[System]: Running queued freestand command: %w} {
+   #if {&{MoveCommands[%1]} != 0} {
+      #var AttemptedDir %1;
+   };
+}
+*/
+
+#action {Now now, don't be so hasty!} {
    print Slow it down...;
    #path move backward;
    mapping.step;
@@ -444,29 +461,18 @@ Be aware if targets walking into the room.
 #alias {continueFromHarvest} {
    #class autobash load;
    autobash.step;
+   #if {&{atkTarget} == 0} {
+      mapping.step;
+   }
 }
 
-#var stepIdx 1;
+#var stepIdx 0;
 #alias nextStepId {
    #math stepIdx {$stepIdx + 1};
    #math stepIdx {$stepIdx % 3};
 };
 
-#var stepTimings {{0}{0.02}{1}{0.02}{2}{0.8}};
-
-#alias {autobash.step} {
-   #delay {delayStepping} {
-
-      #if {&{atkTarget} == 0 && $gmcp[char][vitals][bal] == 1 && $gmcp[char][vitals][eq] == 1} {
-         #path walk;
-         nextStepId;
-      };
-      #else {
-         info Waiting to recover before exploring...;  
-      };
-   } {$stepTimings[$stepIdx]};
-}
-
+#var stepTimings {{0}{0.0}{1}{0.0}{2}{0.8}};
 #class autobash kill;
 #class autobash open;
 

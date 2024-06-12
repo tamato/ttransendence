@@ -1,5 +1,32 @@
 #nop Move commands need a little help
 
+/**
+
+path walk commands use:
+[System]: Running queued freestand command: SW
+n, s, e, w
+nw, ne, sw, se
+up, d
+in, out
+*/
+#var MoveCommands {
+   {n} {}
+   {s} {}
+   {e} {}
+   {w} {}
+
+   {nw} {}
+   {ne} {}
+   {sw} {}
+   {se} {}
+
+   {in} {}
+   {out} {}
+
+   {up} {}
+   {d} {}
+}
+
 #alias {move %1} {
    #send {$insfree 1 %1};
 
@@ -7,6 +34,8 @@
    #nop WARNING, atkTarget would set be set.;
    #class bash close;
    #var AttemptedDir %1;
+   #nop Do not raise this event here, it is done in mapping.tt
+   #nop raiseEvent recordPath;
 };
 
 #alias {n} {
@@ -33,7 +62,7 @@
    move d;
 }
 
-#alias {^in$} {
+#alias {in} {
    move in;
 }
 
