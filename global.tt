@@ -154,6 +154,7 @@
 
 #read itemslist.tt;
 #read events.tt;
+#read autobashing.tt;
 
 #var bftarget {};
 #alias {bclear} {#var bftarget {}};

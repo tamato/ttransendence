@@ -24,16 +24,18 @@
    Raised after successfully moving to a new location
    Teleporting clears the stack
 */
+deregisterEvent recordPath;
 registerEvent recordPath;
 #alias {recordPath} {
-   #nop AttemptedDir comes from MoveCommands.tt and mapping.tt
+   #nop AttemptedDir comes from MoveCommands.tt and mapping.tt;
    #list RecordedPath ins +1 $AttemptedDir;
-   dbg $RecordedPath;
+   #nop dbg Recorded: $RecordedPath, came in $AttemptedDir;
 };
 
 /**
    Clear the stack from teleporting
 */
+deregisterEvent clearPath;
 registerEvent clearPath;
 #alias {clearPath} {
    #list RecordedPath clear;

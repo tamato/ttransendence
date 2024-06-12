@@ -34,8 +34,7 @@ in, out
    #nop WARNING, atkTarget would set be set.;
    #class bash close;
    #var AttemptedDir %1;
-   #nop Do not raise this event here, it is done in mapping.tt
-   #nop raiseEvent recordPath;
+   #nop Do not raise this event here, it is done in mapping.tt;
 };
 
 #alias {n} {
