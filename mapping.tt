@@ -186,8 +186,8 @@
          #path get position pos;
          #path save tpath;
          #list tpath explode {;};
-         #nop the event 'recordPath' will be raised after entering the next room.
-         #nop which uses this variable.
+         #nop the event 'recordPath' will be raised after entering the next room.;
+         #nop which uses this variable.;
          #var AttemptedDir *tpath[$pos][+1];
 
          nextStepId;
@@ -358,6 +358,11 @@ registerEvent RoomInfo mapping.onRoomInfo;
 }
 */
 
+#action {There's water ahead of you. You'll have to} {
+   mapping.nextdest;
+   mapping.step;
+}
+
 #action {Now now, don't be so hasty!} {
    print Slow it down...;
    #path move backward;
@@ -460,7 +465,6 @@ Be aware if targets walking into the room.
 */
 #alias {continueFromHarvest} {
    #class autobash load;
-   autobash.step;
    #if {&{atkTarget} == 0} {
       mapping.step;
    }

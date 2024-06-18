@@ -50,5 +50,12 @@ registerEvent clearPath;
    Home     - Finished bashing
    Travel   - Move to new location
 */
-#var BashStrat {};
+#var BashStrats {
+   {Hunt} {}
+   {Retreat} {}
+   {Heal} {}
+   {Escape} {}
+   {Home} {}
+   {Travel} {}
+};
 
