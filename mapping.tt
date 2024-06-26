@@ -19,11 +19,11 @@
    info   - Auto explore area while also hunting and harvesting plants;
    info * pois;
    info   - list of points of interest;
-   info * twalk
+   info * mwalk
    info   - Using tarot universe to quickly reach goal
 }
 
-#alias {twalk %1} {
+#alias {mwalk %1} {
    #var card @universedist{%1};
    #if {"$card" !== ""} {
       uni $card;
@@ -152,6 +152,7 @@
       #unvar shortest;
       #unvar roomid;
    };
+
    #elseif {&{mapping[yetToVisit][]} == 0} {
       #nop Will be called after on per room operations are finished.;
       registerEvent cleanup mstop;
@@ -179,6 +180,20 @@
 }
 
 #alias {mapping.step} {
+
+   #nop Before just moving to the next dest, check that there is a next dst.;
+   #nop If there not, find the next one.;
+   #path get position pos;
+   #path get length len;
+   #if {$pos > $len} {
+      mapping.nextdest;
+
+      #nop if there is nothing left, leave and don't cue up another move;
+      #if {&{mapping[yetToVisit][]} == 0} {
+         #return;
+      };
+   };
+
    #delay {delayStepping} {
       #if {$gmcp[char][vitals][bal] == 1 && $gmcp[char][vitals][eq] == 1} {
          #path walk;
@@ -201,16 +216,24 @@
    } {$stepTimings[$stepIdx]};
 }
 
+/**
+   This should be handled by all the other actions
+**/
 #EVENT {END OF PATH} {
    #if {&{mapping[yetToVisit][]} > 0} {
-      #nop print End of PATH hit, but there is still more to explore.;
+      #nop print End of RUN hit, but there is still more to explore.;
    };
+   print End of Path;
 }
 
 #EVENT {END OF RUN} {
    #nop Clean up;
    #if {&{mapping[yetToVisit][]} > 0} {
       print End of RUN hit, but there is still more to explore.;
+   };
+
+   #else {
+      print Finished explore/hunting.;
    };
 }
 
@@ -336,7 +359,6 @@ registerEvent RoomInfo mapping.onRoomInfo;
 
    #if {&{mapping[yetToVisit][]} > 0} {
       print Hit some kind of end, finding new destination.;
-      mapping.nextdest;
       mapping.step;
    };
    #else {
@@ -348,6 +370,7 @@ registerEvent RoomInfo mapping.onRoomInfo;
 }
 
 #action {You stumble through the fog, attempting to find a way out.} {
+   mapping.step;
 }
 
 /**
@@ -359,8 +382,15 @@ registerEvent RoomInfo mapping.onRoomInfo;
 */
 
 #action {There's water ahead of you. You'll have to} {
-   mapping.nextdest;
    mapping.step;
+}
+
+#action {There is a door in the way} {
+   mapping.step; 
+}
+
+#action {You slip and fall on the ice as you try to leave.} { 
+   mapping.step; 
 }
 
 #action {Now now, don't be so hasty!} {
@@ -411,6 +441,8 @@ registerEvent RoomInfo mapping.onRoomInfo;
 #class roomnums save;
 
 #alias {mstop} {
+   print Finished, 'mstop' called;
+
    #nop Clean up;
 
    #class pathing clear;
@@ -442,7 +474,6 @@ registerEvent RoomInfo mapping.onRoomInfo;
 }
 
 #alias {mbash} {
-   #class bash clear;
    #class autobash load; 
    #class pathing load;
 
@@ -455,7 +486,7 @@ registerEvent RoomInfo mapping.onRoomInfo;
 
    #nop Do destination checks first;
    registerEvent explore mapping.founddst;
-   registerEvent explore hunt;
+   registerEvent explore $AutoBashStrat;
 
    hunt;
 };
@@ -477,12 +508,13 @@ Be aware if targets walking into the room.
 };
 
 #var stepTimings {{0}{0.0}{1}{0.0}{2}{0.8}};
+
 #class autobash kill;
 #class autobash open;
 
-
 #action {^You have recovered} {
-   hunt;
+   #var AutoBashStrat {autobash.hunt};
+   $AutoBashStrat;
 }
 
 #class autobash close;

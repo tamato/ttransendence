@@ -176,7 +176,7 @@ registerEvent CharItemsRemove targeting.onCharItemsRemove;
                attackCmd $denizenid;
 
                #local name $roomMobs[$denizenid];
-               #local mob <201>$name<001>$denizenid<099>;
+               #local mob <419>$name<079>$denizenid<099>;
 
                room_window_highlight mobs $denizenid $mob;
                #return;

@@ -1,6 +1,6 @@
 #CLASS {targetlist} OPEN
 
-#VARIABLE {areaName} {the land of Minia}
+#VARIABLE {areaName} {the Aalen Forest}
 #VARIABLE {targets}
 {
     {Ashtan} 
@@ -34,6 +34,7 @@
         {Jaaran} {}
         {Stlerin} {}
         {Ta'hena} {}
+        {Ta'lissu} {}
         {Tremayn} {}
         {Tsellias} {}
         {Tu'eras} {}
@@ -84,10 +85,14 @@
     {
         {Alander} {}
         {Berstine} {}
+        {Mirka} {}
         {Morsten} {}
         {Sonterro} {}
+        {Tickler} {}
+        {Vingar} {}
         {Yolenders} {}
         {cougar} {}
+        {guard} {}
         {mercenary} {}
         {thief} {}
         {troll} {}

@@ -103,6 +103,12 @@
       #send {CURING PREDICT reckless};
    };
    #var checkReckless 0;
+
+   #if {$hp == 0} {
+      mstop;
+   };
+
+   raiseEvent healing;
 }
 
 #EVENT {IAC SB GMCP char.maxstats IAC SE}

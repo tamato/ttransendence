@@ -19,6 +19,7 @@
 }
 
 #var RecordedPath { };
+#var ReturnPath { };
 
 /** 
    Raised after successfully moving to a new location
@@ -62,57 +63,96 @@ registerEvent clearPath;
 };
 
 #var AutoBashStrat {
-   autobash.hunt
+   autobash.hunt;
 }
 
 #alias autobash.hunt {
    atk;
 
    #nop If health is too low, get out of there.;
-   #if {@getHpPercent{} < 0.5} {
-   }
+   #local hp @getHpPercent{};
+   #if {$hp < 0.1} {
 
-   #if {&{atkTarget} == 0} {
-      #var AutoBashStrat {autobash.switchToheal};
+      deregisterEvent explore $AutoBashStrat;
+      #var AutoBashStrat {autobash.switchToretreat};
+      registerEvent explore $AutoBashStrat;
       $AutoBashStrat;
+   };
+
+   #if {&{atkTarget} == 0 } {
+      #if {$hp > 95} {
+         registerEvent finishAutoHarvest continueFromHarvest;
+         autoharvest;
+      };
+      #else {
+         autobash.switchToheal;
+      };
    };
 }
 
 #alias autobash.switchToheal {
-   #tick {checkHealth} {
-      #var AutoBashStrat {autobash.heal};
-      $AutoBashStrat;
-   } {1};
+   print Switching to Heal;
+
+   deregisterEvent explore $AutoBashStrat;
+   #var AutoBashStrat {autobash.heal};
+   registerEvent heal $AutoBashStrat;
+   $AutoBashStrat;
 }
 
 #alias autobash.heal {
    info Checking Heatlh...;
 
-   #if {@getHpPercent{} > 0.9} {
-      dbg Need to know what action to do after healing;
-      dbg after we are done, do we go back to the room we left
-      dbg or resume hunting?;
-
-
+   #nop CURING SIPHEALTH;
+   #local hp @getHpPercent{};
+   #if {$hp > 0.95} {
       info Health is in a good state, move on.;
+      deregisterEvent heal;
 
-      #untick {checkHealth};
-      #nop Nothing left to attack? Move on.;
-      raiseEvent cleanup;
-
-      registerEvent finishAutoHarvest continueFromHarvest;
-      autoharvest;
+      #var AutoBashStrat {autobash.hunt};
+      registerEvent explore $AutoBashStrat;
+      $AutoBashStrat;
    };
+
+   #else {
+      print Healing...;
+   }
+}
+
+#alias autobash.switchToretreat {
+   print Switching to Retreat;
+   deregisterEvent explore $AutoBashStrat;
+   #var AutoBashStrat {autobash.retreat};
+   registerEvent explore $AutoBashStrat;
+   registerEvent heal $AutoBashStrat;
+
+   $AutoBashStrat;
 }
 
 #alias autobash.retreat {
+   #if {&roomMobs[] > 0} {
+      #nop Back out to previous room;
+      #nop In lower level places, this is enough;
+      #nop But in higher level areas the mobs will follow and we need to run more.;
+      #local next $RecordedPath[+1];
+      #list RecordedPath delete +1;
+      #list ReturnPath ins $next;
+
+      #local dir ReverseDir[$next];
+      move $dir; 
+   }
 }
 
-#function getHpPercent {
+#function {getHpPercent} {
    #var hp $gmcp[char][vitals][hp];
    #math hp {$hp * 1.0};
    #var maxhp $gmcp[char][vitals][maxhp];
    #math maxhp {$maxhp * 1.0};
    #math hpPercent {$hp/$maxhp};
-   #return hpPercent;
+   #return $hpPercent;
 }
+
+#action {You may drink another health or mana elixir.} {
+   raiseEvent heal;
+}
+
+

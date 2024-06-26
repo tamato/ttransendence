@@ -11,22 +11,8 @@ registerEvent connected connected;
    guireset;
 }
 
-#class bash kill
-#class bash open
-
-#action {^You have recovered balance%*} {
-   atk;
-
-   #if {&{atkTarget} == 0} {
-      #class bash clear;
-   };
-};
-
-#class bash close;
-#class bash save;
-
 #alias {aatk} {
-   #class bash load; 
+   #class autobash load; 
    print {resuming auto attack};
    atk;
 }

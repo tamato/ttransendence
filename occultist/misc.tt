@@ -20,28 +20,13 @@
    info   - inscribe tarot cards, 2 param, first is card, second is #;
 }
 
-#class bash kill
-#class bash open
-
-#action {^You have recovered equilibrium%*} {
-   atk;
-
-   #if {&{atkTarget} == 0} {
-      #class bash clear;
-      #nop #if {$distortActive === 1} {da};
-   };
-};
-
-#class bash close;
-#class bash save;
-
 #nop F1
 #macro {\eOP} { 
    satk;
 };
 #alias {satk} {
    #unvar atkTarget;
-   #class bash clear; 
+   #class autobash clear; 
 }
 
 #nop S-F1
@@ -50,12 +35,11 @@
 };
 
 #alias {aatk} {
-   #class bash load; 
-   print {resuming auto attack};
+   #class autobash load; 
+   print {Auto Attacking};
    #if {$distortActive === 0} {da};
-   atk;
 
-   #class autobash clear;
+   atk;
 }
 
 #nop -------------------------------------------------------------------------

@@ -32,8 +32,8 @@ in, out
 
    #nop removes the trigger to attack again;
    #nop WARNING, atkTarget would set be set.;
-   #class bash close;
    #var AttemptedDir %1;
+   #class autobash clear;
    #nop Do not raise this event here, it is done in mapping.tt;
 };
 
