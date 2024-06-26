@@ -42,26 +42,6 @@ registerEvent clearPath;
    #list RecordedPath clear;
 };
 
-
-/** Options are
-   Idle     - Not activily doing anything
-   Hunt     - Normal hunting mode
-   Retreat  - Leave room to recover
-   Heal     - Stay put until healed, used once a room is cleared from mobs and retreating
-   Escape   - Hermit out to safety
-   Home     - Finished bashing
-   Travel   - Move to new location
-*/
-#var BashStrats {
-   {Idle} {}
-   {Hunt} {}
-   {Retreat} {}
-   {Heal} {}
-   {Escape} {}
-   {Home} {}
-   {Travel} {}
-};
-
 #var AutoBashStrat {
    autobash.hunt;
 }

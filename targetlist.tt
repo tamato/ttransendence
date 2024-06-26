@@ -1,6 +1,6 @@
 #CLASS {targetlist} OPEN
 
-#VARIABLE {areaName} {the Aalen Forest}
+#VARIABLE {areaName} {the Darkenwood Forest}
 #VARIABLE {targets}
 {
     {Ashtan} 
@@ -61,6 +61,8 @@
         {Istishia} {}
         {Vinia} {}
         {arachnoi} {}
+        {ghastly} {}
+        {shadow} {}
         {spider} {}
     }
     {the Dungeon of the Beastlords} 

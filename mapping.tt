@@ -190,6 +190,7 @@
 
       #nop if there is nothing left, leave and don't cue up another move;
       #if {&{mapping[yetToVisit][]} == 0} {
+         mstop;
          #return;
       };
    };
@@ -218,13 +219,9 @@
 
 /**
    This should be handled by all the other actions
-**/
 #EVENT {END OF PATH} {
-   #if {&{mapping[yetToVisit][]} > 0} {
-      #nop print End of RUN hit, but there is still more to explore.;
-   };
-   print End of Path;
 }
+**/
 
 #EVENT {END OF RUN} {
    #nop Clean up;
@@ -492,7 +489,7 @@ registerEvent RoomInfo mapping.onRoomInfo;
 };
 
 /*
-Be aware if targets walking into the room.
+Be aware if targets walk into the room.
 */
 #alias {continueFromHarvest} {
    #class autobash load;
