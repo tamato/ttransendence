@@ -108,7 +108,7 @@
       mstop;
    };
 
-   raiseEvent healing;
+   raiseEvent heal;
 }
 
 #EVENT {IAC SB GMCP char.maxstats IAC SE}

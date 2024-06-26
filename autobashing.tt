@@ -80,7 +80,7 @@ registerEvent clearPath;
    };
 
    #if {&{atkTarget} == 0 } {
-      #if {$hp > 95} {
+      #if {$hp > 0.85} {
          registerEvent finishAutoHarvest continueFromHarvest;
          autoharvest;
       };
@@ -104,7 +104,7 @@ registerEvent clearPath;
 
    #nop CURING SIPHEALTH;
    #local hp @getHpPercent{};
-   #if {$hp > 0.95} {
+   #if {$hp > 0.85} {
       info Health is in a good state, move on.;
       deregisterEvent heal;
 
