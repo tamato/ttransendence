@@ -27,6 +27,10 @@
    #class auraglance clear;
    #class priestess clear;
    #class autobash clear;
+   #class autobashHeal clear;
+   #class autobashMoving clear;
+
+   deregisterEvent connected;
 }
 
 #EVENT {IAC WILL GMCP}

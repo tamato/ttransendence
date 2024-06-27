@@ -198,14 +198,6 @@
    #delay {delayStepping} {
       #if {$gmcp[char][vitals][bal] == 1 && $gmcp[char][vitals][eq] == 1} {
          #path walk;
-
-         #path get position pos;
-         #path save tpath;
-         #list tpath explode {;};
-         #nop the event 'recordPath' will be raised after entering the next room.;
-         #nop which uses this variable.;
-         #var AttemptedDir *tpath[$pos][+1];
-
          nextStepId;
       };
       #else {
@@ -459,18 +451,6 @@ registerEvent RoomInfo mapping.onRoomInfo;
    #undelay delayStepping;
 }
 
-#alias {hunt} {
-   atk;
-
-   #nop Nothing, or they've been cleared out, move on.;
-   #if {&{atkTarget} == 0} {
-      raiseEvent cleanup;
-
-      registerEvent finishAutoHarvest continueFromHarvest;
-      autoharvest;
-   };
-}
-
 #alias {mbash} {
    #class autobash load; 
    #class pathing load;
@@ -484,9 +464,9 @@ registerEvent RoomInfo mapping.onRoomInfo;
 
    #nop Do destination checks first;
    registerEvent explore mapping.founddst;
-   registerEvent explore $AutoBashStrat;
+   registerEvent explore autobash.hunt;
 
-   hunt;
+   autobash.hunt;
 };
 
 /*
@@ -507,14 +487,3 @@ Be aware if targets walk into the room.
 
 #var stepTimings {{0}{0.0}{1}{0.0}{2}{0.8}};
 
-#class autobash kill;
-#class autobash open;
-
-#action {^You have recovered} {
-   #var AutoBashStrat {autobash.hunt};
-   $AutoBashStrat;
-}
-
-#class autobash close;
-#class autobash save;
-#class autobash clear;

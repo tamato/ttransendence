@@ -20,6 +20,14 @@
 
 #var RecordedPath { };
 #var ReturnPath { };
+#var RetreatHealth 0.60;
+#var ContinueHeatlh 0.85;
+
+/**
+   You must regain balance first.
+
+      You have cured the paralysis affliction.
+**/
 
 /** 
    Raised after successfully moving to a new location
@@ -29,9 +37,8 @@ deregisterEvent recordPath;
 registerEvent recordPath;
 #alias {recordPath} {
    #nop AttemptedDir comes from MoveCommands.tt and mapping.tt;
-   #if {&AttemptedDir} {
+   #if {"$AutoBashStrat" !== "Retreating" && &{AttemptedDir}} {
       #list RecordedPath ins +1 $AttemptedDir;
-      #nop dbg Recorded: $RecordedPath, came in $AttemptedDir;
    };
 };
 
@@ -45,13 +52,13 @@ registerEvent clearPath;
 };
 
 #var AutoBashStrat {
-   autobash.hunt;
+   Hunting;
 }
 
 #alias autobash.hunt {
    #nop If health is too low, get out of there.;
    #local hp @getHpPercent{};
-   #if {$hp < 0.95} {
+   #if {$hp < $RetreatHealth} {
       autobash.switchToretreat;
       #return;
    };
@@ -59,10 +66,12 @@ registerEvent clearPath;
    atk;
 
    #if {&{atkTarget} == 0 } {
-      #if {$hp > 0.85} {
-         registerEvent finishAutoHarvest continueFromHarvest;
-         autoharvest;
-         #return;
+      #if {$hp > $ContinueHeatlh} {
+         #if {"$AutoBashStrat" !== "Return"} {
+            registerEvent finishAutoHarvest continueFromHarvest;
+            autoharvest;
+            #return;
+         };
       };
       #else {
          autobash.switchToheal;
@@ -75,9 +84,9 @@ registerEvent clearPath;
    print Switching to Heal;
 
    #class autobash clear; 
-   deregisterEvent explore $AutoBashStrat;
-   #var AutoBashStrat {autobash.heal};
-   registerEvent heal $AutoBashStrat;
+   deregisterEvent explore autobash.hunt;
+   #var AutoBashStrat {Healing};
+   registerEvent heal autobash.heal;
    #class autobashHeal load;
 }
 
@@ -86,15 +95,15 @@ registerEvent clearPath;
 
    #nop CURING SIPHEALTH;
    #local hp @getHpPercent{};
-   #if {$hp > 0.85} {
+   #if {$hp > $ContinueHeatlh} {
       info Health is in a good state, move on.;
       deregisterEvent heal;
       #class autobashHeal clear;
 
       #class autobash load; 
-      #var AutoBashStrat {autobash.hunt};
-      registerEvent explore $AutoBashStrat;
-      $AutoBashStrat;
+      #var AutoBashStrat {Hunting};
+      registerEvent explore autobash.hunt;
+      autobash.hunt;
    };
 
    #else {
@@ -110,51 +119,81 @@ registerEvent clearPath;
    print Switching to Retreat;
    #send {CLEARQUEUE ALL};
 
-   #var AutoBashStrat {autobash.retreat};
+   #var AutoBashStrat {Retreating};
    registerEvent heal autobash.retreat;
    #class autobashHeal load;
+   #class autobashMoving load;
 
    autobash.retreat;
    registerEvent enteredNewRoom allowRetreat;
 }
 
 #var AllowRetreat 1;
-#alias allowRetreat {#var AllowRetreat 1};
+#alias allowRetreat {
+   #var AllowRetreat 1;
+
+   #local next $RecordedPath[+1];
+   #list RecordedPath delete +1;
+   #list ReturnPath ins +1 $next;
+};
+
+#alias {autobash.attemptRetreat} {
+      #nop Back out to previous room;
+      #nop In lower level places, this is enough;
+      #nop But in higher level areas the mobs will follow and we need to run more.;
+      #local next $RecordedPath[+1];
+      #local dir $ReverseDir[$next];
+      move $dir; 
+}
 
 #alias autobash.retreat {
    #if {&{roomMobs[]} > 0 && $AllowRetreat == 1} {
       print Retreating!;
       #var AllowRetreat 0;
-
-      #nop Back out to previous room;
-      #nop In lower level places, this is enough;
-      #nop But in higher level areas the mobs will follow and we need to run more.;
-      #var next $RecordedPath[+1];
-      #list RecordedPath delete +1;
-      #list ReturnPath ins +1 $next;
-
-      #var dir $ReverseDir[$next];
-      move $dir; 
+      autobash.attemptRetreat;
       #return;
    };
 
    #local hp @getHpPercent{};
-   #if {$hp > 0.95} {
+   #if {$hp > $ContinueHeatlh} {
       info Health is better, now return to the fight!;
       deregisterEvent heal autobash.retreat;
       deregisterEvent enteredNewRoom;
 
-      #nop #class autobash load; 
-      #nop #var AutoBashStrat {autobash.hunt};
-      #nop registerEvent explore autobash.hunt;
-      #nop #class autobashHeal clear;
-#nop; 
-      #nop #var next $ReturnPath[+1];
-      #nop #list RecordedPath delete +1;
-      #nop #list ReturnPath ins +1 $next;
-#nop; 
-      #nop #var dir $ReverseDir[$next];
-      #nop move $dir; 
+      #class autobash load; 
+      #var AutoBashStrat {Return};
+      registerEvent explore autobash.hunt;
+      registerEvent enteredNewRoom allowReturn;
+      #class autobashHeal clear;
+      #class autobashMoving clear;
+
+      autobash.return;
+   };
+}
+
+#var AllowReturn 1;
+#alias allowReturn {
+   #var AllowReturn 1;
+   #list ReturnPath delete +1;
+
+   #if {&{ReturnPath} == 0} {
+      print Returned to the room we left;
+      deregisterEvent enteredNewRoom;
+      #var AutoBashStrat {Hunting};
+   }
+};
+
+#alias {autobash.return} {
+   #if {&{roomMobs[]} == 0 && $AllowReturn == 1} {
+      print Going back to the fight!;
+      #var AllowReturn 0;
+
+      #nop Back out to previous room;
+      #nop In lower level places, this is enough;
+      #nop But in higher level areas the mobs will follow and we need to run more.;
+      #local next $ReturnPath[+1];
+      move $next; 
+      #return;
    };
 }
 
@@ -174,6 +213,34 @@ registerEvent clearPath;
 }
 #class autobashHeal close;
 #class autobashHeal save;
-#class autobashHeal clear;
 
+#class autobash kill;
+#class autobash open;
+
+#action {You have recovered} {
+   #var AutoBashStrat {Hunting};
+   autobash.hunt;
+}
+
+#class autobash close;
+#class autobash save;
+
+#class autobashMoving kill;
+#class autobashMoving open;
+
+/** You are paralysed and cannot do that. **/
+#action {You have cured the paralysis affliction.} {
+   autobash.attemptRetreat;
+}
+
+#action {You slowly hobble} {
+   autobash.attemptRetreat;
+}
+
+#action {You must regain balance first.} {
+   autobash.attemptRetreat;
+}
+
+#class autobashMoving close;
+#class autobashMoving save;
 

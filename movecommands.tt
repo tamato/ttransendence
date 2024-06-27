@@ -29,13 +29,7 @@ in, out
 
 #alias {move %1} {
    #send {$insfree 1 %1};
-
-   #nop removes the trigger to attack again;
-   #nop WARNING, atkTarget would set be set.;
    #var AttemptedDir %1;
-   #nop #class autobash clear;
-   #nop print MOVING?!?!;
-   #nop Do not raise this event here, it is done in mapping.tt;
 };
 
 #alias {n} {

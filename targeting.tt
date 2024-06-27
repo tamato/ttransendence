@@ -197,9 +197,9 @@ registerEvent CharItemsRemove targeting.onCharItemsRemove;
    #format inquery %n %1;
    #var inquery $chardb[$inquery];
 
-   info Class: $inquery[class];
-   info Level: $inquery[lvl];
-   info PvP: $inquery[pvp];
-   info City: $inquery[color]$inquery[city]<099>;
+   echo Class: $inquery[class];
+   echo Level: $inquery[lvl];
+   echo PvP: $inquery[pvp];
+   echo City: $inquery[color]$inquery[city]<099>;
 }
 

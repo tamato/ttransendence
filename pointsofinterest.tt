@@ -7,7 +7,7 @@
         print List of Points of Interest;
         #foreach {*PoIs[%*]} {poiKey}
         {
-            info   <258>$poiKey<278>,<238> $PoIs[$poiKey][number]<278>:<248> $PoIs[$poiKey][name]
+            echo <258>$poiKey<278>,<238> $PoIs[$poiKey][number]<278>:<248> $PoIs[$poiKey][name]
         }
     };
     #elseif {&PoIs[%1]}

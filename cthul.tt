@@ -15,6 +15,7 @@ registerEvent connected connected;
    #read occultist/gui.tt;
    #read occultist/pvp.tt;
    
+   #read autobashing.tt;
    #read harvesting/harvest.tt;
 
    guireset;

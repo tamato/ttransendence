@@ -14,6 +14,7 @@
 
 #var seenPlys {};
 
+#read echoes.tt;
 #read movecommands.tt;
 #read eventsSystem.tt;
 #read connect.tt;
@@ -48,37 +49,6 @@
 
 #var addfree {queue add freestanding};
 #var insfree {queue insert freestanding};
-
-#alias {title %1 %2} {
-}
-
-#alias {banner} {
-}
-
-#alias {print} {
-   #line ignore #showme  <169>--------------------------------------------------------------------------------;
-   #line ignore #showme  <079>             [ <139>%0 <079>]<099>;
-   #line ignore #showme  <169>--------------------------------------------------------------------------------;
-}
-
-#alias {err} {
-   #line ignore #showme  {<431>ERROR: <408>%0<099>};
-}
-
-#alias {info} {
-   #line ignore #showme  {<438>%0<099>};
-}
-
-#alias {info} {
-   #line ignore #showme  {<438>%0<099>};
-}
-
-#alias {dbg} {
-   #showme  {<405>DBG: <208>%0<099>};
-}
-
-#alias {pvpInfo} {
-}
 
 #alias {journal} {
    #nop #if {{%0} != {}} { #log off; #config {log} {txt}; #break; };
@@ -158,7 +128,6 @@
 
 #read itemslist.tt;
 #read events.tt;
-#read autobashing.tt;
 
 #var bftarget {};
 #alias {bclear} {#var bftarget {}};
