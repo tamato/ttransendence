@@ -3,15 +3,9 @@
 
 #var whoami Cthul;
 
-#var QueuedAtk 0;
 #alias attackCmd {
    queue insert freestand 5 warp
-   #var QueuedAtk 1;
 };
-
-#action {You reach out and clench a fist before} {
-   #var QueuedAtk 0;
-}
 
 registerEvent connected connected;
 #alias {connected} {

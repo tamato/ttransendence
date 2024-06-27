@@ -170,7 +170,7 @@ registerEvent CharItemsRemove targeting.onCharItemsRemove;
          #foreach *targets[$areaName][] tar {
 
             #if {"$roomMobs[$denizenid]" == "%*$tar%*"} {
-               dbg Setting target to: $denizenid, checked against $tar;
+               #nop dbg Setting target to: $denizenid, checked against $tar;
                #var atkTarget $denizenid;
                #send {settarget $denizenid};
                attackCmd $denizenid;

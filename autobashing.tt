@@ -255,10 +255,10 @@ registerEvent clearPath;
 }
 
 /** Both of your legs must be free and unhindered to do that **/
-#action {You have cured the broken} {
-   #if {$QueuedAtk === 0} {
+#action {Both of your} {
+   #line oneshot #action {You have cured the broken} {
       autobash.hunt;
-   };
+   }
 }
 
 #class autobash close;

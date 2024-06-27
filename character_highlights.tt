@@ -11,7 +11,7 @@
 #hi {Archaeon} {<458>} {8};
 #hi {Argwin} {<199><428>} {6};
 #hi {Aurola} {<438>} {6};
-#hi {Aurorious} {<199><428>} {9};
+#hi {Aziz} {<403>} {4};
 #hi {Badriyah} {<438>} {8};
 #hi {Bellona} {<848>} {7};
 #hi {Blackwillow} {<199><428>} {11};
@@ -28,12 +28,10 @@
 #hi {Inuad} {<468>} {5};
 #hi {Jaisael} {<438>} {7};
 #hi {Jems} {<418>} {4};
-#hi {Kaelthas} {<458>} {8};
 #hi {Kaiu} {<478>} {4};
 #hi {Kilian} {<468>} {6};
 #hi {Killian} {<468>} {7};
 #hi {Kinilan} {<848>} {7};
-#hi {Lauryyn} {<199><428>} {7};
 #hi {Leviticus} {<418>} {9};
 #hi {Menetta} {<438>} {7};
 #hi {Minkai} {<438>} {6};
@@ -181,14 +179,14 @@
 		{color}	{<438>}
 	};
 
-	{Aurorious} {
-		{lvl}		{5}
-		{city}	{eleusis}
-		{pvp}		{0}
-		{class}	{druid}
-		{xp}		{0}
-		{explorer} {1156}
-		{color}	{<199><428>}
+	{Aziz} {
+		{lvl}		{105}
+		{city}	{(hidden)}
+		{pvp}		{685}
+		{class}	{runewarden}
+		{xp}		{181}
+		{explorer} {19}
+		{color}	{<403>}
 	};
 
 	{Badriyah} {
@@ -351,16 +349,6 @@
 		{color}	{<418>}
 	};
 
-	{Kaelthas} {
-		{lvl}		{104}
-		{city}	{ashtan}
-		{pvp}		{541}
-		{class}	{occultist}
-		{xp}		{202}
-		{explorer} {404}
-		{color}	{<458>}
-	};
-
 	{Kaiu} {
 		{lvl}		{116}
 		{city}	{targossas}
@@ -399,16 +387,6 @@
 		{xp}		{111}
 		{explorer} {84}
 		{color}	{<848>}
-	};
-
-	{Lauryyn} {
-		{lvl}		{100}
-		{city}	{eleusis}
-		{pvp}		{96}
-		{class}	{runewarden}
-		{xp}		{324}
-		{explorer} {588}
-		{color}	{<199><428>}
 	};
 
 	{Leviticus} {
