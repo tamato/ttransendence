@@ -29,8 +29,10 @@ deregisterEvent recordPath;
 registerEvent recordPath;
 #alias {recordPath} {
    #nop AttemptedDir comes from MoveCommands.tt and mapping.tt;
-   #list RecordedPath ins +1 $AttemptedDir;
-   #nop dbg Recorded: $RecordedPath, came in $AttemptedDir;
+   #if {&AttemptedDir} {
+      #list RecordedPath ins +1 $AttemptedDir;
+      #nop dbg Recorded: $RecordedPath, came in $AttemptedDir;
+   };
 };
 
 /**
@@ -47,25 +49,24 @@ registerEvent clearPath;
 }
 
 #alias autobash.hunt {
-   atk;
-
    #nop If health is too low, get out of there.;
    #local hp @getHpPercent{};
-   #if {$hp < 0.1} {
-
-      deregisterEvent explore $AutoBashStrat;
-      #var AutoBashStrat {autobash.switchToretreat};
-      registerEvent explore $AutoBashStrat;
-      $AutoBashStrat;
+   #if {$hp < 0.95} {
+      autobash.switchToretreat;
+      #return;
    };
+
+   atk;
 
    #if {&{atkTarget} == 0 } {
       #if {$hp > 0.85} {
          registerEvent finishAutoHarvest continueFromHarvest;
          autoharvest;
+         #return;
       };
       #else {
          autobash.switchToheal;
+         #return;
       };
    };
 }
@@ -73,10 +74,11 @@ registerEvent clearPath;
 #alias autobash.switchToheal {
    print Switching to Heal;
 
+   #class autobash clear; 
    deregisterEvent explore $AutoBashStrat;
    #var AutoBashStrat {autobash.heal};
    registerEvent heal $AutoBashStrat;
-   $AutoBashStrat;
+   #class autobashHeal load;
 }
 
 #alias autobash.heal {
@@ -87,7 +89,9 @@ registerEvent clearPath;
    #if {$hp > 0.85} {
       info Health is in a good state, move on.;
       deregisterEvent heal;
+      #class autobashHeal clear;
 
+      #class autobash load; 
       #var AutoBashStrat {autobash.hunt};
       registerEvent explore $AutoBashStrat;
       $AutoBashStrat;
@@ -99,27 +103,59 @@ registerEvent clearPath;
 }
 
 #alias autobash.switchToretreat {
-   print Switching to Retreat;
-   deregisterEvent explore $AutoBashStrat;
-   #var AutoBashStrat {autobash.retreat};
-   registerEvent explore $AutoBashStrat;
-   registerEvent heal $AutoBashStrat;
 
-   $AutoBashStrat;
+   #class autobash clear; 
+   deregisterEvent explore;
+
+   print Switching to Retreat;
+   #send {CLEARQUEUE ALL};
+
+   #var AutoBashStrat {autobash.retreat};
+   registerEvent heal autobash.retreat;
+   #class autobashHeal load;
+
+   autobash.retreat;
+   registerEvent enteredNewRoom allowRetreat;
 }
 
+#var AllowRetreat 1;
+#alias allowRetreat {#var AllowRetreat 1};
+
 #alias autobash.retreat {
-   #if {&roomMobs[] > 0} {
+   #if {&{roomMobs[]} > 0 && $AllowRetreat == 1} {
+      print Retreating!;
+      #var AllowRetreat 0;
+
       #nop Back out to previous room;
       #nop In lower level places, this is enough;
       #nop But in higher level areas the mobs will follow and we need to run more.;
-      #local next $RecordedPath[+1];
+      #var next $RecordedPath[+1];
       #list RecordedPath delete +1;
-      #list ReturnPath ins $next;
+      #list ReturnPath ins +1 $next;
 
-      #local dir ReverseDir[$next];
+      #var dir $ReverseDir[$next];
       move $dir; 
-   }
+      #return;
+   };
+
+   #local hp @getHpPercent{};
+   #if {$hp > 0.95} {
+      info Health is better, now return to the fight!;
+      deregisterEvent heal autobash.retreat;
+      deregisterEvent enteredNewRoom;
+
+      #nop #class autobash load; 
+      #nop #var AutoBashStrat {autobash.hunt};
+      #nop registerEvent explore autobash.hunt;
+      #nop #class autobashHeal clear;
+#nop; 
+      #nop #var next $ReturnPath[+1];
+      #nop #list RecordedPath delete +1;
+      #nop #list ReturnPath ins +1 $next;
+#nop; 
+      #nop #var dir $ReverseDir[$next];
+      #nop move $dir; 
+   };
 }
 
 #function {getHpPercent} {
@@ -131,8 +167,13 @@ registerEvent clearPath;
    #return $hpPercent;
 }
 
+#class autobashHeal kill;
+#class autobashHeal open;
 #action {You may drink another health or mana elixir.} {
    raiseEvent heal;
 }
+#class autobashHeal close;
+#class autobashHeal save;
+#class autobashHeal clear;
 
 

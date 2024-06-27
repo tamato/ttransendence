@@ -320,20 +320,18 @@ registerEvent RoomInfo mapping.onRoomInfo;
    #nop Auto Explore;
    #nop ----------------------------------------------------;
    #nop Find the current room and remove it from the rooms to go to.;
-   #if {&{mapping[yetToVisit][]} > 0} {
 
-      #nop Try to hit the same rooms as little as possbile;
-      #map set {roomweight} {3.0};
+   #nop Try to hit the same rooms as little as possbile;
+   #map set {roomweight} {3.0};
 
-      #nop Carefull, we may hit the same room many times;
-      #list mapping[yetToVisit] find {$vnum} idx; 
-      #if {$idx != 0} {
-         #list mapping[yetToVisit] delete $idx;
-      };
-
-      #nop go through all exploring callbacks;
-      raiseEvent explore;
+   #nop Carefull, we may hit the same room many times;
+   #list mapping[yetToVisit] find {$vnum} idx; 
+   #if {&idx && $idx != 0} {
+      #list mapping[yetToVisit] delete $idx;
    };
+
+   #nop go through all exploring callbacks;
+   raiseEvent explore;
 
    #nop Go through all walking callbacks;
    raiseEvent walking;
@@ -342,6 +340,8 @@ registerEvent RoomInfo mapping.onRoomInfo;
    #nop #map get roomname rname;
    #nop #local gmcpName $gmcp[room][info][name];
    #nop #if {"^$gmcpName" != "^$rname$"} { print Room names differ! $gmcpName and $rname; };
+
+   raiseEvent enteredNewRoom;
 }
 
 #func {getAreaId} {
@@ -393,7 +393,6 @@ registerEvent RoomInfo mapping.onRoomInfo;
 }
 
 #action {Now now, don't be so hasty!} {
-   print Slow it down...;
    #path move backward;
    mapping.step;
 }

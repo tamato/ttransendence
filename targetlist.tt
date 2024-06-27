@@ -1,6 +1,6 @@
 #CLASS {targetlist} OPEN
 
-#VARIABLE {areaName} {the Darkenwood Forest}
+#VARIABLE {areaName} {the Aalen Forest}
 #VARIABLE {targets}
 {
     {Ashtan} 
@@ -32,6 +32,7 @@
     {the Aalen Forest} 
     {
         {Jaaran} {}
+        {Ranthal} {}
         {Stlerin} {}
         {Ta'hena} {}
         {Ta'lissu} {}
