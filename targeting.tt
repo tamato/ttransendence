@@ -128,21 +128,21 @@ registerEvent CharItemsRemove targeting.onCharItemsRemove;
    {
       #showme {<149>Targets for <819>[<839>$areaName<819>]<099>};
       #foreach {*targets[$areaName][%*]} tar {
-         info   $tar;
+         echo   $tar;
       };
    };
    #elseif {&targets[$areaName][%0]}
    {
       #unhighlight {%0};
       #unvar targets[$areaName][%0];
-      #showme Target '%0' removed from '$areaName'.;
+      info Target '%0' removed from '$areaName'.;
       #class targetlist write targetlist.tt;
    };
    #else
    {
       #highlight { %0 } {blink reverse};
       #var targets[$areaName][%0] {};
-      #showme Target '%0' added to '$areaName'.;
+      info Target '%0' added to '$areaName'.;
       #class targetlist write targetlist.tt;
    };
 }

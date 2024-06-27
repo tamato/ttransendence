@@ -20,7 +20,7 @@
 
 #var RecordedPath { };
 #var ReturnPath { };
-#var RetreatHealth 0.60;
+#var RetreatHealth 0.70;
 #var ContinueHeatlh 0.85;
 
 /**
@@ -38,7 +38,11 @@ registerEvent recordPath;
 #alias {recordPath} {
    #nop AttemptedDir comes from MoveCommands.tt and mapping.tt;
    #if {"$AutoBashStrat" !== "Retreating" && &{AttemptedDir}} {
-      #list RecordedPath ins +1 $AttemptedDir;
+      #local dir $ReverseDir[$AttemptedDir];
+      #list RecordedPath ins +1 $dir;
+      #if {$RecordedPath > 20} {
+         #list RecordedPath delete -1;
+      };
    };
 };
 
@@ -55,7 +59,7 @@ registerEvent clearPath;
    Hunting;
 }
 
-#alias autobash.hunt {
+#alias {autobash.hunt} {
    #nop If health is too low, get out of there.;
    #local hp @getHpPercent{};
    #if {$hp < $RetreatHealth} {
@@ -67,7 +71,11 @@ registerEvent clearPath;
 
    #if {&{atkTarget} == 0 } {
       #if {$hp > $ContinueHeatlh} {
-         #if {"$AutoBashStrat" !== "Return"} {
+         #if {"$AutoBashStrat" === "Return"} {
+            autobash.return;
+            #return;
+         };
+         #else {
             registerEvent finishAutoHarvest continueFromHarvest;
             autoharvest;
             #return;
@@ -91,8 +99,6 @@ registerEvent clearPath;
 }
 
 #alias autobash.heal {
-   info Checking Heatlh...;
-
    #nop CURING SIPHEALTH;
    #local hp @getHpPercent{};
    #if {$hp > $ContinueHeatlh} {
@@ -105,14 +111,12 @@ registerEvent clearPath;
       registerEvent explore autobash.hunt;
       autobash.hunt;
    };
-
-   #else {
-      print Healing...;
-   }
 }
 
 #alias autobash.switchToretreat {
 
+   dbg Clearing ReturnPath;
+   #var ReturnPath { };
    #class autobash clear; 
    deregisterEvent explore;
 
@@ -128,13 +132,16 @@ registerEvent clearPath;
    registerEvent enteredNewRoom allowRetreat;
 }
 
+/** When this is called, it is because the retreat move was succesful **/
 #var AllowRetreat 1;
 #alias allowRetreat {
    #var AllowRetreat 1;
 
    #local next $RecordedPath[+1];
    #list RecordedPath delete +1;
-   #list ReturnPath ins +1 $next;
+   #local dir $ReverseDir[$next];
+   dbg Adding $dir to Returnpath;
+   #list ReturnPath ins +1 $dir;
 };
 
 #alias {autobash.attemptRetreat} {
@@ -142,8 +149,7 @@ registerEvent clearPath;
       #nop In lower level places, this is enough;
       #nop But in higher level areas the mobs will follow and we need to run more.;
       #local next $RecordedPath[+1];
-      #local dir $ReverseDir[$next];
-      move $dir; 
+      move $next; 
 }
 
 #alias autobash.retreat {
@@ -156,7 +162,6 @@ registerEvent clearPath;
 
    #local hp @getHpPercent{};
    #if {$hp > $ContinueHeatlh} {
-      info Health is better, now return to the fight!;
       deregisterEvent heal autobash.retreat;
       deregisterEvent enteredNewRoom;
 
@@ -174,13 +179,17 @@ registerEvent clearPath;
 #var AllowReturn 1;
 #alias allowReturn {
    #var AllowReturn 1;
-   #list ReturnPath delete +1;
 
-   #if {&{ReturnPath} == 0} {
-      print Returned to the room we left;
-      deregisterEvent enteredNewRoom;
-      #var AutoBashStrat {Hunting};
-   }
+   #if {&{ReturnPath[]} > 0} {
+      #list ReturnPath delete +1;
+      dbg Removed item from ReturnPath, count is &{ReturnPath[]};
+
+      #if {&{ReturnPath[]} == 0} {
+         print Returned to the room we started retreating;
+         deregisterEvent enteredNewRoom;
+         #var AutoBashStrat {Hunting};
+      }
+   };
 };
 
 #alias {autobash.return} {
@@ -191,8 +200,12 @@ registerEvent clearPath;
       #nop Back out to previous room;
       #nop In lower level places, this is enough;
       #nop But in higher level areas the mobs will follow and we need to run more.;
+
+      #var ReturnPath;
       #local next $ReturnPath[+1];
+      dbg Headed in $next;
       move $next; 
+      dbg did it move?;
       #return;
    };
 }
@@ -214,12 +227,38 @@ registerEvent clearPath;
 #class autobashHeal close;
 #class autobashHeal save;
 
+#alias {satk} {
+   #unvar atkTarget;
+   #class autobash clear; 
+
+   deregisterEvent heal;
+   deregisterEvent enteredNewRoom;
+   deregisterEvent finishAutoHarvest;
+}
+
+#alias {aatk} {
+   #class autobash load; 
+   print {Auto Attacking};
+   #if {$distortActive === 0} {da};
+
+   deregisterEvent heal;
+   deregisterEvent enteredNewRoom;
+   atk;
+}
+
 #class autobash kill;
 #class autobash open;
 
 #action {You have recovered} {
    #var AutoBashStrat {Hunting};
    autobash.hunt;
+}
+
+/** Both of your legs must be free and unhindered to do that **/
+#action {You have cured the broken} {
+   #if {$QueuedAtk === 0} {
+      autobash.hunt;
+   };
 }
 
 #class autobash close;
@@ -243,4 +282,5 @@ registerEvent clearPath;
 
 #class autobashMoving close;
 #class autobashMoving save;
+
 

@@ -11,12 +11,6 @@ registerEvent connected connected;
    guireset;
 }
 
-#alias {aatk} {
-   #class autobash load; 
-   print {resuming auto attack};
-   atk;
-}
-
 #session mel achaea.com 23;
 melkervur;
 $password;

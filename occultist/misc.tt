@@ -24,23 +24,11 @@
 #macro {\eOP} { 
    satk;
 };
-#alias {satk} {
-   #unvar atkTarget;
-   #class autobash clear; 
-}
 
 #nop S-F1
 #macro {\e[1;2P} { 
    startAutoAtk;
 };
-
-#alias {aatk} {
-   #class autobash load; 
-   print {Auto Attacking};
-   #if {$distortActive === 0} {da};
-
-   atk;
-}
 
 #nop -------------------------------------------------------------------------
 #nop Tarot
