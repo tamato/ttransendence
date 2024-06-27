@@ -367,6 +367,7 @@ registerEvent RoomInfo mapping.onRoomInfo;
 }
 
 #action {You stumble through the fog, attempting to find a way out.} {
+   #path move backward;
    mapping.step;
 }
 
@@ -387,6 +388,7 @@ registerEvent RoomInfo mapping.onRoomInfo;
 }
 
 #action {You slip and fall on the ice as you try to leave.} { 
+   #path move backward;
    mapping.step; 
 }
 
