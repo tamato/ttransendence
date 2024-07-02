@@ -135,20 +135,19 @@ registerEvent clearPath;
 /** When this is called, it is because the retreat move was succesful **/
 #var AllowRetreat 1;
 #alias allowRetreat {
-   #var AllowRetreat 1;
-
    #local next $RecordedPath[+1];
    #list RecordedPath delete +1;
    #local dir $ReverseDir[$next];
    dbg Adding $dir to Returnpath;
    #list ReturnPath ins +1 $dir;
+   #var AllowRetreat 1;
 };
 
 #alias autobash.retreat {
    #if {&{roomMobs[]} > 0 && $AllowRetreat == 1} {
-      print Retreating!;
       #var AllowRetreat 0;
       #local next $RecordedPath[+1];
+      print Retreating!;
       move $next; 
       #return;
    };
