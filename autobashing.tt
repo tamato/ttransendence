@@ -63,7 +63,7 @@ registerEvent clearPath;
    #nop If health is too low, get out of there.;
    #local hp @getHpPercent{};
    #if {$hp < $RetreatHealth} {
-      autobash.switchToretreat;
+      autobash.switchToRetreat;
       #return;
    };
 
@@ -92,44 +92,44 @@ registerEvent clearPath;
    print Switching to Heal;
 
    #class autobash clear; 
-   deregisterEvent explore autobash.hunt;
+   deregisterEvent EnteredRoom autobash.hunt;
    #var AutoBashStrat {Healing};
-   registerEvent heal autobash.heal;
+   registerEvent AutoHeal autobash.heal;
    #class autobashHeal load;
 }
 
 #alias autobash.heal {
-   #nop CURING SIPHEALTH;
+   #nop CURING SIPHEALTH to set the percentage;
    #local hp @getHpPercent{};
    #if {$hp > $ContinueHeatlh} {
-      info Health is in a good state, move on.;
-      deregisterEvent heal;
+      info Health is in a good state, move on. Stop healing and switch to Hunting;
+      deregisterEvent AutoHeal;
       #class autobashHeal clear;
 
       #class autobash load; 
       #var AutoBashStrat {Hunting};
-      registerEvent explore autobash.hunt;
+      registerEvent EnteredRoom autobash.hunt;
       autobash.hunt;
    };
 }
 
-#alias autobash.switchToretreat {
+#alias autobash.switchToRetreat {
 
    dbg Clearing ReturnPath;
    #var ReturnPath { };
    #class autobash clear; 
-   deregisterEvent explore;
+   deregisterEvent EnteredRoom;
 
    print Switching to Retreat;
    #send {CLEARQUEUE ALL};
 
    #var AutoBashStrat {Retreating};
-   registerEvent heal autobash.retreat;
+   registerEvent AutoHeal autobash.retreat;
    #class autobashHeal load;
    #class autobashMoving load;
 
    autobash.retreat;
-   registerEvent enteredNewRoom allowRetreat;
+   registerEvent EnteredRoom allowRetreat;
 }
 
 /** When this is called, it is because the retreat move was succesful **/
@@ -144,31 +144,24 @@ registerEvent clearPath;
    #list ReturnPath ins +1 $dir;
 };
 
-#alias {autobash.attemptRetreat} {
-      #nop Back out to previous room;
-      #nop In lower level places, this is enough;
-      #nop But in higher level areas the mobs will follow and we need to run more.;
-      #local next $RecordedPath[+1];
-      move $next; 
-}
-
 #alias autobash.retreat {
    #if {&{roomMobs[]} > 0 && $AllowRetreat == 1} {
       print Retreating!;
       #var AllowRetreat 0;
-      autobash.attemptRetreat;
+      #local next $RecordedPath[+1];
+      move $next; 
       #return;
    };
 
    #local hp @getHpPercent{};
    #if {$hp > $ContinueHeatlh} {
-      deregisterEvent heal autobash.retreat;
-      deregisterEvent enteredNewRoom;
+      deregisterEvent AutoHeal autobash.retreat;
+      deregisterEvent EnteredRoom;
 
       #class autobash load; 
       #var AutoBashStrat {Return};
-      registerEvent explore autobash.hunt;
-      registerEvent enteredNewRoom allowReturn;
+      registerEvent EnteredRoom autobash.hunt;
+      registerEvent EnteredRoom allowReturn;
       #class autobashHeal clear;
       #class autobashMoving clear;
 
@@ -186,7 +179,7 @@ registerEvent clearPath;
 
       #if {&{ReturnPath[]} == 0} {
          print Returned to the room we started retreating;
-         deregisterEvent enteredNewRoom;
+         deregisterEvent EnteredRoom;
          #var AutoBashStrat {Hunting};
       }
    };
@@ -222,7 +215,8 @@ registerEvent clearPath;
 #class autobashHeal kill;
 #class autobashHeal open;
 #action {You may drink another health or mana elixir.} {
-   raiseEvent heal;
+   info Healing should be called...;
+   #nop raiseEvent heal;
 }
 #class autobashHeal close;
 #class autobashHeal save;
@@ -231,18 +225,21 @@ registerEvent clearPath;
    #unvar atkTarget;
    #class autobash clear; 
 
-   deregisterEvent heal;
-   deregisterEvent enteredNewRoom;
+   deregisterEvent AutoHeal;
+   deregisterEvent EnteredRoom;
    deregisterEvent finishAutoHarvest;
 }
 
+/** 
+   Just do auto attacking. 
+   This assumes that all healing, retreating, or defs are done manually.
+**/
 #alias {aatk} {
    #class autobash load; 
    print {Auto Attacking};
    #if {$distortActive === 0} {da};
 
-   deregisterEvent heal;
-   deregisterEvent enteredNewRoom;
+   deregisterEvent AutoHeal;
    atk;
 }
 
@@ -269,15 +266,18 @@ registerEvent clearPath;
 
 /** You are paralysed and cannot do that. **/
 #action {You have cured the paralysis affliction.} {
-   autobash.attemptRetreat;
+   #var AllowRetreat 1;
+   autobash.retreat;
 }
 
 #action {You slowly hobble} {
-   autobash.attemptRetreat;
+   dbg Hobbling, should attempt another retreat after entering room;
+   #nop autobash.retreat;
 }
 
 #action {You must regain balance first.} {
-   autobash.attemptRetreat;
+   #var AllowRetreat 1;
+   autobash.retreat;
 }
 
 #class autobashMoving close;

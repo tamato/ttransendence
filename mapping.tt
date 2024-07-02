@@ -65,13 +65,13 @@
    #class pathing load;
 
    #nop Do destination checks first;
-   registerEvent walking mapping.walkdst;
-   registerEvent walking mapping.step;
+   registerEvent EnteredRoom mapping.walkdst;
+   registerEvent EnteredRoom mapping.step;
 
    #var mapping[dst] %1;
    #map find {%1};
 
-   raiseEvent walking;
+   raiseEvent EnteredRoom;
 }
 
 #alias {mgostart} {
@@ -173,10 +173,10 @@
    mapping.prepExplore;
 
    #nop Do destination checks first;
-   registerEvent explore mapping.founddst;
-   registerEvent explore mapping.step;
+   registerEvent EnteredRoom mapping.founddst;
+   registerEvent EnteredRoom mapping.step;
 
-   raiseEvent explore;
+   raiseEvent EnteredRoom;
 }
 
 #alias {mapping.step} {
@@ -322,18 +322,14 @@ registerEvent RoomInfo mapping.onRoomInfo;
       #list mapping[yetToVisit] delete $idx;
    };
 
-   #nop go through all exploring callbacks;
-   raiseEvent explore;
-
-   #nop Go through all walking callbacks;
-   raiseEvent walking;
+   #nop go through all callbacks for entering a room;
+   raiseEvent EnteredRoom;
 
    #nop Watch for differences in room names to update the crowd map.;
    #nop #map get roomname rname;
    #nop #local gmcpName $gmcp[room][info][name];
    #nop #if {"^$gmcpName" != "^$rname$"} { print Room names differ! $gmcpName and $rname; };
 
-   raiseEvent enteredNewRoom;
 }
 
 #func {getAreaId} {
@@ -355,7 +351,7 @@ registerEvent RoomInfo mapping.onRoomInfo;
       mstop;
    };
 
-   raiseEvent explore;
+   raiseEvent EnteredRoom;
 }
 
 #action {You stumble through the fog, attempting to find a way out.} {
@@ -439,9 +435,8 @@ registerEvent RoomInfo mapping.onRoomInfo;
    #class autobash clear;
    #unvar mapping[dst];
 
-   deregisterEvent explore;
+   deregisterEvent EnteredRoom;
    deregisterEvent cleanup;
-   deregisterEvent walking;
    deregisterEvent finishAutoHarvest;
    clearAutoHarvestRooms;
 
@@ -463,10 +458,11 @@ registerEvent RoomInfo mapping.onRoomInfo;
    mapping.prepExplore;
 
    #nop Do destination checks first;
-   registerEvent explore mapping.founddst;
-   registerEvent explore autobash.hunt;
+   registerEvent EnteredRoom mapping.founddst;
+   registerEvent CharVitals autobash.hunt;
 
-   autobash.hunt;
+   #nop Does it called a lot?;
+   #nop autobash.hunt;
 };
 
 /*
