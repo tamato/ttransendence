@@ -21,13 +21,7 @@
 #var RecordedPath { };
 #var ReturnPath { };
 #var RetreatHealth 0.70;
-#var ContinueHeatlh 0.85;
-
-/**
-   You must regain balance first.
-
-      You have cured the paralysis affliction.
-**/
+#var ContinueHeatlh 0.90;
 
 /** 
    Raised after successfully moving to a new location
@@ -70,22 +64,28 @@ registerEvent clearPath;
    atk;
 
    #if {&{atkTarget} == 0 } {
-      #if {$hp > $ContinueHeatlh} {
-         #if {"$AutoBashStrat" === "Return"} {
-            autobash.return;
-            #return;
-         };
+      autobash.targetsCleared;
+      #return;
+   };
+}
 
-         #else {
-            registerEvent finishAutoHarvest continueFromHarvest;
-            autoharvest;
-            #return;
-         };
-      };
-      #else {
-         autobash.switchToheal;
+#alias {autobash.targetsCleared} {
+   #if {$hp > $ContinueHeatlh} {
+      #if {"$AutoBashStrat" === "Return"} {
+         autobash.return;
          #return;
       };
+
+      #else {
+         registerEvent finishAutoHarvest continueFromHarvest;
+         autoharvest;
+         #return;
+      };
+   };
+
+   #else {
+      autobash.switchToheal;
+      #return;
    };
 }
 
