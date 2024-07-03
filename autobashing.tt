@@ -283,4 +283,20 @@ registerEvent clearPath;
 #class autobashMoving close;
 #class autobashMoving save;
 
+/** Aliases to move to new location and start autobashing **/
+#alias {autobash.reachedLocation} {
+   deregisterEvent reachedDestination;
+   mbash;
+}
+
+#alias {autobash.rhod} {
+   registerEvent reachedDestination autobash.reachedLocation;
+   mwalk rhod;
+}
+
+#alias {autobash.aalen} {
+   registerEvent reachedDestination autobash.reachedLocation;
+   mwalk aalen;
+}
+
 
