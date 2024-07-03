@@ -19,6 +19,7 @@
 
    #read character_highlights.tt;
    #ticker {updateChars} {#read character_highlights.tt} {60};
+   #read items.tt;
    raiseEvent connected;
 
    #class pathing clear;

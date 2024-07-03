@@ -84,6 +84,11 @@
         {name} {Within a weathered cavern (indoors)}
         {number} {39115}
     }
+    {svash} 
+    {
+        {name} {A canyon}
+        {number} {10211}
+    }
 }
 
 #CLASS {pois} CLOSE
