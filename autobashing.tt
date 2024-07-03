@@ -75,6 +75,7 @@ registerEvent clearPath;
             autobash.return;
             #return;
          };
+
          #else {
             registerEvent finishAutoHarvest continueFromHarvest;
             autoharvest;

@@ -459,7 +459,7 @@ registerEvent RoomInfo mapping.onRoomInfo;
 
    #nop Do destination checks first;
    registerEvent EnteredRoom mapping.founddst;
-   registerEvent CharVitals autobash.hunt;
+   registerEvent EnteredRoom autobash.hunt;
 
    #nop Does it called a lot?;
    #nop autobash.hunt;

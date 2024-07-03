@@ -1,52 +1,5 @@
 #CLASS {itemslist} OPEN
 
-#ALIAS {getGold}
-{
-    #if {"$TakableItem" == "%*gold%*"}
-    {
-        #send {$addfree get gold};
-        #send {$addfree put gold in pack}
-    }
-}
-
-#ALIAS {getItems}
-{
-    #local area $gmcp[room][info][area];
-    #foreach {*itemslist[$area][]} {item}
-    {
-        #if {"$TakableItem" == "%*$item%*"}
-        {
-            #send {$addfree get $item}
-        }
-    }
-}
-
-#ALIAS {items}
-{
-    #if {"%1" === ""}
-    {
-        #showme {<148>Items for <818>[<838>$areaName<818>]<099>};
-        #foreach {*itemslist[$areaName][%*]} {item}
-        {
-            info   $item
-        }
-    };
-    #elseif {&itemslist[$areaName][%0]}
-    {
-        #unhighlight {%0};
-        #unvariable itemslist[$areaName][%0];
-        #showme Item '%0' removed from '$areaName'.;
-        #class itemslist write itemslist.tt
-    };
-    #else
-    {
-        #highlight { %0 } {blink reverse};
-        #variable itemslist[$areaName][%0] {};
-        #showme Item '%0' added to '$areaName'.;
-        #class itemslist write itemslist.tt
-    }
-}
-
 #VARIABLE {itemslist}
 {
     {the Aalen Forest} 

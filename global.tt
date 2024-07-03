@@ -58,7 +58,7 @@
 
    #show {};
    #show {};
-   print {Begin Entry};
+   print Begin Journal Entry;
 }
 
 #alias {fight!} {
