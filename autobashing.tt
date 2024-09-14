@@ -102,6 +102,7 @@ registerEvent clearPath;
 #alias autobash.heal {
    #nop CURING SIPHEALTH to set the percentage;
    #local hp @getHpPercent{};
+   dbg Healing, HP is at $hp;
    #if {$hp > $ContinueHeatlh} {
       info Health is in a good state, move on. Stop healing and switch to Hunting;
       deregisterEvent AutoHeal;
@@ -218,6 +219,12 @@ registerEvent clearPath;
    info Healing should be called...;
    #nop raiseEvent heal;
 }
+
+/** 15:05:31.44 O 91h 27rage 85m 100e 98w[exE|93] :>- **/
+/**
+#nop #action {%d:%d:%d.%d %w %dh %drage} { #line ignore #show Health is at %6!; };
+**/
+
 #class autobashHeal close;
 #class autobashHeal save;
 

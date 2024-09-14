@@ -85,7 +85,6 @@
    };
    #var prevHp $hp;
 
-
    #var mp $gmcp[char][vitals][mp];
    #if {$prevMp == 0} {#var prevMp $mp};
 
