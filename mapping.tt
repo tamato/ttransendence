@@ -19,7 +19,7 @@
    info   - Auto explore area while also hunting and harvesting plants;
    info * pois;
    info   - list of points of interest;
-   info * mwalk
+   info * mwalk;
    info   - Using tarot universe to quickly reach goal
 }
 
@@ -61,7 +61,7 @@
 }
 
 #alias {mgo} {
-   #if {"%1" == ""} {err Pass in room number!; #return};
+   #if {"%1" == ""} {err Pass in room number! The general help command is -mapping-; #return};
 
    #class pathing load;
 
